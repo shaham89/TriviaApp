@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "699119752775",
+    "firebase_url": "https://trivia-cce2d-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "trivia-cce2d",
+    "storage_bucket": "trivia-cce2d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699119752775:android:bb3edda3f3a1815f9e4362",
+        "android_client_info": {
+          "package_name": "com.example.triviaap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699119752775-ku9a4ifriia5ei6vfe98vltnfpsqa24l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.triviaap",
+            "certificate_hash": "6662447b5f8e487dd56dbc9be95f5d6f339e60f1"
+          }
+        },
+        {
+          "client_id": "699119752775-tltrs5v1pa6jljfii7sfq88iqul5fsle.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtddbqjRAEH6NUuMD58AUR6ohM87vBRvI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699119752775-tltrs5v1pa6jljfii7sfq88iqul5fsle.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699119752775:android:e409640db9bcc8489e4362",
+        "android_client_info": {
+          "package_name": "com.example.triviaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699119752775-tltrs5v1pa6jljfii7sfq88iqul5fsle.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtddbqjRAEH6NUuMD58AUR6ohM87vBRvI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699119752775-tltrs5v1pa6jljfii7sfq88iqul5fsle.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
