@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TriviaApp</string>
     <string name="username_hint">Username</string>
-    <string name="LoginTitle">Trivia</string>
+    <string name="LoginTitle">TriviaBay</string>
     <string name="password_hint">Password</string>
     <string name="signup_button_text">SignUP</string>
     <string name="title_activity_login">LoginActivity</string>
