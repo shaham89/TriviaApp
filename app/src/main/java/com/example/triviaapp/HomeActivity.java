@@ -9,6 +9,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -31,8 +34,9 @@ public class HomeActivity extends AppCompatActivity {
             String name = account.getDisplayName();
             String mail = account.getEmail();
 
-            Toast.makeText(this, "name:" + name + ", mail:" + mail, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "welcome! " + name, Toast.LENGTH_SHORT).show();
         }
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     }
 }

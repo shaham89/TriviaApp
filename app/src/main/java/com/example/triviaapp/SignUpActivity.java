@@ -60,7 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
         usersRef = db.collection(usersRefTitle);
         googleSignInImg = findViewById(R.id.google_signin_button);
 
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestEmail()
         .build();
 
