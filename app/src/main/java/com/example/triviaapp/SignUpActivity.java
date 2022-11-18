@@ -66,12 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         gsc = GoogleSignIn.getClient(this, gso);
 
-        googleSignInImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SignIn();
-            }
-        });
+        googleSignInImg.setOnClickListener(view -> SignIn());
         //        usernameEditText = findViewById(R.id.signUpUsernameEditText);
 //        passwordEditText = findViewById(R.id.signUpPasswordEditText);
 //
@@ -86,7 +81,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @NonNull Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(resultCode, resultCode, data);
 
         if (requestCode == 100){
@@ -124,49 +119,6 @@ public class SignUpActivity extends AppCompatActivity {
         return new User(usernameEditText.getText().toString(),
                 passwordEditText.getText().toString());
     }
-
-    private boolean isUserExist(@NonNull Task<QuerySnapshot> task){
-
-        for (QueryDocumentSnapshot document : task.getResult()) {
-
-            if (document.exists()){
-                return true;
-            }
-            Log.d(TAG, document.getId() + " => " + document.getData());
-        }
-        return false;
-
-    }
-
-    protected class signUpClickHandler implements View.OnClickListener {
-        //check if the user exist, and if he doesn't call addUser
-        //if he does, show Toast
-        @Override
-        public void onClick(View view) {
-            if(isValidUsername() && isValidPassword()){
-                User m_user = getCurrentUser();
-
-                usersRef.whereEqualTo(usernameField, m_user.getUsername())
-                .get()
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-
-                                if(isUserExist(task)){
-                                    userAlreadyExist();
-                                } else{
-                                    addUser(m_user);
-                                    Toast.makeText(getApplicationContext(), "Successfully signed up user", Toast.LENGTH_LONG).show();
-                                }
-                            } else {
-                                Log.w(TAG, "Error getting documents.", task.getException());
-                            }
-                        });
-            } else {
-                Toast.makeText(getApplicationContext(), "Enter username and password", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
 
     private void userAlreadyExist(){
         String msg = "User already exists, try login";

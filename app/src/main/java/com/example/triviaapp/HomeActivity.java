@@ -3,6 +3,7 @@ package com.example.triviaapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -18,6 +19,8 @@ public class HomeActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
 
+    private TextView title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,15 +31,22 @@ public class HomeActivity extends AppCompatActivity {
                 .build();
 
         gsc = GoogleSignIn.getClient(this, gso);
+        title = findViewById(R.id.homeActivityTitle);
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if(account != null){
-            String name = account.getDisplayName();
-            String mail = account.getEmail();
-
-            Toast.makeText(this, "welcome! " + name, Toast.LENGTH_SHORT).show();
+        if(account == null){
+            Toast.makeText(this, "account error! ", Toast.LENGTH_SHORT).show();
+            return;
         }
+        String name = account.getDisplayName();
+        String titleText ="Welcome" + name;
+        title.setText(titleText);
+
+        Toast.makeText(this, "welcome! " + name, Toast.LENGTH_SHORT).show();
+
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+
     }
 }
