@@ -2,7 +2,10 @@ package com.example.triviaapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
     GoogleSignInClient gsc;
 
     private TextView title;
+    private Button soloButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,7 @@ public class HomeActivity extends AppCompatActivity {
 
         gsc = GoogleSignIn.getClient(this, gso);
         title = findViewById(R.id.homeActivityTitle);
+        soloButton = findViewById(R.id.soloPlayButton);
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if(account == null){
@@ -47,6 +52,14 @@ public class HomeActivity extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        soloButton.setOnClickListener(new soloClickHandler());
+    }
 
+    private class soloClickHandler implements View.OnClickListener {
+        @Override
+        public void onClick(View view){
+            Intent intent = new Intent(getApplicationContext(), QuestionActivity.class);
+            finish();
+        }
     }
 }
