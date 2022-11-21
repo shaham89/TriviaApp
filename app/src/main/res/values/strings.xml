@@ -15,4 +15,5 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="login_button_text">Login</string>
     <string name="soloButtonText">Solo</string>
+    <string name="email_hint">Email</string>
 </resources>

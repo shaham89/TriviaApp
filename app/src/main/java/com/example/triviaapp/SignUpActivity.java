@@ -27,6 +27,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -35,76 +36,85 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private static final String TAG = "SignUpActivity";
+    private FirebaseAuth m_auth;
+    private String Tag = "SignInActivity";
+
     private CollectionReference usersRef;
     private static final String usersRefTitle = "users";
 
-    private EditText usernameEditText;
+    private EditText emailEditText;
     private EditText passwordEditText;
 
     private static final String usernameField = "username";
-    ImageView googleSignInImg;
-
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        usersRef = db.collection(usersRefTitle);
-        googleSignInImg = findViewById(R.id.google_signin_button);
+        emailEditText = findViewById(R.id.signUpEmailEditText);
+        passwordEditText = findViewById(R.id.signUpPasswordEditText);
 
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-        .requestEmail()
-        .build();
 
-        gsc = GoogleSignIn.getClient(this, gso);
+        m_auth = FirebaseAuth.getInstance();
 
-        googleSignInImg.setOnClickListener(view -> SignIn());
+        final Button signUpButton = findViewById(R.id.signUpButton);
+        signUpButton.setOnClickListener(new signUpClickHandler());
 
-//        signInRequest = BeginSignInRequest.builder()
-//                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-//                .setSupported(true)
-//                .setS)
-
-//        final Button signUpButton = findViewById(R.id.signUpButton);
-//        signUpButton.setOnClickListener(new signUpClickHandler());
-//
     }
 
-    private void SignIn() {
-        Intent intent = gsc.getSignInIntent();
-        startActivityForResult(intent, 100);
+    protected class signUpClickHandler implements View.OnClickListener {
+        //check if the user exist, and if he doesn't call addUser
+        //if he does, show Toast
+        @Override
+        public void onClick(View view) {
+            signIn(emailEditText.getText().toString(), passwordEditText.getText().toString());
+        }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(resultCode, resultCode, data);
-
-        if (requestCode == 100){
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                task.getResult(ApiException.class);
-                HomeActivity();
-            } catch (ApiException e) {
-                e.printStackTrace();
-            }
+    public void onStart() {
+        super.onStart();
+        //check if the user is signed(non-null)
+        FirebaseUser currentUser = m_auth.getCurrentUser();
+        if(currentUser != null){
+            //login
+            String email = currentUser.getEmail();
         }
+
+    }
+
+    private void signIn(String email, String password){
+        m_auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            //if sign in is a success
+                            FirebaseUser user = m_auth.getCurrentUser();
+                            assert user != null;
+                            Log.d(Tag, "create user with email success: " + user.getEmail());
+                            HomeActivity();
+                        } else{
+                            //if sign is failed
+                            Log.w(Tag, "create user failure", task.getException());
+                            Toast.makeText(SignUpActivity.this, "auth failed", Toast.LENGTH_SHORT).show();
+//shaharmar1@kramim.ort.org.il
+                        }
+                    }
+                });
+
     }
 
     private void HomeActivity() {
         finish();
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-
         startActivity(intent);
     }
 
@@ -112,7 +122,7 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean isValidUsername(){
         final short MIN_SIZE = 2;
         final short MAX_SIZE = 10;
-        String username = usernameEditText.getText().toString();
+        String username = emailEditText.getText().toString();
         return username.length() >= MIN_SIZE && username.length() <= MAX_SIZE;
     }
 
@@ -123,7 +133,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private User getCurrentUser(){
-        return new User(usernameEditText.getText().toString(),
+        return new User(emailEditText.getText().toString(),
                 passwordEditText.getText().toString());
     }
 
@@ -136,8 +146,8 @@ public class SignUpActivity extends AppCompatActivity {
     private void addUser(User user){
         usersRef
                 .add(user)
-                .addOnSuccessListener(documentReference -> Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId()))
-                .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
+                .addOnSuccessListener(documentReference -> Log.d(Tag, "DocumentSnapshot added with ID: " + documentReference.getId()))
+                .addOnFailureListener(e -> Log.w(Tag, "Error adding document", e));
 
     }
 

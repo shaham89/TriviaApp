@@ -19,8 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 
 public class HomeActivity extends AppCompatActivity {
 
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
+    private FirebaseAuth m_auth;
 
     private TextView title;
     private Button soloButton;
@@ -30,27 +29,20 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
+        m_auth = FirebaseAuth.getInstance();
+        FirebaseUser user = m_auth.getCurrentUser();
+        assert user != null;
+        String userId = user.getUid();
 
-        gsc = GoogleSignIn.getClient(this, gso);
         title = findViewById(R.id.homeActivityTitle);
         soloButton = findViewById(R.id.soloPlayButton);
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if(account == null){
-            Toast.makeText(this, "account error! ", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        String name = account.getDisplayName();
+
+        String name = user.getDisplayName();
         String titleText ="Welcome" + name;
         title.setText(titleText);
 
         Toast.makeText(this, "welcome! " + name, Toast.LENGTH_SHORT).show();
-
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         soloButton.setOnClickListener(new soloClickHandler());
     }
