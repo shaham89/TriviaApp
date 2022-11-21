@@ -16,4 +16,8 @@
     <string name="login_button_text">Login</string>
     <string name="soloButtonText">Solo</string>
     <string name="email_hint">Email</string>
+    <string name="SignUpTitle">SignUp</string>
+    <string name="already_registered_try_login">Already registered? Try login</string>
+    <string name="try_signUp_text">Don\'t have an account yet? try SignUp</string>
+    <string name="logout">LOGOUT</string>
 </resources>

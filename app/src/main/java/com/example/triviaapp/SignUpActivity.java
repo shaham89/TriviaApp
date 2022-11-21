@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -67,6 +68,8 @@ public class SignUpActivity extends AppCompatActivity {
         final Button signUpButton = findViewById(R.id.signUpButton);
         signUpButton.setOnClickListener(new signUpClickHandler());
 
+        final TextView switchTextView = findViewById(R.id.switchToLoginText);
+        switchTextView.setOnClickListener(new switchToLogin());
     }
 
     protected class signUpClickHandler implements View.OnClickListener {
@@ -84,8 +87,8 @@ public class SignUpActivity extends AppCompatActivity {
         //check if the user is signed(non-null)
         FirebaseUser currentUser = m_auth.getCurrentUser();
         if(currentUser != null){
-            //login
-            String email = currentUser.getEmail();
+            //user is already logged in
+            HomeActivity();
         }
 
     }
@@ -118,6 +121,16 @@ public class SignUpActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    protected class switchToLogin implements View.OnClickListener {
+        //check if the user exist, and if he doesn't call addUser
+        //if he does, show Toast
+        @Override
+        public void onClick(View view) {
+            finish();
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+        }
+    }
 
     private boolean isValidUsername(){
         final short MIN_SIZE = 2;

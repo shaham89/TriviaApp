@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="100"
-    tools:context=".SignUpActivity">
-
+    tools:context=".LoginActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -19,31 +18,31 @@
         />
 
     <ImageView
-        android:id="@+id/signUpLogo"
+        android:id="@+id/login_logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="15"
         app:srcCompat="@drawable/logo" />
 
-<!--    <ImageView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/ic_launcher_background"-->
-<!--        android:id="@+id/google_signin_button"-->
-<!--        />-->
+    <!--    <ImageView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:src="@drawable/ic_launcher_background"-->
+    <!--        android:id="@+id/google_signin_button"-->
+    <!--        />-->
 
 
 
     <EditText
-        android:id="@+id/signUpEmailEditText"
+        android:id="@+id/loginEmailEditText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="20"
         android:hint="@string/email_hint"
-         />
+        />
 
     <EditText
-        android:id="@+id/signUpPasswordEditText"
+        android:id="@+id/loginPasswordEditText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="20"
@@ -51,18 +50,17 @@
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/signUpButton"
+        android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="5"
-        android:text="@string/signup_button_text" />
+        android:text="@string/login_button_text" />
 
     <TextView
-        android:id="@+id/switchToLoginText"
+        android:id="@+id/switchToSignUpTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="5"
-        android:text="@string/already_registered_try_login" />
-
+        android:text="@string/try_signUp_text" />
 
 </LinearLayout>

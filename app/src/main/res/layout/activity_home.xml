@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
 
+
+
     <TextView
         android:id="@+id/homeActivityTitle"
         android:layout_width="0dp"
@@ -24,12 +26,23 @@
         android:id="@+id/soloPlayButton"
         android:layout_width="249dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="340dp"
+        android:layout_marginBottom="69dp"
         android:text="@string/soloButtonText"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/logoutButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homeActivityTitle" />
 
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="245dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="201dp"
+        android:text="@string/logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/soloPlayButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
