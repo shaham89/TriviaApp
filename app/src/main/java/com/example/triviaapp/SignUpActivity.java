@@ -31,6 +31,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -51,6 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private EditText emailEditText;
     private EditText passwordEditText;
+    private EditText displayNameEditText;
 
     private static final String usernameField = "username";
 
@@ -61,7 +63,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         emailEditText = findViewById(R.id.signUpEmailEditText);
         passwordEditText = findViewById(R.id.signUpPasswordEditText);
-
+        displayNameEditText = findViewById(R.id.displayNameEditText);
 
         m_auth = FirebaseAuth.getInstance();
 
@@ -102,7 +104,15 @@ public class SignUpActivity extends AppCompatActivity {
                             //if sign in is a success
                             FirebaseUser user = m_auth.getCurrentUser();
                             assert user != null;
-                            Log.d(Tag, "create user with email success: " + user.getEmail());
+                            UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(displayNameEditText.getText().toString()).build();
+                            user.updateProfile(profileUpdate)
+                                    .addOnCompleteListener(task1 -> {
+                                        if(task1.isSuccessful()){
+                                            Log.d(Tag, "create user with email success: " + user.getEmail());
+                                        }
+                                    });
+
                             HomeActivity();
                         } else{
                             //if sign is failed

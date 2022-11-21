@@ -62,21 +62,18 @@ public class LoginActivity extends AppCompatActivity {
 
     private void login(String email, String password){
         m_auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            //if sign in is a success
-                            FirebaseUser user = m_auth.getCurrentUser();
-                            assert user != null;
-                            Log.d(Tag, "logged user with email success: " + user.getEmail());
-                            HomeActivity();
-                        } else{
-                            //if sign is failed
-                            Log.w(Tag, "login user failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "auth failed", Toast.LENGTH_SHORT).show();
+                .addOnCompleteListener(this, task -> {
+                    if(task.isSuccessful()){
+                        //if sign in is a success
+                        FirebaseUser user = m_auth.getCurrentUser();
+                        assert user != null;
+                        Log.d(Tag, "logged user with email success: " + user.getEmail());
+                        HomeActivity();
+                    } else{
+                        //if sign is failed
+                        Log.w(Tag, "login user failure", task.getException());
+                        Toast.makeText(LoginActivity.this, "auth failed", Toast.LENGTH_SHORT).show();
 //shaharmar1@kramim.ort.org.il
-                        }
                     }
                 });
     }

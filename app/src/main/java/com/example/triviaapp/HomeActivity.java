@@ -35,12 +35,13 @@ public class HomeActivity extends AppCompatActivity {
         assert m_user != null;
         String userId = m_user.getUid();
 
+
         title = findViewById(R.id.homeActivityTitle);
         soloButton = findViewById(R.id.soloPlayButton);
         final Button logoutButton = findViewById(R.id.logoutButton);
 
         String name = m_user.getDisplayName();
-        String titleText ="Welcome" + name;
+        String titleText ="Welcome " + name;
         title.setText(titleText);
 
         Toast.makeText(this, "welcome! " + name, Toast.LENGTH_SHORT).show();

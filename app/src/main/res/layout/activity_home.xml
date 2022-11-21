@@ -16,7 +16,7 @@
         android:layout_marginBottom="195dp"
         android:layout_weight="10"
         android:textAlignment="center"
-        android:textSize="50sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/soloPlayButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
