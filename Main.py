@@ -17,7 +17,7 @@ SUBJECT_LIST = [Capitals]
 def init_subjects():
     for subject in SUBJECT_LIST:
         print(subject().get_name())
-        subject().init_questions(db.collection('qu'))
+        subject().init_questions(db.collection(subject().get_name()))
 
 
 init_subjects()

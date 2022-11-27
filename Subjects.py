@@ -15,7 +15,7 @@ class Question:
         return self.question_text
 
     def get_options(self):
-        return str(self.answer1 + ',' + self.answer2 + ',' + self.answer3 + ',' + self.answer4 + ',')
+        return self.answer1, self.answer2, self.answer3, self.answer4
 
     def get_answer(self):
         return self.trueAnswer
@@ -56,9 +56,9 @@ class Capitals(Subject):
     #     return un_members
 
     @staticmethod
-    def get_questions(self):
+    def get_questions():
         main_question = 'What is the capital of '
-        countries = []
+
         capitals_file = open("Data\\Capitals.txt", "r", encoding="utf8")
         answers = ast.literal_eval(capitals_file.read())
         capitals_file.close()
@@ -73,14 +73,21 @@ class Capitals(Subject):
                                       , answers[i][1]
                                       , answers[i][2]
                                       , answers[i][3]
-                                      , answers[i][1]))
+                                      , answers[i][0]))
         return questions
 
 
     def init_questions(self, collection):
-        pass
+        questions = self.get_questions()
+        QUESTION_TEXT = 'QuestionText'
+        OPTIONS_TEXT = 'Options'
+        TRUE_ANSWER_TEXT = 'TrueAnswer'
+        for q in questions:
+            collection.add({ QUESTION_TEXT: q.get_question(),
+                             OPTIONS_TEXT: q.get_options(),
+                             TRUE_ANSWER_TEXT: q.get_answer()})
 
-qs = Capitals().get_questions()
-
-for question in qs:
-    print('Question:' + question.get_question() + '   answers: ' + question.get_options())
+# qs = Capitals().get_questions()
+#
+# for question in qs:
+#     print('Question:' + question.get_question() + '   answers: ' + question.get_options())
