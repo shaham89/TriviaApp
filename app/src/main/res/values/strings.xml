@@ -21,4 +21,7 @@
     <string name="try_signUp_text">Don\'t have an account yet? try SignUp</string>
     <string name="logout">LOGOUT</string>
     <string name="display_name">Display name</string>
+    <string name="choose_subject_title">Choose Subject</string>
+    <string name="is_solo">isSolo</string>
+    <string name="capitals">capitals</string>
 </resources>
