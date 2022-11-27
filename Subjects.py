@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from country_list import countries_for_language
 import country_converter as coco
 from countryinfo import CountryInfo
+import ast
 
 class Question:
 
@@ -52,19 +53,14 @@ class Capitals(Subject):
     def get_questions(self):
         main_question = 'What is the capital of '
 
+        with open("Capitals.txt", "r", encoding="utf8") as txt_file:
+            text = txt_file.read()
+            print(text)
+            answers = ast.literal_eval(text)
+            return answers
 
-        questions = [Question(main_question + 'England', 'Glasgow', 'Birmingham', 'Cardiff', 'London', 'London'),
-                     Question(main_question + 'Uzbekistan', 'Andijan', 'Samarkand', 'Tashkent', 'Namangan', 'Tashkent'),
-                     Question(main_question + 'France', 'Marseille', 'Paris', 'Lyon', 'Nice', 'Paris'),
-                     Question(main_question + 'Algeria', 'Algiers', 'Bechar', 'Oran', 'Touggourt', 'Algiers'),
-                     Question(main_question + 'Trinidad and Tobago', 'Mon Repos', 'Laventille', 'Port of Spain', 'Chaguanas', 'Port of Spain'),
-                     Question(main_question + 'Georgia', 'Kutaisi', 'Tbilisi', 'Sukhumi', 'Batumi', 'Tbilisi'),
-                     Question(main_question + 'Nicaragua', 'Managua', 'Masava', 'Tipitapa', 'Leon', 'Managua'),
-                     Question(main_question + 'Guatemala', 'Andijan', 'Samarkand', 'Tashkent', 'Namangan', 'Tashkent'),
-                     Question(main_question + 'Uzbekistan', 'Andijan', 'Samarkand', 'Tashkent', 'Namangan', 'Tashkent'),
-                     Question(main_question + 'Georgia', 'Kutaisi', 'Tbilisi', 'Sukhumi', 'Batumi', 'Tbilisi')
-
-                     ]
 
     def init_questions(self, collection):
         pass
+
+print(Capitals().get_questions())
