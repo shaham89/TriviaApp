@@ -1,7 +1,4 @@
 from abc import ABC, abstractmethod
-from country_list import countries_for_language
-import country_converter as coco
-from countryinfo import CountryInfo
 import ast
 
 class Question:
@@ -14,6 +11,14 @@ class Question:
         self.answer4 = answer4
         self.trueAnswer = trueAnswer
 
+    def get_question(self):
+        return self.question_text
+
+    def get_options(self):
+        return str(self.answer1 + ',' + self.answer2 + ',' + self.answer3 + ',' + self.answer4 + ',')
+
+    def get_answer(self):
+        return self.trueAnswer
 
 class Subject(ABC):
 
@@ -50,17 +55,32 @@ class Capitals(Subject):
     #
     #     return un_members
 
+    @staticmethod
     def get_questions(self):
         main_question = 'What is the capital of '
+        countries = []
+        capitals_file = open("Data\\Capitals.txt", "r", encoding="utf8")
+        answers = ast.literal_eval(capitals_file.read())
+        capitals_file.close()
 
-        with open("Capitals.txt", "r", encoding="utf8") as txt_file:
-            text = txt_file.read()
-            print(text)
-            answers = ast.literal_eval(text)
-            return answers
+        countries_file = open("Data\\Countries.txt", "r", encoding="utf8")
+        country_list = ast.literal_eval(countries_file.read())
+        countries_file.close()
+
+        questions = []
+        for i in range(len(answers)):
+            questions.append(Question(main_question + country_list[i] + "?", answers[i][0]
+                                      , answers[i][1]
+                                      , answers[i][2]
+                                      , answers[i][3]
+                                      , answers[i][1]))
+        return questions
 
 
     def init_questions(self, collection):
         pass
 
-print(Capitals().get_questions())
+qs = Capitals().get_questions()
+
+for question in qs:
+    print('Question:' + question.get_question() + '   answers: ' + question.get_options())
