@@ -4,13 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class QuestionActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class GameActivity extends AppCompatActivity {
 
+    private ArrayList<Question> questions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+
+
     }
 }

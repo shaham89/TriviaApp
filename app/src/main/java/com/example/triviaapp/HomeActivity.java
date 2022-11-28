@@ -9,13 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -53,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
     private class soloClickHandler implements View.OnClickListener {
         @Override
         public void onClick(View view){
-            Intent intent = new Intent(getApplicationContext(), QuestionActivity.class);
+            Intent intent = new Intent(getApplicationContext(), GameActivity.class);
             intent.putExtra(String.valueOf(R.string.is_solo), false);
             finish();
         }

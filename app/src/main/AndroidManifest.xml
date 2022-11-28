@@ -16,7 +16,7 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".QuestionActivity"
+            android:name=".GameActivity"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
