@@ -83,15 +83,31 @@ class Capitals(Subject):
         return questions
 
 
-    def init_questions(self, collection):
+    def init_questions(self, db):
         questions = self.get_questions()
         QUESTION_TEXT = 'QuestionText'
         OPTIONS_TEXT = 'Options'
         TRUE_ANSWER_TEXT = 'TrueAnswer'
+        INDEX_TEXT = 'Index'
+        LENGTH_TEXT = 'Length'
+        QUESTION_COLLECTION_TEXT = u'subjects_questions'
+
+        i = 0
+        subject_name = self.get_name()
+        print(subject_name)
+        document_name = subject_name + "_subject"
+        collection_path = QUESTION_COLLECTION_TEXT + "/" + subject_name + "_subject/" + subject_name + "_questions"
+        print(collection_path)
+
         for q in questions:
-            collection.add({ QUESTION_TEXT: q.get_question(),
+
+
+            db.collection(collection_path).add({ QUESTION_TEXT: q.get_question(),
                              OPTIONS_TEXT: q.get_options(),
-                             TRUE_ANSWER_TEXT: q.get_answer()})
+                             TRUE_ANSWER_TEXT: q.get_answer(),
+                             INDEX_TEXT: i})
+            i += 1
+        db.collection(QUESTION_COLLECTION_TEXT).document(document_name).set({LENGTH_TEXT: i})
 
 # qs = Capitals().get_questions()
 #

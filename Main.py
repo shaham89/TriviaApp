@@ -17,11 +17,8 @@ SUBJECT_LIST = [Capitals]
 
 def init_subjects_questions():
     for subject in SUBJECT_LIST:
-        subject_name = subject().get_name()
-        print(subject_name)
-        collection_path = QUESTION_COLLECTION_TEXT + "/" + subject_name + "_subject/" + subject_name + "_questions"
-        print(collection_path)
-        subject().init_questions(db.collection(collection_path))
+
+        subject().init_questions(db)
 
 
 
