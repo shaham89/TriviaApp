@@ -1,24 +1,32 @@
 from abc import ABC, abstractmethod
 import ast
+import random
+
+def md5_hash(str):
+    import hashlib
+
+    result = hashlib.md5(str.encode())
+
+    return result.hexdigest()
 
 class Question:
 
-    def __init__(self, question_text, answer1, answer2, answer3, answer4, trueAnswer):
+    def __init__(self, question_text, options, trueAnswer):
         self.question_text = question_text
-        self.answer1 = answer1
-        self.answer2 = answer2
-        self.answer3 = answer3
-        self.answer4 = answer4
-        self.trueAnswer = trueAnswer
+        self.options = list(options)
+        #shuffle the list to make it more random
+        random.shuffle(self.options)
+        self.trueAnswer = md5_hash(trueAnswer)
 
     def get_question(self):
         return self.question_text
 
     def get_options(self):
-        return self.answer1, self.answer2, self.answer3, self.answer4
+        return self.options
 
     def get_answer(self):
         return self.trueAnswer
+
 
 class Subject(ABC):
 
@@ -29,6 +37,7 @@ class Subject(ABC):
     @abstractmethod
     def init_questions(self, db):
         pass
+
 
 
 class Capitals(Subject):
@@ -69,11 +78,8 @@ class Capitals(Subject):
 
         questions = []
         for i in range(len(answers)):
-            questions.append(Question(main_question + country_list[i] + "?", answers[i][0]
-                                      , answers[i][1]
-                                      , answers[i][2]
-                                      , answers[i][3]
-                                      , answers[i][0]))
+            questions.append(Question(main_question + country_list[i] + "?", answers[i], answers[i][0]))
+
         return questions
 
 
