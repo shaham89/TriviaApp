@@ -24,4 +24,7 @@
     <string name="choose_subject_title">Choose Subject</string>
     <string name="is_solo">isSolo</string>
     <string name="capitals">capitals</string>
+    <string name="create_game">Create Game</string>
+    <string name="room">Room</string>
+    <string name="questions">Questions</string>
 </resources>

@@ -17,17 +17,17 @@
         android:layout_weight="10"
         android:textAlignment="center"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/soloPlayButton"
+        app:layout_constraintBottom_toTopOf="@+id/createGameButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/soloPlayButton"
+        android:id="@+id/createGameButton"
         android:layout_width="249dp"
         android:layout_height="0dp"
         android:layout_marginBottom="69dp"
-        android:text="@string/soloButtonText"
+        android:text="@string/create_game"
         app:layout_constraintBottom_toTopOf="@+id/logoutButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,6 +43,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/soloPlayButton" />
+        app:layout_constraintTop_toBottomOf="@+id/createGameButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

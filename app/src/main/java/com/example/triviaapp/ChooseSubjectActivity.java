@@ -20,11 +20,13 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ChooseSubjectActivity extends AppCompatActivity {
 
     private static final String TAG = "ChooseSubjectActivity";
     private boolean isSolo;
+    private Room room;
     private String subject;
     private ArrayList<Question> questions;
     private FirebaseFirestore db;
@@ -37,9 +39,10 @@ public class ChooseSubjectActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         Intent intent = getIntent();
-        isSolo = intent.getExtras().getBoolean(String.valueOf(R.string.is_solo));
+        room = (Room) intent.getExtras().get(String.valueOf(R.string.room));
 
 
+        questions = new ArrayList<Question>();
 
         findViewById(R.id.capitals_image).setOnClickListener(new imageClickHandler());
 
@@ -51,27 +54,31 @@ public class ChooseSubjectActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             if(view.getId() == R.id.capitals_image){
-                subject = String.valueOf(R.string.capitals);
+                subject = getString(R.string.capitals);
             }
-            getQuestionFromFirestore();
+
         }
 
     }
 
-    private void getQuestionFromFirestore(){
-        CollectionReference docRef = db.collection("Subject_question/" + subject + "_subject/" + subject + "_collection");
+    private void getQuestionFromFirestore(int index){
+        String MAIN_SUBJECT_COLLECTION = "subjects_questions";
+        String path = MAIN_SUBJECT_COLLECTION + "/" + subject + "_subject/" + subject + "_questions";
+        CollectionReference docRef = db.collection(path);
+
         docRef
+                .whereEqualTo("Index", index)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Map<String, Object> questionJson = document.getData();
+                            Log.d(TAG, document.getId() + " => " + questionJson);
+                            questions.add(new Question(questionJson));
                         }
+                        startGame();
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
                 });
 
@@ -79,7 +86,7 @@ public class ChooseSubjectActivity extends AppCompatActivity {
 
     private void startGame(){
         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-
+        intent.putExtra(getString(R.string.questions), questions);
         finish();
         startActivity(intent);
     }
