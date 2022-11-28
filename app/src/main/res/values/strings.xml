@@ -27,4 +27,7 @@
     <string name="create_game">Create Game</string>
     <string name="room">Room</string>
     <string name="questions">Questions</string>
+    <string name="start_game">Start Game</string>
+    <string name="choose_subject">choose subject</string>
+    <string name="subject">Subject</string>
 </resources>

@@ -28,7 +28,6 @@ public class HomeActivity extends AppCompatActivity {
         m_auth = FirebaseAuth.getInstance();
         m_user = m_auth.getCurrentUser();
         assert m_user != null;
-        String userId = m_user.getUid();
 
 
         title = findViewById(R.id.homeActivityTitle);
@@ -36,20 +35,20 @@ public class HomeActivity extends AppCompatActivity {
         final Button logoutButton = findViewById(R.id.logoutButton);
 
         String name = m_user.getDisplayName();
-        String titleText ="Welcome " + name;
+        String titleText = "Welcome " + name;
         title.setText(titleText);
 
         Toast.makeText(this, "welcome! " + name, Toast.LENGTH_SHORT).show();
 
-        createGameButton.setOnClickListener(new soloClickHandler());
+        createGameButton.setOnClickListener(new createRoomClickHandler());
         logoutButton.setOnClickListener(new logoutClickHandler());
     }
 
-    private class soloClickHandler implements View.OnClickListener {
+    private class createRoomClickHandler implements View.OnClickListener {
         @Override
         public void onClick(View view){
-            Intent intent = new Intent(getApplicationContext(), ChooseSubjectActivity.class);
-            intent.putExtra(String.valueOf(R.string.is_solo), false);
+            Intent intent = new Intent(getApplicationContext(), CreateRoomActivity.class);
+            //intent.putExtra(String.valueOf(R.string.is_solo), false);
             startActivity(intent);
             finish();
 

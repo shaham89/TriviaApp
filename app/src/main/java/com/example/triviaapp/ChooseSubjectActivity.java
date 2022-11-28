@@ -26,7 +26,7 @@ public class ChooseSubjectActivity extends AppCompatActivity {
 
     private static final String TAG = "ChooseSubjectActivity";
     private boolean isSolo;
-    private Room room;
+    private Room m_room;
     private String subject;
     private ArrayList<Question> questions;
     private FirebaseFirestore db;
@@ -39,7 +39,7 @@ public class ChooseSubjectActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         Intent intent = getIntent();
-        room = (Room) intent.getExtras().get(String.valueOf(R.string.room));
+        m_room = (Room) intent.getExtras().get(String.valueOf(R.string.room));
 
 
         questions = new ArrayList<Question>();
@@ -56,39 +56,22 @@ public class ChooseSubjectActivity extends AppCompatActivity {
             if(view.getId() == R.id.capitals_image){
                 subject = getString(R.string.capitals);
             }
-
+            m_room.subject = subject;
+            returnSubject();
         }
 
     }
 
-    private void getQuestionFromFirestore(int index){
-        String MAIN_SUBJECT_COLLECTION = "subjects_questions";
-        String path = MAIN_SUBJECT_COLLECTION + "/" + subject + "_subject/" + subject + "_questions";
-        CollectionReference docRef = db.collection(path);
 
-        docRef
-                .whereEqualTo("Index", index)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Map<String, Object> questionJson = document.getData();
-                            Log.d(TAG, document.getId() + " => " + questionJson);
-                            questions.add(new Question(questionJson));
-                        }
-                        startGame();
-                    } else {
-                        Log.d(TAG, "Error getting documents: ", task.getException());
-                    }
-                });
-
-    }
-
-    private void startGame(){
-        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-        intent.putExtra(getString(R.string.questions), questions);
+    private void returnSubject(){
+        Intent intent = new Intent(getApplicationContext(), CreateRoomActivity.class);
+        //intent.putExtra(String.valueOf(R.string.room), m_room);
+        intent.putExtra(String.valueOf(R.string.subject), subject);
+        setResult(100, intent);
         finish();
         startActivity(intent);
     }
+
+
 
 }
