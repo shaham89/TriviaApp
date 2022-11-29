@@ -1,5 +1,6 @@
 package com.example.triviaapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -10,7 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -35,14 +38,16 @@ public class CreateRoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_room);
 
+        db = FirebaseFirestore.getInstance();
         Intent intent = getIntent();
+        questions = new ArrayList<Question>();
 
+        m_room = new Room(true, "", 4, 10, "test room");
 
-
-        m_room.is_solo = true;
-        m_room.maxPlayers = 4;
-        m_room.questions_number = 10;
-        m_room.name = "test room";
+//        m_room.is_solo = true;
+//        m_room.maxPlayers = 4;
+//        m_room.questions_number = 10;
+//        m_room.name = "test room";
 
         findViewById(R.id.chooseSubjectButton).setOnClickListener(new chooseSubjectClickHandler());
         findViewById(R.id.startGameButton).setOnClickListener(new chooseSubjectClickHandler());
@@ -93,9 +98,22 @@ public class CreateRoomActivity extends AppCompatActivity {
     private void callGetQuestions(int numberOfWantedQuestions){
         String subjectPath = m_room.subject + "_subject";
         DocumentReference docRef = db.collection(MAIN_SUBJECT_COLLECTION).document(subjectPath);
-        docRef.get().addOnSuccessListener(documentSnapshot -> {
-            int maxQuestions = (int) documentSnapshot.get("Length");
-            getQuestions(numberOfWantedQuestions, maxQuestions);
+
+
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    // Document found in the offline cache
+                    DocumentSnapshot document = task.getResult();
+                    Log.d(TAG, "Cached document data: " + document.getData());
+                    int maxQuestions = document.getLong("Length").intValue();
+                    getQuestions(numberOfWantedQuestions, maxQuestions);
+
+                } else {
+                    Log.d(TAG, "Cached get failed: ", task.getException());
+                }
+            }
         });
     }
 

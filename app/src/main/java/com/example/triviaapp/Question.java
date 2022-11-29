@@ -1,9 +1,10 @@
 package com.example.triviaapp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Question {
+public class Question implements Serializable {
     public final String questionText;
     public final ArrayList<String> options;
     public final String answerHash;

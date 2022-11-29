@@ -16,4 +16,13 @@ public class Room implements Serializable {
         this.questions_number = questions_number;
         this.name = name;
     }
+
+    public Room() {
+        this.is_solo = is_solo;
+        this.subject = subject;
+        this.maxPlayers = maxPlayers;
+        this.questions_number = questions_number;
+        this.name = name;
+    }
+
 }

@@ -3,6 +3,7 @@ package com.example.triviaapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,13 +37,13 @@ public class ChooseSubjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_subject);
 
-        db = FirebaseFirestore.getInstance();
+//        db = FirebaseFirestore.getInstance();
+//
+//        Intent intent = getIntent();
+//        m_room = (Room) intent.getExtras().get(String.valueOf(R.string.room));
 
-        Intent intent = getIntent();
-        m_room = (Room) intent.getExtras().get(String.valueOf(R.string.room));
 
-
-        questions = new ArrayList<Question>();
+        //questions = new ArrayList<Question>();
 
         findViewById(R.id.capitals_image).setOnClickListener(new imageClickHandler());
 
@@ -56,7 +57,7 @@ public class ChooseSubjectActivity extends AppCompatActivity {
             if(view.getId() == R.id.capitals_image){
                 subject = getString(R.string.capitals);
             }
-            m_room.subject = subject;
+            //m_room.subject = subject;
             returnSubject();
         }
 
@@ -67,7 +68,7 @@ public class ChooseSubjectActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), CreateRoomActivity.class);
         //intent.putExtra(String.valueOf(R.string.room), m_room);
         intent.putExtra(String.valueOf(R.string.subject), subject);
-        setResult(100, intent);
+        setResult(Activity.RESULT_OK, intent);
         finish();
         startActivity(intent);
     }
