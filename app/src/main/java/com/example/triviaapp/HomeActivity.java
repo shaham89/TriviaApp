@@ -42,6 +42,12 @@ public class HomeActivity extends AppCompatActivity {
 
         createGameButton.setOnClickListener(new createRoomClickHandler());
         logoutButton.setOnClickListener(new logoutClickHandler());
+
+        //JUST FOR TESTING!!!!!!
+        Intent intent = new Intent(getApplicationContext(), CreateRoomActivity.class);
+        //intent.putExtra(String.valueOf(R.string.is_solo), false);
+        startActivity(intent);
+        finish();
     }
 
     private class createRoomClickHandler implements View.OnClickListener {
