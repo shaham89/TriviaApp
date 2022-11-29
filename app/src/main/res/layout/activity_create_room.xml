@@ -46,7 +46,7 @@
     <Button
         android:id="@+id/startGameButton"
         android:layout_width="226dp"
-        android:layout_height="0dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="117dp"
         android:text="@string/start_game"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +58,7 @@
     <Button
         android:id="@+id/chooseSubjectButton"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="50dp"
         android:layout_marginStart="7dp"
         android:layout_marginTop="496dp"
         android:layout_marginEnd="4dp"

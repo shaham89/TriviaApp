@@ -65,12 +65,12 @@ public class ChooseSubjectActivity extends AppCompatActivity {
 
 
     private void returnSubject(){
-        Intent intent = new Intent(getApplicationContext(), CreateRoomActivity.class);
+        Intent intent = new Intent();
         //intent.putExtra(String.valueOf(R.string.room), m_room);
         intent.putExtra(String.valueOf(R.string.subject), subject);
         setResult(Activity.RESULT_OK, intent);
         finish();
-        startActivity(intent);
+
     }
 
 

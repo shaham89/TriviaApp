@@ -1,5 +1,9 @@
 package com.example.triviaapp;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,9 +33,10 @@ public class CreateRoomActivity extends AppCompatActivity {
     private static final String TAG = "CreateRoomActivity";
     private static final int LAUNCH_SECOND_ACTIVITY = 7;
     private Room m_room;
-    private ArrayList<Question> questions;
+    private static ArrayList<Question> questions;
     private FirebaseFirestore db;
     public final String MAIN_SUBJECT_COLLECTION = "subjects_questions";
+    private int test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +44,8 @@ public class CreateRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_room);
 
         db = FirebaseFirestore.getInstance();
-        Intent intent = getIntent();
-        questions = new ArrayList<Question>();
+
+        test = 5;
 
         m_room = new Room(true, "", 4, 10, "test room");
 
@@ -50,7 +55,7 @@ public class CreateRoomActivity extends AppCompatActivity {
 //        m_room.name = "test room";
 
         findViewById(R.id.chooseSubjectButton).setOnClickListener(new chooseSubjectClickHandler());
-        findViewById(R.id.startGameButton).setOnClickListener(new chooseSubjectClickHandler());
+        findViewById(R.id.startGameButton).setOnClickListener(new startGameClickHandler());
 
     }
 
@@ -59,11 +64,28 @@ public class CreateRoomActivity extends AppCompatActivity {
         @Override
         public void onClick(View view){
 
-            Intent i = new Intent(getApplicationContext(), ChooseSubjectActivity.class);
-            startActivityForResult(i, LAUNCH_SECOND_ACTIVITY);
+            Intent intent = new Intent(CreateRoomActivity.this, ChooseSubjectActivity.class);
+            getSubjectResult.launch(intent);
 
         }
     }
+
+    ActivityResultLauncher<Intent> getSubjectResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // Here, no request code
+                        Intent data = result.getData();
+                        String subject = data.getStringExtra(String.valueOf(R.string.subject));
+                        m_room.subject = subject;
+
+                        callGetQuestions(m_room.questions_number);
+
+                    }
+                }
+            });
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -75,6 +97,7 @@ public class CreateRoomActivity extends AppCompatActivity {
                 m_room.subject = subject;
 
                 callGetQuestions(m_room.questions_number);
+
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 // Write your code if there's no result
@@ -99,20 +122,19 @@ public class CreateRoomActivity extends AppCompatActivity {
         String subjectPath = m_room.subject + "_subject";
         DocumentReference docRef = db.collection(MAIN_SUBJECT_COLLECTION).document(subjectPath);
 
+        questions = new ArrayList<Question>();
 
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    // Document found in the offline cache
-                    DocumentSnapshot document = task.getResult();
-                    Log.d(TAG, "Cached document data: " + document.getData());
-                    int maxQuestions = document.getLong("Length").intValue();
-                    getQuestions(numberOfWantedQuestions, maxQuestions);
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                // Document found in the offline cache
+                DocumentSnapshot document = task.getResult();
+                Log.d(TAG, "Cached document data: " + document.getData());
+                int maxQuestions = document.getLong("Length").intValue();
+                getQuestions(numberOfWantedQuestions, maxQuestions);
+                Log.d(TAG, "Questions:" + questions);
 
-                } else {
-                    Log.d(TAG, "Cached get failed: ", task.getException());
-                }
+            } else {
+                Log.d(TAG, "Cached get failed: ", task.getException());
             }
         });
     }
@@ -152,7 +174,11 @@ public class CreateRoomActivity extends AppCompatActivity {
                     } else {
                         Log.d(TAG, "Error getting documents: ", task.getException());
                     }
+                    Log.d(TAG, "Questions:" + questions);
+
                 });
+
+
 
     }
 
