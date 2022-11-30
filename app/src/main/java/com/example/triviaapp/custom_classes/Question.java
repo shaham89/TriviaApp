@@ -1,4 +1,4 @@
-package com.example.triviaapp;
+package com.example.triviaapp.custom_classes;
 
 import java.io.Serializable;
 import java.util.ArrayList;

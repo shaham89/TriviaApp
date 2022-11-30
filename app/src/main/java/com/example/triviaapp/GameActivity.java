@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.triviaapp.custom_classes.Question;
+import com.example.triviaapp.tinyDB.TinyDB;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,7 +25,7 @@ public class GameActivity extends AppCompatActivity {
     private Button answer1, answer2, answer3, answer4;
     private Button[] answers;
     private TextView gameQuestionTextview;
-
+    private TinyDB m_tinydb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,10 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         questions = (ArrayList<Question>) intent.getSerializableExtra(getString(R.string.questions));
+
+        m_tinydb = new TinyDB(getApplicationContext());
+
+        m_tinydb.putListObject(key, objectsArray);
 
         init_views();
 
@@ -46,19 +53,33 @@ public class GameActivity extends AppCompatActivity {
         gameQuestionTextview.setText(currQuestion.questionText);
 
         for(int i = 0; i < answers.length; i++){
-            answers[i].setText(currQuestion.options.get(0));
+            answers[i].setText(currQuestion.options.get(i));
         }
 
     }
 
-    private String getMd5Hashed(String answer) {
+    final static char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+    private static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = HEX_ARRAY[v >>> 4];
+            hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
+
+    private static String getMd5Hashed(String answer) {
+
+
+
         byte[] bytesOfMessage = answer.getBytes(StandardCharsets.UTF_8);
 
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("MD5");
             byte[] MD5digestBytes = md.digest(bytesOfMessage);
-            String md5String = new String(MD5digestBytes, StandardCharsets.UTF_8);
+            String md5String = bytesToHex(MD5digestBytes);
 
             return md5String;
         } catch (NoSuchAlgorithmException e) {

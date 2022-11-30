@@ -1,4 +1,4 @@
-package com.example.triviaapp;
+package com.example.triviaapp.custom_classes;
 
 public class User {
     private String m_username;
