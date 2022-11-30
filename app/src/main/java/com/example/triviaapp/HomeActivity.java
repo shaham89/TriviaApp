@@ -44,7 +44,8 @@ public class HomeActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(new logoutClickHandler());
 
         //JUST FOR TESTING!!!!!!
-        Intent intent = new Intent(getApplicationContext(), CreateRoomActivity.class);
+//        Intent intent = new Intent(getApplicationContext(), CreateRoomActivity.class);
+        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
         //intent.putExtra(String.valueOf(R.string.is_solo), false);
         startActivity(intent);
         finish();

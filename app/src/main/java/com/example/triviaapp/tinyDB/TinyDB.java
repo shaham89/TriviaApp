@@ -40,6 +40,9 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.example.triviaapp.custom_classes.Question;
+import com.google.gson.Gson;
+
 
 public class TinyDB {
 
@@ -327,32 +330,32 @@ public class TinyDB {
     }
 
 
-//    public ArrayList<Object> getListObject(String key, Class<?> mClass){
-//    	Gson gson = new Gson(); 
-//    	
-//    	ArrayList<String> objStrings = getListString(key);
-//    	ArrayList<Object> objects =  new ArrayList<Object>();
-//    	
-//    	for(String jObjString : objStrings){
-//    		Object value  = gson.fromJson(jObjString,  mClass);
-//    		objects.add(value);
-//    	}
-//    	return objects;
-//    }
+    public ArrayList<Question> getListQuestions(String key, Class<?> mClass){
+    	Gson gson = new Gson();
+
+    	ArrayList<String> objStrings = getListString(key);
+    	ArrayList<Question> objects =  new ArrayList<Question>();
+
+    	for(String jObjString : objStrings){
+    		Question value  = gson.fromJson(jObjString,  Question.class);
+    		objects.add(value);
+    	}
+    	return objects;
+    }
     
 
     
-//    public <T> T getObject(String key, Class<T> classOfT){
-//
-//        String json = getString(key);
-//        Object value = new Gson().fromJson(json, classOfT);
-//        if (value == null)
-//            throw new NullPointerException();
-//        return (T)value;
-//    }
+    public <T> T getObject(String key, Class<T> classOfT){
+
+        String json = getString(key);
+        Object value = new Gson().fromJson(json, classOfT);
+        if (value == null)
+            throw new NullPointerException();
+        return (T)value;
+    }
     
     
-    // Put methods
+     //Put methods
 
     /**
      * Put int value into SharedPreferences with 'key' and save
@@ -489,7 +492,7 @@ public class TinyDB {
     	putString(key, gson.toJson(obj));
     }
 
-    public void putListObject(String key, ArrayList<Object> objArray){
+    public void putListObject(String key, ArrayList<Question> objArray){
     	checkForNullKey(key);
     	Gson gson = new Gson();
     	ArrayList<String> objStrings = new ArrayList<String>();

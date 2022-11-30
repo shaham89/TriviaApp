@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -31,14 +32,15 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
 
-        questions = (ArrayList<Question>) intent.getSerializableExtra(getString(R.string.questions));
+        //questions = (ArrayList<Question>) intent.getSerializableExtra(getString(R.string.questions));
 
         m_tinydb = new TinyDB(getApplicationContext());
+        String listName = "m_tempQuestions";
+        //m_tinydb.putListObject(listName, questions);
 
-        m_tinydb.putListObject(key, objectsArray);
-
+        questions = m_tinydb.getListQuestions(listName, Question.class);
         init_views();
 
 
@@ -66,7 +68,7 @@ public class GameActivity extends AppCompatActivity {
             hexChars[j * 2] = HEX_ARRAY[v >>> 4];
             hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
         }
-        return new String(hexChars);
+        return new String(hexChars).toLowerCase(Locale.ROOT);
     }
 
     private static String getMd5Hashed(String answer) {
@@ -92,11 +94,16 @@ public class GameActivity extends AppCompatActivity {
     //Change the color of the correct answer button to green
     private void greenLightCorrectAnswer(){
         for(Button answer: answers){
-            if(currQuestion.TRUE_ANSWER.equals(getMd5Hashed(answer.getText().toString()))) {
+            if(currQuestion.answerHash.equals(getMd5Hashed(answer.getText().toString()))) {
                 answer.setBackgroundColor(getResources().getColor(R.color.green_answer));
             }
         }
+    }
 
+    private void resetButtonColors(){
+        for(Button answer: answers){
+            answer.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        }
     }
 
     protected class answerClickedHandler implements View.OnClickListener {
@@ -105,8 +112,7 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
 
-            String userAnswer = ((Button)view).getText().toString();
-            String userAnswerHash = getMd5Hashed(userAnswer);
+            resetButtonColors();
 
             view.setBackgroundColor(getResources().getColor(R.color.red_answer));
 
