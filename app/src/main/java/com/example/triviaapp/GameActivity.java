@@ -36,13 +36,25 @@ public class GameActivity extends AppCompatActivity {
     //if true the client won't ask questions from the database
     static final boolean IS_TESTING = true;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        getQuestions();
 
+        timeScores = new long[questions.size()];
+        init_views();
+
+
+        playGame();
+
+    }
+
+    private static final Object lock = new Object();
+
+    @SuppressWarnings("unchecked")
+    private void getQuestions(){
         String listName = "m_tempQuestions";
         if(IS_TESTING){
             TinyDB m_tinydb = new TinyDB(getApplicationContext());
@@ -55,17 +67,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         //m_tinydb.putListObject(listName, questions);
-
-
-        timeScores = new long[questions.size()];
-        init_views();
-
-
-        playGame();
-
     }
-
-    private static final Object lock = new Object();
 
     private void playGame(){
         Thread game_thread = new Thread() {
