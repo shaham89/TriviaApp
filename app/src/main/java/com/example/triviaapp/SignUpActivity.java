@@ -22,7 +22,6 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth m_auth;
     private static final String Tag = "SignInActivity";
 
-
     private EditText emailEditText;
     private EditText passwordEditText;
     private EditText displayNameEditText;
@@ -37,20 +36,24 @@ public class SignUpActivity extends AppCompatActivity {
         init_views();
     }
 
-    protected class signUpClickHandler implements View.OnClickListener {
-        //check if the user exist, and if he doesn't call addUser
-        //if he does, show Toast
+    private class signUpClickHandler implements View.OnClickListener {
+
         @Override
         public void onClick(View view) {
 
-            //is the typed c
-            if(!isCredentialsValid()){
+            String emailAddress = emailEditText.getText().toString();
+            String password = passwordEditText.getText().toString();
+            String displayName = displayNameEditText.getText().toString();
+
+            //is the typed credentials are not valid, don't send them
+            if(!CredentialsValidator.isSignUpCredentialsValid(getApplicationContext(),
+                    emailAddress,
+                    password,
+                    displayName)){
                 return;
             }
 
-            signUp(emailEditText.getText().toString(),
-                    passwordEditText.getText().toString(),
-                    displayNameEditText.getText().toString());
+            signUp(emailAddress, password, displayName);
         }
 
     }
@@ -59,10 +62,10 @@ public class SignUpActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
 
-        signIn();
+        signIn(); //check if the user has already signedIn
     }
 
-    //Signs in an already signed user, for example if the user already signedUp or logged in
+    //Signs in an already signed user, for example if the user has already signedUp or logged in
     private void signIn(){
 
         //check if the user is signed(non-null)
@@ -111,15 +114,14 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    private void homeActivity() {
+    protected void homeActivity() {
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         finish();
         startActivity(intent);
     }
 
-    protected class switchToLogin implements View.OnClickListener {
-        //check if the user exist, and if he doesn't call addUser
-        //if he does, show Toast
+    private class switchToLogin implements View.OnClickListener {
+        //switch to login screen
         @Override
         public void onClick(View view) {
             finish();
@@ -128,54 +130,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    //checks if all the credentials are valid, and Toasts appropriate message accordingly
-    private boolean isCredentialsValid(){
-        if(isPasswordValid()){
-            String passwordRules = "Password Length should be at least 6 letters";
-            Toast.makeText(SignUpActivity.this, passwordRules, Toast.LENGTH_SHORT).show();
-            return false;
-        }
 
-        if(isEmailAddressValid()){
-            String emailRules = "Email not valid";
-            Toast.makeText(SignUpActivity.this, emailRules, Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if(isDisplayNameValid()){
-            String displayNameRules = "Display name should be 2-10 letters";
-            Toast.makeText(SignUpActivity.this, displayNameRules, Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
-
-    //checks for length
-    private boolean isDisplayNameValid(){
-        final short MIN_CHARACTER_SIZE = 2;
-        final short MAX_CHARACTER_SIZE = 10;
-        String username = displayNameEditText.getText().toString();
-        return username.length() >= MIN_CHARACTER_SIZE && username.length() <= MAX_CHARACTER_SIZE;
-    }
-
-    //checks for regex pattern and length
-    private boolean isEmailAddressValid(){
-        final short MIN_CHARACTER_SIZE = 2;
-        final short MAX_CHARACTER_SIZE = 40;
-
-        String email = emailEditText.getText().toString();
-        return email.length() >= MIN_CHARACTER_SIZE &&
-                email.length() <= MAX_CHARACTER_SIZE &&
-                android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
-    }
-
-    //checks for length
-    private boolean isPasswordValid(){
-        final short MIN_CHARACTER_SIZE = 4;
-        final short MAX_CHARACTER_SIZE = 20;
-        String password = passwordEditText.getText().toString();
-        return password.length() >= MIN_CHARACTER_SIZE && password.length() <= MAX_CHARACTER_SIZE;
-    }
 
 
     private void init_views(){

@@ -1,8 +1,5 @@
 package com.example.triviaapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,9 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -22,7 +18,7 @@ import com.google.firebase.firestore.CollectionReference;
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth m_auth;
-    private String Tag = "loginActivity";
+    private final String Tag = "loginActivity";
 
     private CollectionReference usersRef;
     private static final String usersRefTitle = "users";
@@ -37,11 +33,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        emailEditText = findViewById(R.id.loginEmailEditText);
-        passwordEditText = findViewById(R.id.loginPasswordEditText);
-
 
         m_auth = FirebaseAuth.getInstance();
+
+        emailEditText = findViewById(R.id.loginEmailEditText);
+        passwordEditText = findViewById(R.id.loginPasswordEditText);
 
         final Button signUpButton = findViewById(R.id.loginButton);
         signUpButton.setOnClickListener(new loginClickHandler());
@@ -51,11 +47,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     protected class loginClickHandler implements View.OnClickListener {
-        //check if the user exist, and if he doesn't call addUser
-        //if he does, show Toast
+
         @Override
         public void onClick(View view) {
-            login(emailEditText.getText().toString(), passwordEditText.getText().toString());
+
+            String emailAddress = emailEditText.getText().toString();
+            String password = passwordEditText.getText().toString();
+
+            //is the typed credentials are not valid, don't send them
+            if(!CredentialsValidator.isLoginCredentialsValid(getApplicationContext(),
+                    emailAddress,
+                    password)){
+                return;
+            }
+
+            login(emailAddress, password);
         }
 
     }
@@ -69,11 +75,10 @@ public class LoginActivity extends AppCompatActivity {
                         assert user != null;
                         Log.d(Tag, "logged user with email success: " + user.getEmail());
                         HomeActivity();
-                    } else{
+                    } else {
                         //if sign is failed
                         Log.w(Tag, "login user failure", task.getException());
                         Toast.makeText(LoginActivity.this, "auth failed", Toast.LENGTH_SHORT).show();
-//shaharmar1@kramim.ort.org.il
                     }
                 });
     }
@@ -84,9 +89,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    protected class switchToSignUp implements View.OnClickListener {
-        //check if the user exist, and if he doesn't call addUser
-        //if he does, show Toast
+    private class switchToSignUp implements View.OnClickListener {
+        //switch to signUpScreen
         @Override
         public void onClick(View view) {
             finish();

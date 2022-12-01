@@ -45,10 +45,10 @@ public class HomeActivity extends AppCompatActivity {
 
         //JUST FOR TESTING!!!!!!
 //        Intent intent = new Intent(getApplicationContext(), CreateRoomActivity.class);
-        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-        //intent.putExtra(String.valueOf(R.string.is_solo), false);
-        startActivity(intent);
-        finish();
+//        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+//        //intent.putExtra(String.valueOf(R.string.is_solo), false);
+//        startActivity(intent);
+//        finish();
     }
 
     private class createRoomClickHandler implements View.OnClickListener {
