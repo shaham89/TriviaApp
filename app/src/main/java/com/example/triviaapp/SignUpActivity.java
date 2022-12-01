@@ -44,9 +44,9 @@ public class SignUpActivity extends AppCompatActivity {
             String emailAddress = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
             String displayName = displayNameEditText.getText().toString();
-
+            Toast.makeText(getApplicationContext(), "Testing", Toast.LENGTH_LONG).show();
             //is the typed credentials are not valid, don't send them
-            if(!CredentialsValidator.isSignUpCredentialsValid(getApplicationContext(),
+            if(CredentialsValidator.areSignUpCredentialsInvalid(getApplicationContext(),
                     emailAddress,
                     password,
                     displayName)){
@@ -145,4 +145,5 @@ public class SignUpActivity extends AppCompatActivity {
         switchTextView.setOnClickListener(new switchToLogin());
 
     }
+
 }

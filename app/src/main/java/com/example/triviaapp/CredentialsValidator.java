@@ -7,42 +7,51 @@ public class CredentialsValidator {
 
 
     //checks if all the credentials are valid, and Toasts appropriate message accordingly
-    public static boolean isLoginCredentialsValid(Context activityContext,
+    public static boolean areLoginCredentialsInvalid(Context activityContext,
                                                    String emailAddress,
                                                    String password){
+
+        if(emailAddress == null || password == null || activityContext == null){
+            return true;
+        }
 
         if(!isPasswordValid(password)){
             //password invalid
             String passwordRules = "Password Length should be at least 6 letters";
             Toast.makeText(activityContext, passwordRules, Toast.LENGTH_SHORT).show();
-            return false;
+            return true;
         }
 
         if(!isEmailAddressValid(emailAddress)){
             //email address invalid
             String emailRules = "Email not valid";
             Toast.makeText(activityContext, emailRules, Toast.LENGTH_SHORT).show();
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     //checks if all the credentials are valid, and Toasts appropriate message accordingly
-    public static boolean isSignUpCredentialsValid(Context activityContext,
+    public static boolean areSignUpCredentialsInvalid(Context activityContext,
                                                    String emailAddress,
                                                    String password,
-                                                   String displayName){
-        if(!isLoginCredentialsValid(activityContext, emailAddress, password)){
-            return false;
+                                                   String displayName) {
+
+        if(displayName == null){
+            return true;
+        }
+
+        if(areLoginCredentialsInvalid(activityContext, emailAddress, password)){
+            return true;
         }
 
         if(!isDisplayNameValid(displayName)){
             String displayNameRules = "Display name should be 2-10 letters";
             Toast.makeText(activityContext, displayNameRules, Toast.LENGTH_SHORT).show();
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     //checks for length

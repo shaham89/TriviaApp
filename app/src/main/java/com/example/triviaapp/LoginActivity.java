@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
             String password = passwordEditText.getText().toString();
 
             //is the typed credentials are not valid, don't send them
-            if(!CredentialsValidator.isLoginCredentialsValid(getApplicationContext(),
+            if(CredentialsValidator.areLoginCredentialsInvalid(getApplicationContext(),
                     emailAddress,
                     password)){
                 return;
