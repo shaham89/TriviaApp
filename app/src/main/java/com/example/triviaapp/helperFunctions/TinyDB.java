@@ -19,7 +19,7 @@
  *  and unicode 2017 that are used for separating the items in a list.
  */
 
-package com.example.triviaapp.tinyDB;
+package com.example.triviaapp.helperFunctions;
 
 import java.io.File;
 import java.io.FileOutputStream;

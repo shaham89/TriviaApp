@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.triviaapp.custom_classes.Question;
-import com.example.triviaapp.tinyDB.TinyDB;
+import com.example.triviaapp.helperFunctions.TinyDB;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -34,7 +34,7 @@ public class GameActivity extends AppCompatActivity {
     private static final long TIME_BETWEEN_QUESTIONS_MS = 2 * 1000;
 
     //if true the client won't ask questions from the database
-    static final boolean IS_TESTING = true;
+    static final boolean IS_TESTING = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +62,32 @@ public class GameActivity extends AppCompatActivity {
         } else {
             Intent intent = getIntent();
 
-
             questions = (ArrayList<Question>) intent.getSerializableExtra(getString(R.string.questions));
         }
 
         //m_tinydb.putListObject(listName, questions);
+    }
+
+    private void playQuestion(int questionIndex){
+        currQuestion = questions.get(questionIndex);
+        showCurrQuestion();
+        isFreezeState = false;
+
+        try {
+            long start = System.currentTimeMillis();
+            lock.wait(TIME_PER_QUESTION_MS);
+            long finish = System.currentTimeMillis();
+            isFreezeState = true;
+            long timeElapsed = finish - start;
+
+            timeScores[questionIndex] = timeElapsed;
+
+            greenLightCorrectAnswer();
+            lock.wait(TIME_BETWEEN_QUESTIONS_MS);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void playGame(){
@@ -75,27 +96,7 @@ public class GameActivity extends AppCompatActivity {
             public void run() {
                 synchronized(lock) {
                     for(int i = 0; i < questions.size(); i++){
-
-                        currQuestion = questions.get(i);
-                        showCurrQuestion();
-                        isFreezeState = false;
-
-                        try {
-                            long start = System.currentTimeMillis();
-                            lock.wait(TIME_PER_QUESTION_MS);
-                            long finish = System.currentTimeMillis();
-                            isFreezeState = true;
-                            long timeElapsed = finish - start;
-
-                            timeScores[i] = timeElapsed;
-
-                            greenLightCorrectAnswer();
-                            lock.wait(TIME_BETWEEN_QUESTIONS_MS);
-
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
+                        playQuestion(i);
                     }
                     gameEnded();
                 }

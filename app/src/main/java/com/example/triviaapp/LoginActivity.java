@@ -11,22 +11,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.triviaapp.helperFunctions.CredentialsValidator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth m_auth;
     private final String Tag = "loginActivity";
 
-    private CollectionReference usersRef;
-    private static final String usersRefTitle = "users";
 
     private EditText emailEditText;
     private EditText passwordEditText;
-
-    private static final String usernameField = "username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
         m_auth = FirebaseAuth.getInstance();
 
-        emailEditText = findViewById(R.id.loginEmailEditText);
-        passwordEditText = findViewById(R.id.loginPasswordEditText);
-
-        final Button signUpButton = findViewById(R.id.loginButton);
-        signUpButton.setOnClickListener(new loginClickHandler());
-
-        final TextView switchTextView = findViewById(R.id.switchToSignUpTextView);
-        switchTextView.setOnClickListener(new switchToSignUp());
+        init_views();
     }
 
     protected class loginClickHandler implements View.OnClickListener {
@@ -98,5 +87,17 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    private void init_views(){
+        emailEditText = findViewById(R.id.loginEmailEditText);
+        passwordEditText = findViewById(R.id.loginPasswordEditText);
+
+        final Button signUpButton = findViewById(R.id.loginButton);
+        signUpButton.setOnClickListener(new loginClickHandler());
+
+        final TextView switchTextView = findViewById(R.id.switchToSignUpTextView);
+        switchTextView.setOnClickListener(new switchToSignUp());
+    }
+
 
 }

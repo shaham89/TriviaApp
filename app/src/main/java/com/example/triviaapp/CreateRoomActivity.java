@@ -74,32 +74,31 @@ public class CreateRoomActivity extends AppCompatActivity {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         // Here, no request code
                         Intent data = result.getData();
-                        String subject = data.getStringExtra(String.valueOf(R.string.subject));
-                        m_room.subject = subject;
+                        assert data != null;
+                        m_room.subject = data.getStringExtra(String.valueOf(R.string.subject));
 
                         callGetQuestions(m_room.questions_number);
 
                     }
                 }
             });
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
-            if(resultCode == Activity.RESULT_OK){
-                String subject = data.getStringExtra(String.valueOf(R.string.subject));
-                m_room.subject = subject;
-
-                callGetQuestions(m_room.questions_number);
-
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                // Write your code if there's no result
-            }
-        }
-    } //onActivityResult
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
+//            if(resultCode == Activity.RESULT_OK){
+//                m_room.subject = data.getStringExtra(String.valueOf(R.string.subject));
+//
+//                callGetQuestions(m_room.questions_number);
+//
+//            }
+//            if (resultCode == Activity.RESULT_CANCELED) {
+//                // Write your code if there's no result
+//            }
+//        }
+//    } //onActivityResult
 
     private class startGameClickHandler implements View.OnClickListener {
         @Override

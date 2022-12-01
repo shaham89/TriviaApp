@@ -16,8 +16,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private FirebaseAuth m_auth;
 
-    private TextView title;
-    private Button createGameButton;
     private FirebaseUser m_user;
 
     @Override
@@ -30,18 +28,7 @@ public class HomeActivity extends AppCompatActivity {
         assert m_user != null;
 
 
-        title = findViewById(R.id.homeActivityTitle);
-        createGameButton = findViewById(R.id.createGameButton);
-        final Button logoutButton = findViewById(R.id.logoutButton);
-
-        String name = m_user.getDisplayName();
-        String titleText = "Welcome " + name;
-        title.setText(titleText);
-
-        Toast.makeText(this, "welcome! " + name, Toast.LENGTH_SHORT).show();
-
-        createGameButton.setOnClickListener(new createRoomClickHandler());
-        logoutButton.setOnClickListener(new logoutClickHandler());
+        init_views();
 
         //JUST FOR TESTING!!!!!!
 //        Intent intent = new Intent(getApplicationContext(), CreateRoomActivity.class);
@@ -67,9 +54,26 @@ public class HomeActivity extends AppCompatActivity {
         public void onClick(View view){
             Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
             FirebaseAuth.getInstance().signOut();
+            Toast.makeText(getApplicationContext(), "Logged out", Toast.LENGTH_SHORT).show();
             finish();
             startActivity(intent);
         }
+    }
+
+    private void init_views(){
+        TextView title = findViewById(R.id.homeActivityTitle);
+
+        final Button logoutButton = findViewById(R.id.logoutButton);
+
+        String name = m_user.getDisplayName();
+        String titleText = "Welcome " + name;
+        title.setText(titleText);
+
+        Toast.makeText(getApplicationContext(), "welcome! " + name, Toast.LENGTH_SHORT).show();
+
+        findViewById(R.id.createGameButton).setOnClickListener(new createRoomClickHandler());
+        logoutButton.setOnClickListener(new logoutClickHandler());
+
     }
 
 }
