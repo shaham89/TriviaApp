@@ -11,9 +11,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 import com.example.triviaapp.custom_classes.Question;
 import com.example.triviaapp.custom_classes.Room;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -22,12 +24,18 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 
 public class CreateSoloRoomActivity extends AppCompatActivity {
+
+    //views
+    private SwitchMaterial isCompetitiveSwitch;
+    private EditText roomTitleEditText;
+    private EditText questionNumberEditText;
 
     private static final String TAG = "CreateRoomActivity";
     private Room m_room;
@@ -47,16 +55,27 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
         assert m_user != null;
 
         //m_room = new Room(true, "", 4, 10, "test room");
-        initDefaultRoom();
+        initViews();
 
 
-        findViewById(R.id.chooseSubjectButton).setOnClickListener(new chooseSubjectClickHandler());
-        findViewById(R.id.startGameButton).setOnClickListener(new startGameClickHandler());
+        m_room = new Room();
 
     }
 
-    private void initDefaultRoom() {
-        m_room = new Room(m_user.getDisplayName() + "'s room");
+    private void initViews() {
+        findViewById(R.id.chooseSubjectButton).setOnClickListener(new chooseSubjectClickHandler());
+        findViewById(R.id.startGameButton).setOnClickListener(new startGameClickHandler());
+
+        isCompetitiveSwitch = findViewById(R.id.isCompetitiveSwitch);
+
+        // To listen for a switch's checked/unchecked state changes
+        //isCompetitiveSwitch.setOnCheckedChangeListener();
+
+        roomTitleEditText = findViewById(R.id.roomTitleEditText);
+        questionNumberEditText = findViewById(R.id.questionsNumberEditText);
+
+        roomTitleEditText.setText(MessageFormat.format("{0}''s room", m_user.getDisplayName()));
+        questionNumberEditText.setText(getString(R.string.DEFAULT_QUESTION_NUM));
     }
 
     private class chooseSubjectClickHandler implements View.OnClickListener {
@@ -80,40 +99,57 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
                         assert data != null;
                         m_room.subject = data.getStringExtra(String.valueOf(R.string.subject));
 
-                        callGetQuestions(m_room.questions_number);
-
                     }
                 }
             });
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
-//            if(resultCode == Activity.RESULT_OK){
-//                m_room.subject = data.getStringExtra(String.valueOf(R.string.subject));
-//
-//                callGetQuestions(m_room.questions_number);
-//
-//            }
-//            if (resultCode == Activity.RESULT_CANCELED) {
-//                // Write your code if there's no result
-//            }
-//        }
-//    } //onActivityResult
+
+    private static final Object lock = new Object();
+
+    private void waitUntilQuestionsAreRead(){
+        final long MAXIMUM_WAITING_TIME_MS = 20000;
+        Thread game_thread = new Thread() {
+            @Override
+            public void run() {
+                synchronized(lock) {
+                    try {
+                        lock.wait(MAXIMUM_WAITING_TIME_MS);
+                        m_room.questions = questions;
+                        startGameActivity();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+
+        game_thread.start();
+    }
+
 
     private class startGameClickHandler implements View.OnClickListener {
+
         @Override
         public void onClick(View view){
 
-            Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-            intent.putExtra(getString(R.string.questions), questions);
-            finish();
-            startActivity(intent);
+            callGetQuestions(m_room.questions_number);
+            m_room.is_competitive = isCompetitiveSwitch.isChecked();
+            if(m_room.is_competitive){
+                m_room.questions_number = Room.DEFAULT_QUESTION_NUMBER;
+            } else {
+                m_room.questions_number = Integer.parseInt(questionNumberEditText.getText().toString());
+            }
+            m_room.room_name = roomTitleEditText.getText().toString();
+
+            waitUntilQuestionsAreRead();
         }
     }
 
+    private void startGameActivity(){
+        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+        intent.putExtra(getString(R.string.room), m_room);
+        finish();
+        startActivity(intent);
+    }
 
 
     private void callGetQuestions(int numberOfWantedQuestions){
@@ -149,12 +185,12 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
         }
 
         for (int index : randomIndicesSet) {
-            getQuestionFromFirestore(index);
+            getQuestionFromFirestore(index, numberOfWantedQuestions);
         }
 
     }
 
-    private void getQuestionFromFirestore(int index){
+    private void getQuestionFromFirestore(int index, int numberOfWantedQuestions){
 
         String path = MAIN_SUBJECT_COLLECTION + "/" + m_room.subject + "_subject/" + m_room.subject + "_questions";
         CollectionReference docRef = db.collection(path);
@@ -168,6 +204,12 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
                             Map<String, Object> questionJson = document.getData();
                             Log.d(TAG, document.getId() + " => " + questionJson);
                             questions.add(new Question(questionJson));
+
+                            if(questions.size() == numberOfWantedQuestions){
+                                synchronized (lock){
+                                    lock.notify();
+                                }
+                            }
                         }
                     } else {
                         Log.d(TAG, "Error getting documents: ", task.getException());
