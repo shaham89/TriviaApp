@@ -30,4 +30,8 @@
     <string name="start_game">Start Game</string>
     <string name="choose_subject">choose subject</string>
     <string name="subject">Subject</string>
+    <string name="DEFAULT_QUESTION_NUM">20</string>
+    <string name="competitive_game_text">Competitive game</string>
+    <string name="room_name">Room name</string>
+    <string name="number_of_questions">Number of Questions</string>
 </resources>

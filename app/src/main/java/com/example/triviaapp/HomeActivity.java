@@ -14,8 +14,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private FirebaseAuth m_auth;
-
     private FirebaseUser m_user;
 
     @Override
@@ -23,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        m_auth = FirebaseAuth.getInstance();
+        FirebaseAuth m_auth = FirebaseAuth.getInstance();
         m_user = m_auth.getCurrentUser();
         assert m_user != null;
 
@@ -41,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
     private class createRoomClickHandler implements View.OnClickListener {
         @Override
         public void onClick(View view){
-            Intent intent = new Intent(getApplicationContext(), CreateRoomActivity.class);
+            Intent intent = new Intent(getApplicationContext(), CreateSoloRoomActivity.class);
             //intent.putExtra(String.valueOf(R.string.is_solo), false);
             startActivity(intent);
             finish();

@@ -14,6 +14,8 @@ import android.view.View;
 
 import com.example.triviaapp.custom_classes.Question;
 import com.example.triviaapp.custom_classes.Room;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -23,44 +25,45 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 
-public class CreateRoomActivity extends AppCompatActivity {
+public class CreateSoloRoomActivity extends AppCompatActivity {
 
     private static final String TAG = "CreateRoomActivity";
-    private static final int LAUNCH_SECOND_ACTIVITY = 7;
     private Room m_room;
     private static ArrayList<Question> questions;
     private FirebaseFirestore db;
+    private FirebaseUser m_user;
     public final String MAIN_SUBJECT_COLLECTION = "subjects_questions";
-    private int test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_room);
+        setContentView(R.layout.activity_create_solo_room);
 
         db = FirebaseFirestore.getInstance();
+        FirebaseAuth m_auth = FirebaseAuth.getInstance();
+        m_user = m_auth.getCurrentUser();
+        assert m_user != null;
 
-        test = 5;
+        //m_room = new Room(true, "", 4, 10, "test room");
+        initDefaultRoom();
 
-        m_room = new Room(true, "", 4, 10, "test room");
-
-//        m_room.is_solo = true;
-//        m_room.maxPlayers = 4;
-//        m_room.questions_number = 10;
-//        m_room.name = "test room";
 
         findViewById(R.id.chooseSubjectButton).setOnClickListener(new chooseSubjectClickHandler());
         findViewById(R.id.startGameButton).setOnClickListener(new startGameClickHandler());
 
     }
 
+    private void initDefaultRoom() {
+        m_room = new Room(m_user.getDisplayName() + "'s room");
+    }
 
     private class chooseSubjectClickHandler implements View.OnClickListener {
         @Override
         public void onClick(View view){
 
-            Intent intent = new Intent(CreateRoomActivity.this, ChooseSubjectActivity.class);
+            Intent intent = new Intent(CreateSoloRoomActivity.this, ChooseSubjectActivity.class);
             getSubjectResult.launch(intent);
 
         }
@@ -117,14 +120,14 @@ public class CreateRoomActivity extends AppCompatActivity {
         String subjectPath = m_room.subject + "_subject";
         DocumentReference docRef = db.collection(MAIN_SUBJECT_COLLECTION).document(subjectPath);
 
-        questions = new ArrayList<Question>();
+        questions = new ArrayList<>();
 
         docRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 // Document found in the offline cache
                 DocumentSnapshot document = task.getResult();
                 Log.d(TAG, "Cached document data: " + document.getData());
-                int maxQuestions = document.getLong("Length").intValue();
+                int maxQuestions = Objects.requireNonNull(document.getLong("Length")).intValue();
                 getQuestions(numberOfWantedQuestions, maxQuestions);
                 Log.d(TAG, "Questions:" + questions);
 
@@ -134,15 +137,15 @@ public class CreateRoomActivity extends AppCompatActivity {
         });
     }
 
-    private int getRandomNumber(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
+    private int getRandomNumber(int max) {
+        return (int) ((Math.random() * (max)));
     }
 
     private void getQuestions(int numberOfWantedQuestions, int maxQuestions){
-        HashSet<Integer> randomIndicesSet = new HashSet<Integer>();
+        HashSet<Integer> randomIndicesSet = new HashSet<>();
 
         while(randomIndicesSet.size() < numberOfWantedQuestions){
-            randomIndicesSet.add(getRandomNumber(0, maxQuestions - 1));
+            randomIndicesSet.add(getRandomNumber(maxQuestions - 1));
         }
 
         for (int index : randomIndicesSet) {
