@@ -2,7 +2,6 @@ package com.example.triviaapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -110,7 +109,7 @@ public class GameActivity extends AppCompatActivity {
 
 
     private void gameEnded(){
-        Log.w("GameActivity", "TIme scores:" + timeScores[4]);
+        //Log.w("GameActivity", "TIme scores:" + timeScores[0]);
 
         Intent intent = new Intent(this, GameStatsActivity.class);
         intent.putExtra(getString(R.string.correct_answers_text), correctAnswers);
