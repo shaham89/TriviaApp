@@ -34,4 +34,6 @@
     <string name="competitive_game_text">Competitive game</string>
     <string name="room_name">Room name</string>
     <string name="number_of_questions">Number of Questions</string>
+    <string name="scores_text">scores</string>
+    <string name="correct_answers_text">correctAnswers</string>
 </resources>

@@ -21,7 +21,8 @@ import java.util.Locale;
 public class GameActivity extends AppCompatActivity {
 
     private Room m_room;
-    private static int correctAnswers = 0;
+    private static boolean[] correctAnswers;
+    private static int currentQuestionIndex;
     private Question currQuestion;
 
     private Button[] answers;
@@ -42,8 +43,9 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         getQuestions();
-
+        currentQuestionIndex = 0;
         timeScores = new long[m_room.questions.size()];
+        correctAnswers = new boolean[m_room.questions.size()];
         init_views();
 
 
@@ -82,6 +84,7 @@ public class GameActivity extends AppCompatActivity {
             timeScores[questionIndex] = timeElapsed;
 
             greenLightCorrectAnswer();
+            GameActivity.currentQuestionIndex += 1;
             lock.wait(TIME_BETWEEN_QUESTIONS_MS);
 
         } catch (InterruptedException e) {
@@ -109,8 +112,18 @@ public class GameActivity extends AppCompatActivity {
     private void gameEnded(){
         Log.w("GameActivity", "TIme scores:" + timeScores[4]);
 
-        Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra("correctAnswers", correctAnswers);
+        Intent intent = new Intent(this, GameStatsActivity.class);
+        intent.putExtra(getString(R.string.correct_answers_text), correctAnswers);
+
+        String[] questionText = new String[m_room.questions.size()];
+        for(int i = 0; i < questionText.length; i++){
+            questionText[i] = m_room.questions.get(i).questionText;
+        }
+
+        intent.putExtra(getString(R.string.questions), questionText);
+        intent.putExtra(getString(R.string.scores_text), timeScores);
+        finish();
+        startActivity(intent);
     }
 
     private void showCurrQuestion(){
@@ -153,7 +166,7 @@ public class GameActivity extends AppCompatActivity {
 
 
                 if(isAnswerCorrect((Button) view)){
-                    correctAnswers += 1;
+                    correctAnswers[GameActivity.currentQuestionIndex] = true;
                 } else {
                     view.setBackgroundColor(getResources().getColor(R.color.red_answer));
                 }

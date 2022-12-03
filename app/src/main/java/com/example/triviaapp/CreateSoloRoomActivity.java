@@ -131,7 +131,7 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
         @Override
         public void onClick(View view){
 
-            callGetQuestions(m_room.questions_number);
+
             m_room.is_competitive = isCompetitiveSwitch.isChecked();
             if(m_room.is_competitive){
                 m_room.questions_number = Room.DEFAULT_QUESTION_NUMBER;
@@ -140,6 +140,7 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
             }
             m_room.room_name = roomTitleEditText.getText().toString();
 
+            callGetQuestions(m_room.questions_number);
             waitUntilQuestionsAreRead();
         }
     }
