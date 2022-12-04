@@ -31,13 +31,17 @@ import java.util.Objects;
 
 public class CreateSoloRoomActivity extends AppCompatActivity {
 
+    private static final String TAG = "CreateRoomActivity";
+
     //views
     private SwitchMaterial isCompetitiveSwitch;
     private EditText questionNumberEditText;
 
-    private static final String TAG = "CreateRoomActivity";
+
     private Game m_game;
     private static ArrayList<Question> questions;
+    private int numberOfWantedQuestions;
+
     private FirebaseFirestore db;
     public final String MAIN_SUBJECT_COLLECTION = "subjects_questions";
 
@@ -71,7 +75,7 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
 
         questionNumberEditText = findViewById(R.id.questionsNumberEditText);
 
-        questionNumberEditText.setText(getString(R.string.DEFAULT_QUESTION_NUM));
+        questionNumberEditText.setText(String.valueOf(Game.DEFAULT_QUESTION_NUMBER));
     }
 
     private class chooseSubjectClickHandler implements View.OnClickListener {
@@ -93,7 +97,7 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
                         // Here, no request code
                         Intent data = result.getData();
                         assert data != null;
-                        m_game.subject = data.getStringExtra(String.valueOf(R.string.subject));
+                        m_game.setSubject(data.getStringExtra(String.valueOf(R.string.subject)));
 
                     }
                 }
@@ -109,7 +113,8 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
                 synchronized(lock) {
                     try {
                         lock.wait(MAXIMUM_WAITING_TIME_MS);
-                        m_game.questions = questions;
+                        m_game.setQuestions(new Question[questions.size()]);
+                        m_game.setQuestions(questions.toArray(m_game.getQuestions()));
                         startGameActivity();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -128,28 +133,28 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
         public void onClick(View view){
 
 
-            m_game.is_competitive = isCompetitiveSwitch.isChecked();
-            if(m_game.is_competitive){
-                m_game.questions_number = Game.DEFAULT_QUESTION_NUMBER;
+            m_game.setCompetitive(isCompetitiveSwitch.isChecked());
+            if(m_game.isCompetitive()){
+                numberOfWantedQuestions = Game.DEFAULT_QUESTION_NUMBER;
             } else {
-                m_game.questions_number = Integer.parseInt(questionNumberEditText.getText().toString());
+                numberOfWantedQuestions = Integer.parseInt(questionNumberEditText.getText().toString());
             }
 
-            callGetQuestions(m_game.questions_number);
+            callGetQuestions();
             waitUntilQuestionsAreRead();
         }
     }
 
     private void startGameActivity(){
         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-        intent.putExtra(getString(R.string.room), m_game);
+        intent.putExtra(getString(R.string.game_intent_text), m_game);
         finish();
         startActivity(intent);
     }
 
 
-    private void callGetQuestions(int numberOfWantedQuestions){
-        String subjectPath = m_game.subject + "_subject";
+    private void callGetQuestions(){
+        String subjectPath = m_game.getSubject() + "_subject";
         DocumentReference docRef = db.collection(MAIN_SUBJECT_COLLECTION).document(subjectPath);
 
         questions = new ArrayList<>();
@@ -188,7 +193,7 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
 
     private void getQuestionFromFirestore(int index, int numberOfWantedQuestions){
 
-        String path = MAIN_SUBJECT_COLLECTION + "/" + m_game.subject + "_subject/" + m_game.subject + "_questions";
+        String path = MAIN_SUBJECT_COLLECTION + "/" + m_game.getSubject() + "_subject/" + m_game.getSubject() + "_questions";
         CollectionReference docRef = db.collection(path);
 
         docRef
