@@ -24,7 +24,7 @@
     <string name="choose_subject_title">Choose Subject</string>
     <string name="is_solo">isSolo</string>
     <string name="capitals">capitals</string>
-    <string name="create_game">Create Game</string>
+    <string name="create_game">Play Practice</string>
     <string name="game_intent_text">Game</string>
     <string name="questions">Questions</string>
     <string name="start_game">Start Game</string>
@@ -37,4 +37,5 @@
     <string name="scores_text">scores</string>
     <string name="correct_answers_text">correctAnswers</string>
     <string name="is_competitive_text">is_competitive</string>
+    <string name="play_competitive">Play competitive</string>
 </resources>

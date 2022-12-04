@@ -43,9 +43,8 @@ public class GameStatsActivity extends AppCompatActivity {
         Game game = (Game) intent.getSerializableExtra(getString(R.string.game_intent_text));
         m_gameResults = new GameResults(scores, correctAnswers, game);
         questions = m_gameResults.getQuestions();
-        dataPointsTapToast = Toast.makeText(GameStatsActivity.this, "", Toast.LENGTH_SHORT);
 
-    initViews();
+        initViews();
     }
 
     private void initViews(){
@@ -77,8 +76,6 @@ public class GameStatsActivity extends AppCompatActivity {
         }
         return data;
     }
-
-    private static Toast dataPointsTapToast;
 
 
     private void initSeries(){

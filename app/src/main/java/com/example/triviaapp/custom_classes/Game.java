@@ -40,7 +40,7 @@ public class Game implements Serializable {
 
     public static final String DEFAULT_SUBJECT = "capitals";
     public static final int DEFAULT_QUESTION_NUMBER = 5;
-
+    public static final int COMPETITIVE_QUESTION_NUMBER = 10;
 
     public Game() {
         this.subject = DEFAULT_SUBJECT;

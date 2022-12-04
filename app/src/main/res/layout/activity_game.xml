@@ -14,82 +14,51 @@
         android:layout_weight="20"
         android:layout_height="0dp"
         android:textSize="45sp"
+        android:layout_marginBottom="70dp"
         />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="20"
-        android:orientation="vertical">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:weightSum="100"
-        android:layout_weight="40"
-        >
-
 
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="45"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="60"
             android:weightSum="100"
             android:orientation="vertical"
             tools:ignore="NestedWeights">
             <Button
                 android:id="@+id/questionButton1"
-                android:textSize="25sp"
+                android:textSize="30sp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="50"
+                android:layout_weight="25"
                  />
 
             <Button
                 android:id="@+id/questionButton2"
                 android:layout_width="match_parent"
-                android:textSize="25sp"
+                android:textSize="30sp"
                 android:layout_height="0dp"
-                android:layout_weight="50"
+                android:layout_weight="25"
                  />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="10"
-            android:orientation="vertical">
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="45"
-            android:weightSum="100"
-            android:orientation="vertical">
 
             <Button
                 android:id="@+id/questionButton3"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:textSize="25sp"
-                android:layout_weight="50" />
+                android:textSize="30sp"
+                android:layout_weight="25" />
 
             <Button
                 android:id="@+id/questionButton4"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="50"
-                android:textSize="25sp"
+                android:layout_weight="25"
+                android:textSize="30sp"
                 />
 
         </LinearLayout>
-    </LinearLayout>
+
+
+
 
 </LinearLayout>

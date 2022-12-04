@@ -46,7 +46,6 @@ public class GameActivity extends AppCompatActivity {
 
         init_views();
 
-
         playGame();
 
     }
@@ -81,6 +80,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void run() {
                 synchronized(lock) {
+                    isFreezeState = false;
                     for(int i = 0; i < m_game.getQuestions().length; i++){
                         playQuestion(i);
                     }

@@ -36,11 +36,12 @@ public class HomeActivity extends AppCompatActivity {
 //        finish();
     }
 
-    private class createRoomClickHandler implements View.OnClickListener {
+    private class playClickHandler implements View.OnClickListener {
         @Override
         public void onClick(View view){
             Intent intent = new Intent(getApplicationContext(), CreateSoloRoomActivity.class);
-            //intent.putExtra(String.valueOf(R.string.is_solo), false);
+            boolean isCompetitive = view.getId() == R.id.playCompetitiveButton;
+            intent.putExtra(String.valueOf(R.string.is_competitive_text), isCompetitive);
             startActivity(intent);
             finish();
 
@@ -61,16 +62,17 @@ public class HomeActivity extends AppCompatActivity {
     private void init_views(){
         TextView title = findViewById(R.id.homeActivityTitle);
 
-        final Button logoutButton = findViewById(R.id.logoutButton);
-
         String name = m_user.getDisplayName();
         String titleText = "Welcome " + name;
         title.setText(titleText);
 
         Toast.makeText(getApplicationContext(), "welcome! " + name, Toast.LENGTH_SHORT).show();
 
-        findViewById(R.id.createGameButton).setOnClickListener(new createRoomClickHandler());
-        logoutButton.setOnClickListener(new logoutClickHandler());
+
+        findViewById(R.id.playCompetitiveButton).setOnClickListener(new playClickHandler());
+        findViewById(R.id.playPracticeButton).setOnClickListener(new playClickHandler());
+
+        findViewById(R.id.logoutButton).setOnClickListener(new logoutClickHandler());
 
     }
 

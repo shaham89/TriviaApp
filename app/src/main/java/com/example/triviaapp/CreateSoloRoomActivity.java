@@ -15,7 +15,6 @@ import android.widget.EditText;
 
 import com.example.triviaapp.custom_classes.Question;
 import com.example.triviaapp.custom_classes.Game;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -33,8 +32,6 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
 
     private static final String TAG = "CreateRoomActivity";
 
-    //views
-    private SwitchMaterial isCompetitiveSwitch;
     private EditText questionNumberEditText;
 
 
@@ -55,19 +52,27 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
         FirebaseUser m_user = m_auth.getCurrentUser();
         assert m_user != null;
 
+        hasStartGameClickedAlready = false;
+
         //m_room = new Room(true, "", 4, 10, "test room");
         initViews();
 
 
         m_game = new Game();
+        Intent intent = getIntent();
+        m_game.setCompetitive(intent.getBooleanExtra(String.valueOf(R.string.is_competitive_text), false));
 
+        if(m_game.isCompetitive()){
+            questionNumberEditText.setText(String.valueOf(Game.COMPETITIVE_QUESTION_NUMBER));
+            questionNumberEditText.setEnabled(false);
+        }
     }
 
     private void initViews() {
         findViewById(R.id.chooseSubjectButton).setOnClickListener(new chooseSubjectClickHandler());
         findViewById(R.id.startGameButton).setOnClickListener(new startGameClickHandler());
 
-        isCompetitiveSwitch = findViewById(R.id.isCompetitiveSwitch);
+        //views
 
         // To listen for a switch's checked/unchecked state changes
         //isCompetitiveSwitch.setOnCheckedChangeListener();
@@ -135,9 +140,9 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
             if(hasStartGameClickedAlready){return;}
             hasStartGameClickedAlready = true;
 
-            m_game.setCompetitive(isCompetitiveSwitch.isChecked());
+            //m_game.setCompetitive(isCompetitiveSwitch.isChecked());
             if(m_game.isCompetitive()){
-                numberOfWantedQuestions = Game.DEFAULT_QUESTION_NUMBER;
+                numberOfWantedQuestions = Game.COMPETITIVE_QUESTION_NUMBER;
             } else {
                 numberOfWantedQuestions = Integer.parseInt(questionNumberEditText.getText().toString());
             }

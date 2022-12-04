@@ -8,16 +8,6 @@
     tools:context=".CreateSoloRoomActivity">
 
 
-    <EditText
-        android:id="@+id/roomTitleEditText"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
-        android:ems="10"
-        android:hint="@string/room_name"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/questionsNumberEditText"
