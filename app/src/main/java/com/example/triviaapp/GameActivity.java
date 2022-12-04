@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.triviaapp.custom_classes.Question;
-import com.example.triviaapp.custom_classes.Room;
+import com.example.triviaapp.custom_classes.Game;
 import com.example.triviaapp.helperFunctions.TinyDB;
 
 import java.nio.charset.StandardCharsets;
@@ -19,7 +19,7 @@ import java.util.Locale;
 
 public class GameActivity extends AppCompatActivity {
 
-    private Room m_room;
+    private Game m_game;
     private static boolean[] correctAnswers;
     private static int currentQuestionIndex;
     private Question currQuestion;
@@ -43,8 +43,8 @@ public class GameActivity extends AppCompatActivity {
 
         getQuestions();
         currentQuestionIndex = 0;
-        timeScores = new long[m_room.questions.size()];
-        correctAnswers = new boolean[m_room.questions.size()];
+        timeScores = new long[m_game.questions.size()];
+        correctAnswers = new boolean[m_game.questions.size()];
         init_views();
 
 
@@ -58,18 +58,18 @@ public class GameActivity extends AppCompatActivity {
         String listName = "m_tempQuestions";
         if(IS_TESTING){
             TinyDB m_tinydb = new TinyDB(getApplicationContext());
-            m_room.questions = m_tinydb.getListQuestions(listName, Question.class);
+            m_game.questions = m_tinydb.getListQuestions(listName, Question.class);
         } else {
             Intent intent = getIntent();
 
-            m_room = (Room) intent.getSerializableExtra(getString(R.string.room));
+            m_game = (Game) intent.getSerializableExtra(getString(R.string.room));
         }
 
         //m_tinydb.putListObject(listName, questions);
     }
 
     private void playQuestion(int questionIndex){
-        currQuestion = m_room.questions.get(questionIndex);
+        currQuestion = m_game.questions.get(questionIndex);
         showCurrQuestion();
         isFreezeState = false;
 
@@ -96,7 +96,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void run() {
                 synchronized(lock) {
-                    for(int i = 0; i < m_room.questions.size(); i++){
+                    for(int i = 0; i < m_game.questions.size(); i++){
                         playQuestion(i);
                     }
                     gameEnded();
@@ -112,14 +112,15 @@ public class GameActivity extends AppCompatActivity {
         //Log.w("GameActivity", "TIme scores:" + timeScores[0]);
 
         Intent intent = new Intent(this, GameStatsActivity.class);
-        intent.putExtra(getString(R.string.correct_answers_text), correctAnswers);
 
-        String[] questionText = new String[m_room.questions.size()];
+
+        String[] questionText = new String[m_game.questions.size()];
         for(int i = 0; i < questionText.length; i++){
-            questionText[i] = m_room.questions.get(i).questionText;
+            questionText[i] = m_game.questions.get(i).questionText;
         }
 
-        intent.putExtra(getString(R.string.questions), questionText);
+        intent.putExtra(getString(R.string.correct_answers_text), correctAnswers);
+        intent.putExtra(getString(R.string.is_competitive_text), m_game.is_competitive);
         intent.putExtra(getString(R.string.scores_text), timeScores);
         finish();
         startActivity(intent);

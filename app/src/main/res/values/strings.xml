@@ -36,4 +36,5 @@
     <string name="number_of_questions">Number of Questions</string>
     <string name="scores_text">scores</string>
     <string name="correct_answers_text">correctAnswers</string>
+    <string name="is_competitive_text">is_competitive</string>
 </resources>

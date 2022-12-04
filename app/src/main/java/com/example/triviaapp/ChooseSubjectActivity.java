@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.triviaapp.custom_classes.Question;
-import com.example.triviaapp.custom_classes.Room;
+import com.example.triviaapp.custom_classes.Game;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class ChooseSubjectActivity extends AppCompatActivity {
 
     private static final String TAG = "ChooseSubjectActivity";
     private boolean isSolo;
-    private Room m_room;
+    private Game m_game;
     private String subject;
     private ArrayList<Question> questions;
     private FirebaseFirestore db;

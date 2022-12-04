@@ -18,6 +18,7 @@ public class GameStatsActivity extends AppCompatActivity {
     private GraphView graphView;
     private long[] scores;
     private boolean[] correctAnswers;
+    private boolean is_competitive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,9 @@ public class GameStatsActivity extends AppCompatActivity {
 
         scores = intent.getLongArrayExtra(getString(R.string.scores_text));
         correctAnswers = intent.getBooleanArrayExtra(getString(R.string.correct_answers_text));
+        //Bundle args = getIntent().getExtras();
+        //boolean istrue= args.getBoolean(EXTRA_ANSWER_IS_TRUE, false);
+        is_competitive = intent.getBooleanExtra(getString(R.string.is_competitive_text), false);
 
         initViews();
     }

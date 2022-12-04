@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.triviaapp.custom_classes.Question;
-import com.example.triviaapp.custom_classes.Room;
+import com.example.triviaapp.custom_classes.Game;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,7 +24,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
@@ -34,14 +33,12 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
 
     //views
     private SwitchMaterial isCompetitiveSwitch;
-    private EditText roomTitleEditText;
     private EditText questionNumberEditText;
 
     private static final String TAG = "CreateRoomActivity";
-    private Room m_room;
+    private Game m_game;
     private static ArrayList<Question> questions;
     private FirebaseFirestore db;
-    private FirebaseUser m_user;
     public final String MAIN_SUBJECT_COLLECTION = "subjects_questions";
 
     @Override
@@ -51,14 +48,14 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         FirebaseAuth m_auth = FirebaseAuth.getInstance();
-        m_user = m_auth.getCurrentUser();
+        FirebaseUser m_user = m_auth.getCurrentUser();
         assert m_user != null;
 
         //m_room = new Room(true, "", 4, 10, "test room");
         initViews();
 
 
-        m_room = new Room();
+        m_game = new Game();
 
     }
 
@@ -71,10 +68,9 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
         // To listen for a switch's checked/unchecked state changes
         //isCompetitiveSwitch.setOnCheckedChangeListener();
 
-        roomTitleEditText = findViewById(R.id.roomTitleEditText);
+
         questionNumberEditText = findViewById(R.id.questionsNumberEditText);
 
-        roomTitleEditText.setText(MessageFormat.format("{0}''s room", m_user.getDisplayName()));
         questionNumberEditText.setText(getString(R.string.DEFAULT_QUESTION_NUM));
     }
 
@@ -97,7 +93,7 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
                         // Here, no request code
                         Intent data = result.getData();
                         assert data != null;
-                        m_room.subject = data.getStringExtra(String.valueOf(R.string.subject));
+                        m_game.subject = data.getStringExtra(String.valueOf(R.string.subject));
 
                     }
                 }
@@ -113,7 +109,7 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
                 synchronized(lock) {
                     try {
                         lock.wait(MAXIMUM_WAITING_TIME_MS);
-                        m_room.questions = questions;
+                        m_game.questions = questions;
                         startGameActivity();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -132,29 +128,28 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
         public void onClick(View view){
 
 
-            m_room.is_competitive = isCompetitiveSwitch.isChecked();
-            if(m_room.is_competitive){
-                m_room.questions_number = Room.DEFAULT_QUESTION_NUMBER;
+            m_game.is_competitive = isCompetitiveSwitch.isChecked();
+            if(m_game.is_competitive){
+                m_game.questions_number = Game.DEFAULT_QUESTION_NUMBER;
             } else {
-                m_room.questions_number = Integer.parseInt(questionNumberEditText.getText().toString());
+                m_game.questions_number = Integer.parseInt(questionNumberEditText.getText().toString());
             }
-            m_room.room_name = roomTitleEditText.getText().toString();
 
-            callGetQuestions(m_room.questions_number);
+            callGetQuestions(m_game.questions_number);
             waitUntilQuestionsAreRead();
         }
     }
 
     private void startGameActivity(){
         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-        intent.putExtra(getString(R.string.room), m_room);
+        intent.putExtra(getString(R.string.room), m_game);
         finish();
         startActivity(intent);
     }
 
 
     private void callGetQuestions(int numberOfWantedQuestions){
-        String subjectPath = m_room.subject + "_subject";
+        String subjectPath = m_game.subject + "_subject";
         DocumentReference docRef = db.collection(MAIN_SUBJECT_COLLECTION).document(subjectPath);
 
         questions = new ArrayList<>();
@@ -193,7 +188,7 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
 
     private void getQuestionFromFirestore(int index, int numberOfWantedQuestions){
 
-        String path = MAIN_SUBJECT_COLLECTION + "/" + m_room.subject + "_subject/" + m_room.subject + "_questions";
+        String path = MAIN_SUBJECT_COLLECTION + "/" + m_game.subject + "_subject/" + m_game.subject + "_questions";
         CollectionReference docRef = db.collection(path);
 
         docRef
