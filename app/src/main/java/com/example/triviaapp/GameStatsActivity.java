@@ -26,6 +26,7 @@ import java.util.Arrays;
 public class GameStatsActivity extends AppCompatActivity {
 
     private GraphView graphView;
+    private TextView dataPointTextView;
     private GameResults m_gameResults;
     private static Question[] questions;
 
@@ -49,6 +50,7 @@ public class GameStatsActivity extends AppCompatActivity {
 
     private void initViews(){
         graphView = findViewById(R.id.scoresGraph);
+        dataPointTextView = findViewById(R.id.dataPointTextView);
 
         initTextViewsScore();
         initGraph();
@@ -104,9 +106,8 @@ public class GameStatsActivity extends AppCompatActivity {
 
 
         OnDataPointTapListener showQuestionTap = (OnDataPointTapListener) (series1, dataPoint) -> {
-
-            dataPointsTapToast.setText(questions[(int) dataPoint.getX() - 1].questionText + "\n" + (int) dataPoint.getY() + " ms");
-            dataPointsTapToast.show();
+            String showOutput = questions[(int) dataPoint.getX() - 1].questionText + "\n" + (int) dataPoint.getY() + " ms";
+            dataPointTextView.setText(showOutput);
         };
 
         correctSeries.setOnDataPointTapListener(showQuestionTap);

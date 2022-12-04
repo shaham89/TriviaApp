@@ -13,6 +13,7 @@ public class GameResults extends Game {
         this.correctAnswers = correctAnswers;
 
         setNumberOfCorrectAnswers();
+        setAverageTimeScore();
     }
 
     public boolean[] getCorrectAnswers() {
