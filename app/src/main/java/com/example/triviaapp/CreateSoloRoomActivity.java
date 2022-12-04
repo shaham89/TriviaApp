@@ -126,12 +126,14 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
         game_thread.start();
     }
 
+    private static boolean hasStartGameClickedAlready = false;
 
     private class startGameClickHandler implements View.OnClickListener {
 
         @Override
         public void onClick(View view){
-
+            if(hasStartGameClickedAlready){return;}
+            hasStartGameClickedAlready = true;
 
             m_game.setCompetitive(isCompetitiveSwitch.isChecked());
             if(m_game.isCompetitive()){

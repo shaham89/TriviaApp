@@ -25,7 +25,7 @@ public class GameActivity extends AppCompatActivity {
 
     private Button[] answers;
     private TextView gameQuestionTextview;
-    private long[] timeScores;
+    private int[] timeScores;
 
     private static boolean isFreezeState;
 
@@ -41,7 +41,7 @@ public class GameActivity extends AppCompatActivity {
         m_game = (Game) getIntent().getSerializableExtra(getString(R.string.game_intent_text));
 
         currentQuestionIndex = 0;
-        timeScores = new long[m_game.getQuestions().length];
+        timeScores = new int[m_game.getQuestions().length];
         correctAnswers = new boolean[m_game.getQuestions().length];
 
         init_views();
@@ -65,7 +65,7 @@ public class GameActivity extends AppCompatActivity {
             isFreezeState = true;
             long timeElapsed = finish - start;
 
-            timeScores[questionIndex] = timeElapsed;
+            timeScores[questionIndex] = (int) timeElapsed;
 
             greenLightCorrectAnswer();
             GameActivity.currentQuestionIndex += 1;
@@ -98,7 +98,7 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = new Intent(this, GameStatsActivity.class);
 
         intent.putExtra(getString(R.string.correct_answers_text), correctAnswers);
-        intent.putExtra(getString(R.string.game_intent_text), m_game.isCompetitive());
+        intent.putExtra(getString(R.string.game_intent_text), m_game);
         intent.putExtra(getString(R.string.scores_text), timeScores);
         finish();
         startActivity(intent);

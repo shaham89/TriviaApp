@@ -1,12 +1,13 @@
 package com.example.triviaapp.custom_classes;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Game implements Serializable {
     protected boolean isCompetitive;
     protected String subject;
     protected Question[] questions;
+
+    protected int numberOfQuestions = 0;
 
     public boolean isCompetitive() {
         return isCompetitive;
@@ -30,6 +31,11 @@ public class Game implements Serializable {
 
     public void setQuestions(Question[] questions) {
         this.questions = questions;
+        this.numberOfQuestions = this.questions.length;
+    }
+
+    public int getNumberOfQuestions() {
+        return numberOfQuestions;
     }
 
     public static final String DEFAULT_SUBJECT = "capitals";
@@ -46,6 +52,7 @@ public class Game implements Serializable {
         this.subject = game.subject;
         this.isCompetitive = game.isCompetitive;
         this.questions = game.questions;
+        this.numberOfQuestions = game.numberOfQuestions;
     }
 
 }

@@ -45,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
             String emailAddress = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
             String displayName = displayNameEditText.getText().toString();
-            Toast.makeText(getApplicationContext(), "Testing", Toast.LENGTH_LONG).show();
+
             //is the typed credentials are not valid, don't send them
             if(CredentialsValidator.areSignUpCredentialsInvalid(getApplicationContext(),
                     emailAddress,
@@ -73,7 +73,7 @@ public class SignUpActivity extends AppCompatActivity {
         FirebaseUser currentUser = m_auth.getCurrentUser();
         if(currentUser != null){
             //user is already logged in
-            homeActivity();
+            startHomeActivity();
         }
     }
 
@@ -86,7 +86,6 @@ public class SignUpActivity extends AppCompatActivity {
                         //if signUp is a success
                         updateUserDisplayName(displayName);
 
-                        homeActivity();
                     } else {
                         //if signUp failed
                         Log.w(Tag, "create user failure", task.getException());
@@ -111,11 +110,12 @@ public class SignUpActivity extends AppCompatActivity {
                     if(task1.isSuccessful()){
                         Log.d(Tag, "Updated user display name successfully: " + user.getDisplayName());
                     }
+                    startHomeActivity();
                 });
     }
 
 
-    protected void homeActivity() {
+    protected void startHomeActivity() {
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         finish();
         startActivity(intent);

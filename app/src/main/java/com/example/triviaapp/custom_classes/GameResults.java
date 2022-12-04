@@ -3,14 +3,16 @@ package com.example.triviaapp.custom_classes;
 public class GameResults extends Game {
     private final int[] timeScores;
     private final boolean[] correctAnswers;
-    private final Game game;
 
-    public GameResults(int[] timeScores, boolean[] correctAnswers, Game game, Game game1) {
+    private float averageTimeScore;
+    private int numberOfCorrectQuestions;
+
+    public GameResults(int[] timeScores, boolean[] correctAnswers, Game game) {
         super(game);
         this.timeScores = timeScores;
         this.correctAnswers = correctAnswers;
 
-        this.game = game1;
+        setNumberOfCorrectAnswers();
     }
 
     public boolean[] getCorrectAnswers() {
@@ -21,13 +23,31 @@ public class GameResults extends Game {
         return timeScores;
     }
 
-    public int getNumberOfCorrectAnswers(){
+    public int getNumberOfCorrectQuestions() {
+        return numberOfCorrectQuestions;
+    }
+
+    public float getAverageTimeScore() {
+        return averageTimeScore;
+    }
+
+    private void setNumberOfCorrectAnswers(){
         int numberOfCorrectAnswers = 0;
         for(boolean isCorrect : this.correctAnswers){
             if(isCorrect){
                 numberOfCorrectAnswers += 1;
             }
         }
-        return numberOfCorrectAnswers;
+        this.numberOfCorrectQuestions = numberOfCorrectAnswers;
     }
+
+    public void setAverageTimeScore(){
+        float avg = 0;
+        for (long score : timeScores) {
+            avg += score;
+        }
+        avg /= timeScores.length;
+        averageTimeScore = avg;
+    }
+
 }

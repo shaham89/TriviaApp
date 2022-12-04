@@ -3,22 +3,31 @@ package com.example.triviaapp;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.triviaapp.custom_classes.Game;
+import com.example.triviaapp.custom_classes.GameResults;
+import com.example.triviaapp.custom_classes.Question;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.PointsGraphSeries;
+import com.jjoe64.graphview.series.Series;
+
+import java.util.Arrays;
 
 public class GameStatsActivity extends AppCompatActivity {
 
     private GraphView graphView;
-    private long[] scores;
-    private boolean[] correctAnswers;
-    private boolean is_competitive;
+    private GameResults m_gameResults;
+    private static Question[] questions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,38 +36,36 @@ public class GameStatsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        scores = intent.getLongArrayExtra(getString(R.string.scores_text));
-        correctAnswers = intent.getBooleanArrayExtra(getString(R.string.correct_answers_text));
-        //Bundle args = getIntent().getExtras();
-        //boolean istrue= args.getBoolean(EXTRA_ANSWER_IS_TRUE, false);
-        is_competitive = intent.getBooleanExtra(getString(R.string.is_competitive_text), false);
+        int[] scores = intent.getIntArrayExtra(getString(R.string.scores_text));
+        boolean[] correctAnswers = intent.getBooleanArrayExtra(getString(R.string.correct_answers_text));
 
-        initViews();
+        Game game = (Game) intent.getSerializableExtra(getString(R.string.game_intent_text));
+        m_gameResults = new GameResults(scores, correctAnswers, game);
+        questions = m_gameResults.getQuestions();
+        dataPointsTapToast = Toast.makeText(GameStatsActivity.this, "", Toast.LENGTH_SHORT);
+
+    initViews();
     }
 
     private void initViews(){
         graphView = findViewById(R.id.scoresGraph);
-        TextView avgView = findViewById(R.id.averageScore);
-        float avg = 0;
-        for (long score : scores) {
-            avg += score;
-        }
-        avg /= scores.length;
 
-        avgView.setText(String.format("Average Time Score: %s", avg));
+        initTextViewsScore();
+        initGraph();
+        initSeries();
+    }
+
+    private void initTextViewsScore(){
+
+        TextView avgView = findViewById(R.id.averageScore);
+        avgView.setText(String.format("Average Time Score: %s", m_gameResults.getAverageTimeScore()));
 
         TextView answerScores = findViewById(R.id.answerScore);
 
-        int numberOfCorrectAnswer = 0;
-        for(Boolean isCorrect: correctAnswers){
-            if(isCorrect){
-                numberOfCorrectAnswer += 1;
-            }
-        }
+        String correctAnswerRatio = String.format("%s/%s Correct Answers",
+                m_gameResults.getNumberOfCorrectQuestions(), m_gameResults.getNumberOfQuestions());
 
-        answerScores.setText(String.format("%s/%sCorrect Answers", numberOfCorrectAnswer, correctAnswers.length));
-        initGraph();
-
+        answerScores.setText(correctAnswerRatio);
     }
 
     private static String[] generateXAxis(int size){
@@ -67,6 +74,50 @@ public class GameStatsActivity extends AppCompatActivity {
             data[i - 1] = String.valueOf(i);
         }
         return data;
+    }
+
+    private static Toast dataPointsTapToast;
+
+
+    private void initSeries(){
+        DataPoint[] points = new DataPoint[m_gameResults.getNumberOfQuestions()];
+
+        for(int i = 0; i < m_gameResults.getNumberOfQuestions(); i++){
+            points[i] = new DataPoint(i + 1, m_gameResults.getTimeScores()[i]);
+        }
+
+        PointsGraphSeries<DataPoint> correctSeries = new PointsGraphSeries<>();
+        PointsGraphSeries<DataPoint> inCorrectSeries = new PointsGraphSeries<>();
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
+
+
+        for(int i = 0; i < m_gameResults.getNumberOfQuestions(); i++){
+            if(m_gameResults.getCorrectAnswers()[i]){
+                correctSeries.appendData(points[i], false, m_gameResults.getNumberOfQuestions());
+            } else{
+                inCorrectSeries.appendData(points[i], false, m_gameResults.getNumberOfQuestions());
+            }
+        }
+
+        correctSeries.setColor(Color.GREEN);
+        inCorrectSeries.setColor(Color.RED);
+
+
+        OnDataPointTapListener showQuestionTap = (OnDataPointTapListener) (series1, dataPoint) -> {
+
+            dataPointsTapToast.setText(questions[(int) dataPoint.getX() - 1].questionText + "\n" + (int) dataPoint.getY() + " ms");
+            dataPointsTapToast.show();
+        };
+
+        correctSeries.setOnDataPointTapListener(showQuestionTap);
+        inCorrectSeries.setOnDataPointTapListener(showQuestionTap);
+
+        correctSeries.setSize(20);
+        inCorrectSeries.setSize(20);
+
+        graphView.addSeries(series);
+        graphView.addSeries(correctSeries);
+        graphView.addSeries(inCorrectSeries);
     }
 
     private void initGraph(){
@@ -80,47 +131,30 @@ public class GameStatsActivity extends AppCompatActivity {
         // our title text size.
         graphView.setTitleTextSize(40);
 
-        graphView.getViewport().setScalable(true);  // activate horizontal zooming and scrolling
-        graphView.getViewport().setScrollable(true);  // activate horizontal scrolling
-        graphView.getViewport().setScalableY(true);  // activate horizontal and vertical zooming and scrolling
-        graphView.getViewport().setScrollableY(true);
+
+        graphView.getViewport().setXAxisBoundsManual(true);
+        graphView.getViewport().setMinX(0.9);
+        graphView.getViewport().setMaxX(m_gameResults.getNumberOfQuestions() + 0.1);
+
+// Set manual Y bounds
+        graphView.getViewport().setYAxisBoundsManual(true);
+        graphView.getViewport().setMinY(0);
+        graphView.getViewport().setMaxY(5100);
 
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
-        String[] axis = generateXAxis(scores.length);
+        String[] axis = generateXAxis(m_gameResults.getNumberOfQuestions());
+        Log.w("Stats activity", Arrays.toString(axis));
         staticLabelsFormatter.setHorizontalLabels(axis);
-        staticLabelsFormatter.setVerticalLabels(new String[] {"1000", "2000", "3000","4000", "5000"});
+
+        staticLabelsFormatter.setVerticalLabels(new String[] {"0,", "1000", "2000", "3000","4000", "5000"});
+        //staticLabelsFormatter.setVerticalLabels(new String[] {"1000", "2000"});
+
         graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
 
-
-        DataPoint[] points = new DataPoint[scores.length];
-
-        for(int i = 0; i < scores.length; i++){
-            points[i] = new DataPoint(i, scores[i]);
-        }
-
-        PointsGraphSeries<DataPoint> correctSeries = new PointsGraphSeries<>();
-        PointsGraphSeries<DataPoint> inCorrectSeries = new PointsGraphSeries<>();
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
-
-
-        for(int i = 0; i < scores.length; i++){
-            if(correctAnswers[i]){
-                correctSeries.appendData(points[i], false, scores.length);
-            } else{
-                inCorrectSeries.appendData(points[i], false, scores.length);
-            }
-        }
-
-        correctSeries.setColor(Color.GREEN);
-        inCorrectSeries.setColor(Color.RED);
-        correctSeries.setSize(20);
-        inCorrectSeries.setSize(20);
-
-        graphView.addSeries(series);
-        graphView.addSeries(correctSeries);
-        graphView.addSeries(inCorrectSeries);
-
+        graphView.setBackgroundColor(Color.BLACK);
 
     }
+
+
 }
