@@ -1,5 +1,8 @@
 package com.example.triviaapp;
 
+import static com.example.triviaapp.helperFunctions.FireStoreConstents.MAIN_STATS_COLLECTION;
+import static com.example.triviaapp.helperFunctions.FireStoreConstents.STATS_SCORE_FIELD;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,11 +10,19 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.triviaapp.custom_classes.Game;
 import com.example.triviaapp.custom_classes.GameResults;
 import com.example.triviaapp.custom_classes.Question;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.core.OrderBy;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
@@ -29,12 +40,14 @@ public class GameStatsActivity extends AppCompatActivity {
     private TextView dataPointTextView;
     private GameResults m_gameResults;
     private static Question[] questions;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_stats);
 
+        db = FirebaseFirestore.getInstance();
         Intent intent = getIntent();
 
         int[] scores = intent.getIntArrayExtra(getString(R.string.scores_text));
@@ -45,6 +58,12 @@ public class GameStatsActivity extends AppCompatActivity {
         questions = m_gameResults.getQuestions();
 
         initViews();
+    }
+    private static final String TAG = "StatsActivity";
+    private static int user_place = 0;
+
+    private void updateUserScore(){
+
     }
 
     private void initViews(){

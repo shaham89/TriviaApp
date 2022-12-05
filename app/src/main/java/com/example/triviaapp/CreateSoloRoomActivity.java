@@ -66,6 +66,7 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
             questionNumberEditText.setText(String.valueOf(Game.COMPETITIVE_QUESTION_NUMBER));
             questionNumberEditText.setEnabled(false);
         }
+
     }
 
     private void initViews() {

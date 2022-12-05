@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TriviaApp">
         <activity
+            android:name=".LeaderBoardActivity"
+            android:exported="false" />
+        <activity
             android:name=".GameStatsActivity"
             android:exported="false" />
         <activity
