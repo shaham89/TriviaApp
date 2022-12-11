@@ -1,6 +1,6 @@
 package com.example.triviaapp;
 
-import static com.example.triviaapp.helperFunctions.FireStoreConstents.MAIN_STATS_COLLECTION;
+import static com.example.triviaapp.helperFunctions.FireStoreConstants.MAIN_STATS_COLLECTION;
 
 import androidx.appcompat.app.AppCompatActivity;
 

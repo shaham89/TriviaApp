@@ -4,7 +4,7 @@ public class GameResults extends Game {
     private final int[] timeScores;
     private final boolean[] correctAnswers;
 
-    private float averageTimeScore;
+    private double averageTimeScore;
     private int numberOfCorrectQuestions;
 
     public GameResults(int[] timeScores, boolean[] correctAnswers, Game game) {
@@ -28,7 +28,7 @@ public class GameResults extends Game {
         return numberOfCorrectQuestions;
     }
 
-    public float getAverageTimeScore() {
+    public double getAverageTimeScore() {
         return averageTimeScore;
     }
 
@@ -42,7 +42,7 @@ public class GameResults extends Game {
         this.numberOfCorrectQuestions = numberOfCorrectAnswers;
     }
 
-    public void setAverageTimeScore(){
+    private void setAverageTimeScore(){
         float avg = 0;
         for (long score : timeScores) {
             avg += score;

@@ -1,7 +1,13 @@
 package com.example.triviaapp;
 
-import static com.example.triviaapp.helperFunctions.FireStoreConstents.MAIN_STATS_COLLECTION;
-import static com.example.triviaapp.helperFunctions.FireStoreConstents.STATS_SCORE_FIELD;
+
+import static com.example.triviaapp.helperFunctions.FireStoreConstants.ID_FIELD_FIELD;
+import static com.example.triviaapp.helperFunctions.FireStoreConstants.MAIN_STATS_COLLECTION;
+import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_SCORE_FIELD;
+import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_SUBJECT_FIELD;
+import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TIME_SCORE_FIELD;
+import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TOTAL_CORRECT_ANSWERS_FIELD;
+import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TOTAL_GAMES_PLAYED_FIELD;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,29 +16,27 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.triviaapp.custom_classes.Game;
 import com.example.triviaapp.custom_classes.GameResults;
 import com.example.triviaapp.custom_classes.Question;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.core.OrderBy;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.PointsGraphSeries;
-import com.jjoe64.graphview.series.Series;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class GameStatsActivity extends AppCompatActivity {
 
@@ -41,11 +45,14 @@ public class GameStatsActivity extends AppCompatActivity {
     private GameResults m_gameResults;
     private static Question[] questions;
     private FirebaseFirestore db;
-
+    private FirebaseUser m_user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_stats);
+
+        m_user = FirebaseAuth.getInstance().getCurrentUser();
+        assert m_user != null;
 
         db = FirebaseFirestore.getInstance();
         Intent intent = getIntent();
@@ -58,11 +65,117 @@ public class GameStatsActivity extends AppCompatActivity {
         questions = m_gameResults.getQuestions();
 
         initViews();
+        if(m_gameResults.isCompetitive()){
+            updateStats();
+        }
+
     }
     private static final String TAG = "StatsActivity";
     private static int user_place = 0;
 
-    private void updateUserScore(){
+    private void updateUserGames(String docId, long score, double timeScore, boolean doesAlreadyExists){
+        //UserStats stats = new UserStats(m_user.getUid(), 1, 2, 4000, m_gameResults.getSubject())
+
+
+        HashMap<String, Object> updateDict = new HashMap<>();
+        //total games played in subject
+        updateDict.put(STATS_TOTAL_GAMES_PLAYED_FIELD, FieldValue.increment(1));
+        //total correct answer in subject
+        updateDict.put(STATS_TOTAL_CORRECT_ANSWERS_FIELD, FieldValue.increment(m_gameResults.getNumberOfCorrectQuestions()));
+        //subject
+        updateDict.put(STATS_SUBJECT_FIELD, m_gameResults.getSubject());
+        //score
+        updateDict.put(STATS_SCORE_FIELD, score);
+        //timeScore
+        updateDict.put(STATS_TIME_SCORE_FIELD, timeScore);
+        //user id
+        updateDict.put(ID_FIELD_FIELD, m_user.getUid());
+
+        if(doesAlreadyExists){
+            db.collection(MAIN_STATS_COLLECTION)
+                    .document(docId)
+                    .update(updateDict)
+                    .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully updated!"))
+                    .addOnFailureListener(e -> Log.w(TAG, "Error updating document", e));
+        } else {
+            db.collection(MAIN_STATS_COLLECTION)
+                    .add(updateDict)
+                    .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully updated!"))
+                    .addOnFailureListener(e -> Log.w(TAG, "Error updating document", e));
+        }
+
+
+    }
+
+    private void updateUserScore(String docId, List<Float> scores){
+        //UserStats stats = new UserStats(m_user.getUid(), 1, 2, 4000, m_gameResults.getSubject())
+
+
+        HashMap<String, Object> updateDict = new HashMap<>();
+        updateDict.put(STATS_SCORE_FIELD, m_gameResults.getAverageTimeScore());
+
+
+        db.collection(MAIN_STATS_COLLECTION)
+                .document(docId)
+                .update(updateDict)
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "score successfully updated!"))
+                .addOnFailureListener(e -> Log.w(TAG, "Error updating score", e));
+
+    }
+
+    private void updateStats(){
+
+        //query for the same user and subject
+        Query query = db.collection(MAIN_STATS_COLLECTION)
+                .whereEqualTo(STATS_SUBJECT_FIELD, m_gameResults.getSubject())
+                .whereEqualTo(ID_FIELD_FIELD, m_user.getUid());
+//                .whereLessThanOrEqualTo(STATS_SCORE_FIELD, m_gameResults.getAverageTimeScore())
+//                .orderBy(STATS_SCORE_FIELD, Query.Direction.ASCENDING).limit(1);
+
+        query.get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        boolean doesDocumentExist = false;
+                        String documentID = "";
+                        long userCurrentScore = m_gameResults.getNumberOfCorrectQuestions();
+                        double userCurrentTimeScore = m_gameResults.getAverageTimeScore();
+
+                        long bestUserScore = userCurrentScore;
+                        double bestUserTimeScore = userCurrentTimeScore;
+
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                            doesDocumentExist = true;
+                            Log.d(TAG, document.getId() + " => " + document.getData());
+                            documentID = document.getId();
+
+                            //if current score/timeScore is better than the database score
+                            //update the score and the time score
+                            long firestoreUserScore = (long)document.get(STATS_SCORE_FIELD);
+                            double firestoreUserTimeScore = (double) document.get(STATS_TIME_SCORE_FIELD);
+                            bestUserScore = firestoreUserScore;
+                            bestUserTimeScore = firestoreUserTimeScore;
+
+                            //if the current score is better, update the timeScore also
+                            if(userCurrentScore > firestoreUserScore){
+                                bestUserScore = userCurrentScore;
+                                bestUserTimeScore = userCurrentTimeScore;
+
+                            } else if(userCurrentScore == firestoreUserScore && userCurrentScore < firestoreUserTimeScore){
+                                //if the currentScore==FirestoreScore, update the timeScore
+                                //only if the currentTimeScore is better
+                                Toast.makeText(GameStatsActivity.this, "New best score!", Toast.LENGTH_SHORT).show();
+                                bestUserTimeScore = userCurrentTimeScore;
+                            }
+                        }
+
+
+                        updateUserGames(documentID, bestUserScore, bestUserTimeScore, doesDocumentExist);
+
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                    }
+                });
 
     }
 
@@ -169,7 +282,7 @@ public class GameStatsActivity extends AppCompatActivity {
         graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
 
-        graphView.setBackgroundColor(Color.BLACK);
+        graphView.setBackgroundColor(Color.WHITE);
 
     }
 

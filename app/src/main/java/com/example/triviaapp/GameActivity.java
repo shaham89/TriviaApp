@@ -43,7 +43,7 @@ public class GameActivity extends AppCompatActivity {
         currentQuestionIndex = 0;
         timeScores = new int[m_game.getQuestions().length];
         correctAnswers = new boolean[m_game.getQuestions().length];
-
+        isFreezeState = false;
         init_views();
 
         playGame();
