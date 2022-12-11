@@ -59,6 +59,16 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    private class leaderBoardsClickHandler implements View.OnClickListener {
+        @Override
+        public void onClick(View view){
+            Intent intent = new Intent(getApplicationContext(), LeaderBoardActivity.class);
+
+            finish();
+            startActivity(intent);
+        }
+    }
+
     private void init_views(){
         TextView title = findViewById(R.id.homeActivityTitle);
 
@@ -71,7 +81,7 @@ public class HomeActivity extends AppCompatActivity {
 
         findViewById(R.id.playCompetitiveButton).setOnClickListener(new playClickHandler());
         findViewById(R.id.playPracticeButton).setOnClickListener(new playClickHandler());
-
+        findViewById(R.id.leaderBoardsButton).setOnClickListener(new leaderBoardsClickHandler());
         findViewById(R.id.logoutButton).setOnClickListener(new logoutClickHandler());
 
     }

@@ -1,20 +1,19 @@
 package com.example.triviaapp.custom_classes;
 
 public class User {
-    protected String m_id;
+    protected String displayName;
 
-    public String getId() {
-        return m_id;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setId(String m_id) {
-        this.m_id = m_id;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
-    public User(String id){
-        m_id = id;
+    public User(String displayName) {
+        this.displayName = displayName;
     }
-
 
     @Override
     public boolean equals(Object obj){
@@ -22,6 +21,6 @@ public class User {
             return false;
         }
 
-        return this.m_id.equals(((User)obj).getId());
+        return this.displayName.equals(((User)obj).displayName);
     }
 }

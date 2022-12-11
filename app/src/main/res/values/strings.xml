@@ -38,4 +38,5 @@
     <string name="correct_answers_text">correctAnswers</string>
     <string name="is_competitive_text">is_competitive</string>
     <string name="play_competitive">Play competitive</string>
+    <string name="leaderboards">leaderboards</string>
 </resources>

@@ -3,6 +3,7 @@ package com.example.triviaapp;
 
 import static com.example.triviaapp.helperFunctions.FireStoreConstants.ID_FIELD_FIELD;
 import static com.example.triviaapp.helperFunctions.FireStoreConstants.MAIN_STATS_COLLECTION;
+import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_DISPLAY_NAME_FIELD;
 import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_SCORE_FIELD;
 import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_SUBJECT_FIELD;
 import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TIME_SCORE_FIELD;
@@ -36,7 +37,7 @@ import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+
 
 public class GameStatsActivity extends AppCompatActivity {
 
@@ -71,7 +72,6 @@ public class GameStatsActivity extends AppCompatActivity {
 
     }
     private static final String TAG = "StatsActivity";
-    private static int user_place = 0;
 
     private void updateUserGames(String docId, long score, double timeScore, boolean doesAlreadyExists){
         //UserStats stats = new UserStats(m_user.getUid(), 1, 2, 4000, m_gameResults.getSubject())
@@ -90,6 +90,8 @@ public class GameStatsActivity extends AppCompatActivity {
         updateDict.put(STATS_TIME_SCORE_FIELD, timeScore);
         //user id
         updateDict.put(ID_FIELD_FIELD, m_user.getUid());
+        //display name
+        updateDict.put(STATS_DISPLAY_NAME_FIELD, m_user.getDisplayName());
 
         if(doesAlreadyExists){
             db.collection(MAIN_STATS_COLLECTION)
@@ -107,22 +109,7 @@ public class GameStatsActivity extends AppCompatActivity {
 
     }
 
-    private void updateUserScore(String docId, List<Float> scores){
-        //UserStats stats = new UserStats(m_user.getUid(), 1, 2, 4000, m_gameResults.getSubject())
-
-
-        HashMap<String, Object> updateDict = new HashMap<>();
-        updateDict.put(STATS_SCORE_FIELD, m_gameResults.getAverageTimeScore());
-
-
-        db.collection(MAIN_STATS_COLLECTION)
-                .document(docId)
-                .update(updateDict)
-                .addOnSuccessListener(aVoid -> Log.d(TAG, "score successfully updated!"))
-                .addOnFailureListener(e -> Log.w(TAG, "Error updating score", e));
-
-    }
-
+    @SuppressWarnings("ConstantConditions")
     private void updateStats(){
 
         //query for the same user and subject
@@ -149,8 +136,8 @@ public class GameStatsActivity extends AppCompatActivity {
                             Log.d(TAG, document.getId() + " => " + document.getData());
                             documentID = document.getId();
 
-                            //if current score/timeScore is better than the database score
-                            //update the score and the time score
+
+                            //hopefully this isn't null
                             long firestoreUserScore = (long)document.get(STATS_SCORE_FIELD);
                             double firestoreUserTimeScore = (double) document.get(STATS_TIME_SCORE_FIELD);
                             bestUserScore = firestoreUserScore;
@@ -160,7 +147,6 @@ public class GameStatsActivity extends AppCompatActivity {
                             if(userCurrentScore > firestoreUserScore){
                                 bestUserScore = userCurrentScore;
                                 bestUserTimeScore = userCurrentTimeScore;
-
                             } else if(userCurrentScore == firestoreUserScore && userCurrentScore < firestoreUserTimeScore){
                                 //if the currentScore==FirestoreScore, update the timeScore
                                 //only if the currentTimeScore is better

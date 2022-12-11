@@ -2,41 +2,33 @@ package com.example.triviaapp.custom_classes;
 
 public class UserStats extends User {
 
-    private int totalGamesNumber;
-    private int totalRightAnswers;
-    private int bestAverageTime;
+
+    private double timeScore;
+    private long score;
     private String subject;
 
-    public UserStats(String id, int totalGamesNumber, int totalRightAnswers, int bestAverageTime, String subject) {
-        super(id);
-        this.totalGamesNumber = totalGamesNumber;
-        this.totalRightAnswers = totalRightAnswers;
-        this.bestAverageTime = bestAverageTime;
+
+    public UserStats(String displayName, double timeScore, long score, String subject) {
+        super(displayName);
+        this.timeScore = timeScore;
+        this.score = score;
         this.subject = subject;
     }
 
-    public int getTotalGamesNumber() {
-        return totalGamesNumber;
+    public double getTimeScore() {
+        return timeScore;
     }
 
-    public void setTotalGamesNumber(int totalGamesNumber) {
-        this.totalGamesNumber = totalGamesNumber;
+    public void setTimeScore(double timeScore) {
+        this.timeScore = timeScore;
     }
 
-    public int getTotalRightAnswers() {
-        return totalRightAnswers;
+    public long getScore() {
+        return score;
     }
 
-    public void setTotalRightAnswers(int totalRightAnswers) {
-        this.totalRightAnswers = totalRightAnswers;
-    }
-
-    public int getBestAverageTime() {
-        return bestAverageTime;
-    }
-
-    public void setBestAverageTime(int bestAverageTime) {
-        this.bestAverageTime = bestAverageTime;
+    public void setScore(long score) {
+        this.score = score;
     }
 
     public String getSubject() {
@@ -46,4 +38,6 @@ public class UserStats extends User {
     public void setSubject(String subject) {
         this.subject = subject;
     }
+
+
 }
