@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,6 +7,34 @@
     android:weightSum="100"
     tools:context=".LeaderBoardActivity">
 
+
+    <TextView
+        android:id="@+id/scoreTextView1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/scoreTextView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/scoreTextView3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/userScoreTextView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:text="" />
 
     <Button
         android:id="@+id/getSubjectButton"

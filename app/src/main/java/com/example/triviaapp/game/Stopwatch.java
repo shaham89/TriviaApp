@@ -18,6 +18,7 @@ public class Stopwatch {
     private boolean isRunning;
 
     private static final long REFRESH_RATE_MS = 100;
+    private static final long SOME_DELAY_MS = 5;
     // Creates a new Handler
     final Handler handler = new Handler();
 
@@ -66,7 +67,7 @@ public class Stopwatch {
 
                 // Set the text view text.
                updateUi();
-                currentWaitingTimeMs -= REFRESH_RATE_MS;
+                currentWaitingTimeMs = currentWaitingTimeMs - REFRESH_RATE_MS - SOME_DELAY_MS;
 
                 if(currentWaitingTimeMs <= 0){
                     isRunning = false;

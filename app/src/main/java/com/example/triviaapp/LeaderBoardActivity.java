@@ -9,8 +9,6 @@ import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TIM
 import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TOTAL_CORRECT_ANSWERS_FIELD;
 import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TOTAL_GAMES_PLAYED_FIELD;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +18,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.triviaapp.customClasses.UserStats;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,13 +33,11 @@ public class LeaderBoardActivity extends AppCompatActivity {
     private static final String TAG = "LeaderBoardActivity";
     private FirebaseFirestore db;
     private final int NUMBER_OF_TOP_SCORES = 3;
-    private static UserStats[] topUsersStats;
-    private String subject;
     private FirebaseUser m_user;
-    private static long userBestScore;
-    private static double userBestTimeScore;
-    private static long totalGames;
-    private static long totalCorrectAnswers;
+
+    private TextView[] scoresTextView;
+    private TextView userScoreTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +49,30 @@ public class LeaderBoardActivity extends AppCompatActivity {
         m_user = FirebaseAuth.getInstance().getCurrentUser();
 
 
-        topUsersStats = new UserStats[NUMBER_OF_TOP_SCORES];
+        //topUsersStats = new UserStats[NUMBER_OF_TOP_SCORES];
         findViewById(R.id.getSubjectButton).setOnClickListener(new LeaderBoardActivity.chooseSubjectClickHandler());
-
-
+        scoresTextView = new TextView[NUMBER_OF_TOP_SCORES];
+        userScoreTextView = findViewById(R.id.userScoreTextView);
+        scoresTextView[0] = findViewById(R.id.scoreTextView1);
+        scoresTextView[1] = findViewById(R.id.scoreTextView2);
+        scoresTextView[2] = findViewById(R.id.scoreTextView3);
 
     }
+
+    private void updateTopScore(UserStats[] userStats){
+        int i = 0;
+        for(UserStats stats : userStats){
+            if(stats == null || stats.getTimeScore() == 0){
+                continue;
+            }
+            String text = stats.getDisplayName() + ": " + stats.getScore() + "/10" +
+                    " time: " + stats.getTimeScore();
+
+            scoresTextView[i].setText(text);
+            i += 1;
+        }
+    }
+
 
 
     @SuppressWarnings("ConstantConditions")
@@ -72,6 +87,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         int i = 0;
+                        UserStats[] topUsersStats = new UserStats[NUMBER_OF_TOP_SCORES];
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d(TAG, document.getId() + " => " + document.getData());
                             topUsersStats[i] = new UserStats((String)document.get(STATS_DISPLAY_NAME_FIELD),
@@ -80,10 +96,18 @@ public class LeaderBoardActivity extends AppCompatActivity {
                                     subject);
                             i += 1;
                         }
+                        updateTopScore(topUsersStats);
                     } else {
                         Log.d(TAG, "Error getting documents: ", task.getException());
                     }
                 });
+    }
+
+    private void updateUserStats(long score, double timeScore, long totalGames, long totalCorrectAnswers){
+        String text = "Your score: " + score +
+                " " + timeScore + ", total games:" + totalGames +
+                " totalCorrectAnswers:" + totalCorrectAnswers;
+        userScoreTextView.setText(text);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -96,14 +120,27 @@ public class LeaderBoardActivity extends AppCompatActivity {
         query.get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-
+                        boolean documentExist = false;
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d(TAG, document.getId() + " => " + document.getData());
-                            userBestScore = (long) document.get(STATS_SCORE_FIELD);
-                            userBestTimeScore = (double) document.get(STATS_TIME_SCORE_FIELD);
-                            totalGames = (long) document.get(STATS_TOTAL_GAMES_PLAYED_FIELD);
-                            totalCorrectAnswers = (long) document.get(STATS_TOTAL_CORRECT_ANSWERS_FIELD);
+                            long userBestScore = (long) document.get(STATS_SCORE_FIELD);
+                            double userBestTimeScore = (double) document.get(STATS_TIME_SCORE_FIELD);
+                            long totalGames = (long) document.get(STATS_TOTAL_GAMES_PLAYED_FIELD);
+                            long totalCorrectAnswers = (long) document.get(STATS_TOTAL_CORRECT_ANSWERS_FIELD);
+
+                            updateUserStats(userBestScore,
+                                    userBestTimeScore,
+                                    totalGames,
+                                    totalCorrectAnswers);
+                            documentExist = true;
+
                         }
+
+                        if(!documentExist){
+                            String text = "You haven't played competitive in this subject yet";
+                            userScoreTextView.setText(text);
+                        }
+
                     } else {
                         Log.d(TAG, "Error getting documents: ", task.getException());
                     }
@@ -122,17 +159,15 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     ActivityResultLauncher<Intent> getSubjectResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // Here, no request code
-                        Intent data = result.getData();
-                        assert data != null;
-                        subject = data.getStringExtra(String.valueOf(R.string.subject));
-                        getTopScore(subject);
-                        getUserScore(subject);
-                    }
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    // Here, no request code
+                    Intent data = result.getData();
+                    assert data != null;
+
+                    String subject = data.getStringExtra(String.valueOf(R.string.subject));
+                    getTopScore(subject);
+                    getUserScore(subject);
                 }
             });
 
