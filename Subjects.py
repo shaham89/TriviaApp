@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import ast
 import random
 
+
 def md5_hash(str):
     import hashlib
 
@@ -9,12 +10,19 @@ def md5_hash(str):
 
     return result.hexdigest()
 
+
 class Question:
+
+    QUESTION_TEXT = 'QuestionText'
+    OPTIONS_TEXT = 'Options'
+    TRUE_ANSWER_TEXT = 'TrueAnswer'
+    INDEX_TEXT = 'Index'
+    LENGTH_TEXT = 'Length'
 
     def __init__(self, question_text, options, trueAnswer):
         self.question_text = question_text
         self.options = list(options)
-        #shuffle the list to make it more random
+        # shuffle the list to make it more random
         random.shuffle(self.options)
         self.trueAnswer = md5_hash(trueAnswer)
 
@@ -30,6 +38,9 @@ class Question:
 
 class Subject(ABC):
 
+
+    QUESTION_COLLECTION_TEXT = u'subjects_questions'
+
     @abstractmethod
     def get_name(self):
         pass
@@ -38,78 +49,3 @@ class Subject(ABC):
     def init_questions(self, db):
         pass
 
-
-
-class Capitals(Subject):
-
-
-    NAME = 'capitals'
-
-    def get_name(self):
-        return self.NAME
-
-    # @staticmethod
-    # def get_un_countries():
-    #     cc = coco.CountryConverter()
-    #     c_list = list(dict(countries_for_language('en')).values())
-    #     print(len(c_list))
-    #     #standard_names = cc.convert(names=c_list, to='name_short')
-    #     UNmembershipDate = cc.convert(names=c_list, to='UNmember')
-    #
-    #     un_members = []
-    #     for i in range(len(c_list)):
-    #         # if the un membership date exist, the country is in the un
-    #         if type(UNmembershipDate[i]) == int:
-    #             un_members.append(c_list[i])
-    #
-    #     return un_members
-
-    @staticmethod
-    def get_questions():
-        main_question = 'What is the capital of '
-
-        capitals_file = open("Data\\Capitals.txt", "r", encoding="utf8")
-        answers = ast.literal_eval(capitals_file.read())
-        capitals_file.close()
-
-        countries_file = open("Data\\Countries.txt", "r", encoding="utf8")
-        country_list = ast.literal_eval(countries_file.read())
-        countries_file.close()
-
-        questions = []
-        for i in range(len(answers)):
-            questions.append(Question(main_question + country_list[i] + "?", answers[i], answers[i][0]))
-
-        return questions
-
-
-    def init_questions(self, db):
-        questions = self.get_questions()
-        QUESTION_TEXT = 'QuestionText'
-        OPTIONS_TEXT = 'Options'
-        TRUE_ANSWER_TEXT = 'TrueAnswer'
-        INDEX_TEXT = 'Index'
-        LENGTH_TEXT = 'Length'
-        QUESTION_COLLECTION_TEXT = u'subjects_questions'
-
-        i = 0
-        subject_name = self.get_name()
-        print(subject_name)
-        document_name = subject_name + "_subject"
-        collection_path = QUESTION_COLLECTION_TEXT + "/" + subject_name + "_subject/" + subject_name + "_questions"
-        print(collection_path)
-
-        for q in questions:
-
-
-            db.collection(collection_path).add({ QUESTION_TEXT: q.get_question(),
-                             OPTIONS_TEXT: q.get_options(),
-                             TRUE_ANSWER_TEXT: q.get_answer(),
-                             INDEX_TEXT: i})
-            i += 1
-        db.collection(QUESTION_COLLECTION_TEXT).document(document_name).set({LENGTH_TEXT: i})
-
-# qs = Capitals().get_questions()
-#
-# for question in qs:
-#     print('Question:' + question.get_question() + '   answers: ' + question.get_options())
