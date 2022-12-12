@@ -35,6 +35,9 @@ class Question:
     def get_answer(self):
         return self.trueAnswer
 
+    def __str__(self):
+        return self.question_text + ', options:' + ''.join(self.options) + "  true:" + self.trueAnswer
+
 
 class Subject(ABC):
 
