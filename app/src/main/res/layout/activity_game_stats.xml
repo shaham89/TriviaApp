@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="100"
-    tools:context=".GameStatsActivity">
+    tools:context=".game.GameStatsActivity">
 
 
     <LinearLayout

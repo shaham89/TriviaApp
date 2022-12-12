@@ -1,17 +1,14 @@
-package com.example.triviaapp;
+package com.example.triviaapp.game;
 
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 
 import androidx.annotation.RequiresApi;
 
 import com.mackhartley.roundedprogressbar.RoundedProgressBar;
 
-import java.text.MessageFormat;
 
 public class Stopwatch {
     private static final String TAG = "stopwatch";
@@ -58,12 +55,7 @@ public class Stopwatch {
 
         Log.d(TAG, "starting");
 
-        // Call the post() method,
-        // passing in a new Runnable.
-        // The post() method processes
-        // code without a delay,
-        // so the code in the Runnable
-        // will run almost immediately.
+
         handler.post(new Runnable() {
             @Override
             public void run()

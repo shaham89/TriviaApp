@@ -1,4 +1,4 @@
-package com.example.triviaapp;
+package com.example.triviaapp.game;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.triviaapp.custom_classes.Question;
-import com.example.triviaapp.custom_classes.Game;
+import com.example.triviaapp.ChooseSubjectActivity;
+import com.example.triviaapp.R;
+import com.example.triviaapp.customClasses.Question;
+import com.example.triviaapp.customClasses.Game;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -28,7 +30,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 
-public class CreateSoloRoomActivity extends AppCompatActivity {
+public class CreateGameActivity extends AppCompatActivity {
 
     private static final String TAG = "CreateRoomActivity";
 
@@ -45,7 +47,7 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_solo_room);
+        setContentView(R.layout.activity_create_game);
 
         db = FirebaseFirestore.getInstance();
         FirebaseAuth m_auth = FirebaseAuth.getInstance();
@@ -88,7 +90,7 @@ public class CreateSoloRoomActivity extends AppCompatActivity {
         @Override
         public void onClick(View view){
 
-            Intent intent = new Intent(CreateSoloRoomActivity.this, ChooseSubjectActivity.class);
+            Intent intent = new Intent(CreateGameActivity.this, ChooseSubjectActivity.class);
             getSubjectResult.launch(intent);
 
         }

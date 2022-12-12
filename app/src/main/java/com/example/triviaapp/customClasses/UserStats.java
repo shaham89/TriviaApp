@@ -1,4 +1,4 @@
-package com.example.triviaapp.custom_classes;
+package com.example.triviaapp.customClasses;
 
 public class UserStats extends User {
 

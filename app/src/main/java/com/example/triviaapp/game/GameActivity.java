@@ -1,4 +1,4 @@
-package com.example.triviaapp;
+package com.example.triviaapp.game;
 
 import android.content.Intent;
 import android.os.Build;
@@ -10,8 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.triviaapp.custom_classes.Question;
-import com.example.triviaapp.custom_classes.Game;
+import com.example.triviaapp.R;
+import com.example.triviaapp.customClasses.Question;
+import com.example.triviaapp.customClasses.Game;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

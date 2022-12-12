@@ -7,8 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.triviaapp.custom_classes.Question;
-import com.example.triviaapp.custom_classes.Game;
+import com.example.triviaapp.customClasses.Question;
+import com.example.triviaapp.customClasses.Game;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;

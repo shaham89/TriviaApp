@@ -1,4 +1,4 @@
-package com.example.triviaapp;
+package com.example.triviaapp.signin;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.triviaapp.HomeActivity;
+import com.example.triviaapp.R;
 import com.example.triviaapp.helperFunctions.CredentialsValidator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:weightSum="100"
     android:orientation="vertical"
-    tools:context=".GameActivity">
+    tools:context=".game.GameActivity">
 
     <TextView
         android:id="@+id/gameQuestionTextview"

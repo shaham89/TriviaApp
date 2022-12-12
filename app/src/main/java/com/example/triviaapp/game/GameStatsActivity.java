@@ -1,4 +1,4 @@
-package com.example.triviaapp;
+package com.example.triviaapp.game;
 
 
 import static com.example.triviaapp.helperFunctions.FireStoreConstants.ID_FIELD_FIELD;
@@ -19,9 +19,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.triviaapp.custom_classes.Game;
-import com.example.triviaapp.custom_classes.GameResults;
-import com.example.triviaapp.custom_classes.Question;
+import com.example.triviaapp.R;
+import com.example.triviaapp.customClasses.Game;
+import com.example.triviaapp.customClasses.GameResults;
+import com.example.triviaapp.customClasses.Question;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;

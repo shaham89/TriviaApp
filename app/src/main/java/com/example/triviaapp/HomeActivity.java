@@ -5,10 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.triviaapp.game.CreateGameActivity;
+import com.example.triviaapp.signin.SignUpActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -39,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     private class playClickHandler implements View.OnClickListener {
         @Override
         public void onClick(View view){
-            Intent intent = new Intent(getApplicationContext(), CreateSoloRoomActivity.class);
+            Intent intent = new Intent(getApplicationContext(), CreateGameActivity.class);
             boolean isCompetitive = view.getId() == R.id.playCompetitiveButton;
             intent.putExtra(String.valueOf(R.string.is_competitive_text), isCompetitive);
             startActivity(intent);
