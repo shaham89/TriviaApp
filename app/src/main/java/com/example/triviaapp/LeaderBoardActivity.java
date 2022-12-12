@@ -6,6 +6,8 @@ import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_DIS
 import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_SCORE_FIELD;
 import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_SUBJECT_FIELD;
 import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TIME_SCORE_FIELD;
+import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TOTAL_CORRECT_ANSWERS_FIELD;
+import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TOTAL_GAMES_PLAYED_FIELD;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -35,6 +37,10 @@ public class LeaderBoardActivity extends AppCompatActivity {
     private static UserStats[] topUsersStats;
     private String subject;
     private FirebaseUser m_user;
+    private static long userBestScore;
+    private static double userBestTimeScore;
+    private static long totalGames;
+    private static long totalCorrectAnswers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +86,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
                 });
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void getUserScore(String subject){
 
         Query query = db.collection(MAIN_STATS_COLLECTION)
@@ -92,7 +99,10 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d(TAG, document.getId() + " => " + document.getData());
-
+                            userBestScore = (long) document.get(STATS_SCORE_FIELD);
+                            userBestTimeScore = (double) document.get(STATS_TIME_SCORE_FIELD);
+                            totalGames = (long) document.get(STATS_TOTAL_GAMES_PLAYED_FIELD);
+                            totalCorrectAnswers = (long) document.get(STATS_TOTAL_CORRECT_ANSWERS_FIELD);
                         }
                     } else {
                         Log.d(TAG, "Error getting documents: ", task.getException());
@@ -121,6 +131,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
                         assert data != null;
                         subject = data.getStringExtra(String.valueOf(R.string.subject));
                         getTopScore(subject);
+                        getUserScore(subject);
                     }
                 }
             });

@@ -1,11 +1,13 @@
 package com.example.triviaapp;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.triviaapp.custom_classes.Question;
@@ -26,6 +28,7 @@ public class GameActivity extends AppCompatActivity {
     private Button[] answers;
     private TextView gameQuestionTextview;
     private int[] timeScores;
+    private Stopwatch stopwatch;
 
     private static boolean isFreezeState;
 
@@ -33,6 +36,7 @@ public class GameActivity extends AppCompatActivity {
     private static final long TIME_BETWEEN_QUESTIONS_MS = 2 * 1000;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +60,15 @@ public class GameActivity extends AppCompatActivity {
         currQuestion = m_game.getQuestions()[questionIndex];
         showCurrQuestion();
         isFreezeState = false;
+        stopwatch.reset();
 
         try {
             long start = System.currentTimeMillis();
             lock.wait(TIME_PER_QUESTION_MS);
             long finish = System.currentTimeMillis();
+
+            stopwatch.stop();
+
             isFreezeState = true;
             long timeElapsed = finish - start;
 
@@ -75,7 +83,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void playGame(){
+    private void playGame() {
         Thread game_thread = new Thread() {
             @Override
             public void run() {
@@ -155,6 +163,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void init_views(){
 
         answers = new Button[]{ findViewById(R.id.questionButton1),
@@ -165,8 +174,9 @@ public class GameActivity extends AppCompatActivity {
         for (Button answer : answers) {
             answer.setOnClickListener(new answerClickedHandler());
         }
-
+        long time = 5000;
         gameQuestionTextview = findViewById(R.id.gameQuestionTextview);
+        stopwatch = new Stopwatch(findViewById(R.id.stopWatchProgressBar), time);
     }
 
     //returns the hex string representation of a hashMd5 on string
