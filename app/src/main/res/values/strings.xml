@@ -33,10 +33,15 @@
     <string name="DEFAULT_QUESTION_NUM">20</string>
     <string name="competitive_game_text">Competitive game</string>
     <string name="room_name">Room name</string>
-    <string name="number_of_questions">Number of Questions</string>
+    <string name="number_of_questions">Number of Questions:</string>
     <string name="scores_text">scores</string>
     <string name="correct_answers_text">correctAnswers</string>
     <string name="is_competitive_text">is_competitive</string>
     <string name="play_competitive">Play competitive</string>
     <string name="leaderboards">leaderboards</string>
+    <string name="astronomy">astronomy</string>
+    <string name="questions_limit">1 - 50</string>
+    <string name="time_per_question">Time per question(seconds):</string>
+    <string name="time_per_question_limit">1 - 10</string>
+    <string name="image_id">subject_image_id</string>
 </resources>

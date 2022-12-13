@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,35 +9,100 @@
     tools:context=".game.CreateGameActivity">
 
 
-
-    <EditText
-        android:id="@+id/questionsNumberEditText"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
-        android:ems="10"
-        android:textAlignment="center"
-        android:inputType="numberSigned"
-        android:hint="@string/number_of_questions"
-        android:importantForAutofill="no" />
+        android:layout_weight="10"
+        android:weightSum="100"
+        android:paddingBottom="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/questionNumberTextView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="70"
+            android:textSize="25sp"
+            android:text="@string/number_of_questions"
+            tools:ignore="NestedWeights" />
+
+        <EditText
+            android:id="@+id/questionsNumberEditText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="30"
+            android:ems="10"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:inputType="numberSigned"
+            android:hint="@string/questions_limit"
+            android:importantForAutofill="no"
+            tools:ignore="NestedWeights" />
+
+    </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="40"
+        android:layout_weight="12"
         android:weightSum="100"
-        android:orientation="vertical">
+        android:paddingBottom="10dp"
+        android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/timePerQuestionTextView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="70"
+            android:textSize="25sp"
+            android:text="@string/time_per_question"
+            tools:ignore="NestedWeights" />
 
+        <EditText
+            android:id="@+id/timePerQuestionEditText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="30"
+            android:ems="10"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:inputType="numberSigned"
+            android:hint="@string/time_per_question_limit"
+            android:importantForAutofill="no"
+            tools:ignore="NestedWeights" />
 
     </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/currentSubjectTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:text="@string/capitals" />
+
+    <ImageView
+        android:id="@+id/subjectImage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="35"
+        app:srcCompat="@drawable/earth" />
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"/>
 
     <Button
         android:id="@+id/chooseSubjectButton"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_weight="15"
         android:text="@string/choose_subject"
         />
 
@@ -46,5 +112,7 @@
         android:layout_height="0dp"
         android:layout_weight="10"
         android:text="@string/start_game" />
+
+
 
 </LinearLayout>

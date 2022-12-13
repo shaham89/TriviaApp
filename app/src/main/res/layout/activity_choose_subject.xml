@@ -15,22 +15,60 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:weightSum="100"
             >
 
             <TextView
                 android:id="@+id/chooseSubjectTitleTextView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="10"
                 android:textSize="40sp"
                 android:textAlignment="center"
-                android:text="@string/choose_subject_title" />
+                android:text="@string/choose_subject_title"
+
+                android:paddingBottom="40dp"/>
+
+            <TextView
+                android:id="@+id/capitalsTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:textSize="40sp"
+                android:textAlignment="center"
+                android:text="@string/capitals" />
 
             <ImageView
                 android:id="@+id/capitals_image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="20"
                 app:srcCompat="@drawable/earth" />
 
+            <TextView
+                android:id="@+id/astronomyTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:textSize="40sp"
+                android:textAlignment="center"
+                android:text="@string/astronomy" />
+
+            <ImageView
+                android:id="@+id/astronomy_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="20"
+                app:srcCompat="@drawable/astronomy" />
+
+            <TextView
+                android:id="@+id/historyTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="30"
+                android:textSize="40sp"
+                android:textAlignment="center"
+                android:text="@string/astronomy" />
         </LinearLayout>
 
 

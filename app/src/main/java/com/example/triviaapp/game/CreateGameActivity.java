@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.triviaapp.ChooseSubjectActivity;
 import com.example.triviaapp.R;
@@ -96,6 +98,8 @@ public class CreateGameActivity extends AppCompatActivity {
         }
     }
 
+
+
     ActivityResultLauncher<Intent> getSubjectResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -106,6 +110,14 @@ public class CreateGameActivity extends AppCompatActivity {
                         Intent data = result.getData();
                         assert data != null;
                         m_game.setSubject(data.getStringExtra(String.valueOf(R.string.subject)));
+                        int imageID = data.getIntExtra(String.valueOf(R.string.image_id), 0);
+
+                        if (imageID != 0){
+                            final ImageView img = findViewById(R.id.subjectImage);
+                            img.setImageResource(imageID);
+                            final TextView subjectView = findViewById(R.id.currentSubjectTitleTextView);
+                            subjectView.setText(m_game.getSubject());
+                        }
 
                     }
                 }
