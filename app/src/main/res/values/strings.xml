@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TriviaApp</string>
+    <string name="app_name">TriviaBat</string>
     <string name="username_hint">Username</string>
     <string name="LoginTitle">TriviaBay</string>
     <string name="password_hint">Password</string>
@@ -40,10 +40,10 @@
     <string name="play_competitive">Play competitive</string>
     <string name="leaderboards">leaderboards</string>
     <string name="astronomy">astronomy</string>
-    <string name="questions_limit">1 - 50</string>
+    <string name="questions_limit">1 – 50</string>
     <string name="time_per_question">Time per question(seconds):</string>
-    <string name="time_per_question_limit">1 - 10</string>
+    <string name="time_per_question_limit">1 – 10</string>
     <string name="image_id">subject_image_id</string>
     <string name="history">history</string>
-    <string name="generalKnowledge">generel_knowledge</string>
+    <string name="generalKnowledge">general_knowledge</string>
 </resources>

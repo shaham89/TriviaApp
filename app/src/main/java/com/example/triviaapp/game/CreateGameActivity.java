@@ -37,6 +37,7 @@ public class CreateGameActivity extends AppCompatActivity {
     private static final String TAG = "CreateRoomActivity";
 
     private EditText questionNumberEditText;
+    private EditText questionsTimeEditText;
 
 
     private Game m_game;
@@ -69,6 +70,9 @@ public class CreateGameActivity extends AppCompatActivity {
         if(m_game.isCompetitive()){
             questionNumberEditText.setText(String.valueOf(Game.COMPETITIVE_QUESTION_NUMBER));
             questionNumberEditText.setEnabled(false);
+
+            questionsTimeEditText.setText(String.valueOf(Game.COMPETITIVE_TIME_PER_QUESTION_SEC));
+            questionNumberEditText.setEnabled(false);
         }
 
     }
@@ -82,6 +86,8 @@ public class CreateGameActivity extends AppCompatActivity {
         // To listen for a switch's checked/unchecked state changes
         //isCompetitiveSwitch.setOnCheckedChangeListener();
 
+        questionsTimeEditText = findViewById(R.id.timePerQuestionEditText);
+        questionsTimeEditText.setText(String.valueOf(Game.DEFAULT_TIME_PER_QUESTION_SEC));
 
         questionNumberEditText = findViewById(R.id.questionsNumberEditText);
 

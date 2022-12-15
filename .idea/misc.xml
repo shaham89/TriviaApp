@@ -3,7 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/magshimim/AndroidStudioProjects/app/src/main/res/layout-v26/activity_game.xml" value="0.1" />
+        <entry key="..\:/Users/magshimim/AndroidStudioProjects/app/src/main/res/layout-v26/activity_game.xml" value="0.18" />
         <entry key="..\:/Users/magshimim/AndroidStudioProjects/app/src/main/res/layout/activity_choose_subject.xml" value="0.15" />
         <entry key="..\:/Users/magshimim/AndroidStudioProjects/app/src/main/res/layout/activity_create_game.xml" value="0.17028985507246377" />
         <entry key="..\:/Users/magshimim/AndroidStudioProjects/app/src/main/res/layout/activity_create_room.xml" value="0.22" />
@@ -20,6 +20,8 @@
         <entry key="..\:/Users/magshimim/AndroidStudioProjects/app/src/main/res/layout/activity_subject_choose.xml" value="0.18" />
         <entry key="..\:/Users/magshimim/AndroidStudioProjects/app/src/main/res/layout/content_scrolling.xml" value="0.1" />
         <entry key="..\:/Users/magshimim/AndroidStudioProjects/app/src/main/res/menu/menu_subject_choose.xml" value="0.1" />
+        <entry key="..\:/Users/magshimim/AndroidStudioProjects/app/src/main/res/mipmap-anydpi-v26/drop_logo.xml" value="0.1" />
+        <entry key="..\:/Users/magshimim/AndroidStudioProjects/app/src/main/res/mipmap-anydpi-v26/drop_logo_round.xml" value="0.1" />
       </map>
     </option>
   </component>

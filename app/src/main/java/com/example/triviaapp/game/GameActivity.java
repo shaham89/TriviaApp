@@ -164,6 +164,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    //for stopwatch
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void init_views(){
 
