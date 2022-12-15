@@ -23,6 +23,8 @@ def get_questions(file_name):
 def upload_pkl(subject_name, db):
     FILE_NAME = "Data\\" + subject_name + ".pkl"
 
+    QUESTION_COLLECTION_TEXT = u'subjects_questions'
+
     questions = get_questions(FILE_NAME)
 
     i = 0
