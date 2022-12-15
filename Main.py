@@ -23,9 +23,8 @@ CAPITALS_TEXT = u'capitals'
 #
 #         subject().init_questions(db)
 
-#two 50 easy and one 33 medium
-# upload_pkl("general_knowledge", db)
 
-upload_pkl("history", db)
+
+upload_pkl("", db)
 
 #init_subjects_questions()

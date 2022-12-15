@@ -52,3 +52,21 @@ class Subject(ABC):
     def init_questions(self, db):
         pass
 
+
+#astronomy
+#used question are: hard, 40; easy, 43; medium, 59
+
+#two 50 easy and one 33 medium
+# upload_pkl("history", db)
+
+
+#two easy(50, 33) and one 50 medium
+# upload_pkl("general_knowledge", db)
+
+#two easy(50, 33) probably
+#upload_pkl("world_cup", db)
+
+#two long mediums one hard
+#upload_pkl("harry_potter", db)
+
+
