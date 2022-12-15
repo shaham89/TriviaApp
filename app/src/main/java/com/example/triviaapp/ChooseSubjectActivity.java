@@ -39,6 +39,8 @@ public class ChooseSubjectActivity extends AppCompatActivity {
 
         findViewById(R.id.capitals_image).setOnClickListener(new imageClickHandler());
         findViewById(R.id.astronomy_image).setOnClickListener(new imageClickHandler());
+        findViewById(R.id.history_image).setOnClickListener(new imageClickHandler());
+        findViewById(R.id.generalKnowledge_image).setOnClickListener(new imageClickHandler());
     }
 
     protected class imageClickHandler implements View.OnClickListener {
@@ -57,9 +59,14 @@ public class ChooseSubjectActivity extends AppCompatActivity {
                     subject = getString(R.string.astronomy);
                     subjectImageID = R.drawable.astronomy;
                     break;
-                default:
-                    subject = getString(R.string.capitals);
-                    subjectImageID = R.drawable.earth;
+                case R.id.history_image:
+                    subject = getString(R.string.history);
+                    subjectImageID = R.drawable.history;
+                    break;
+                case R.id.generalKnowledge_image:
+                    subject = getString(R.string.generalKnowledge);
+                    subjectImageID = R.drawable.general_knowledge;
+                    break;
 
             }
 

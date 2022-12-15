@@ -44,4 +44,6 @@
     <string name="time_per_question">Time per question(seconds):</string>
     <string name="time_per_question_limit">1 - 10</string>
     <string name="image_id">subject_image_id</string>
+    <string name="history">history</string>
+    <string name="generalKnowledge">generel_knowledge</string>
 </resources>
