@@ -4,6 +4,7 @@ from firebase_admin import firestore
 from Subjects import *
 from Capitals import Capitals
 from Astronomy import Astronomy
+from Uploader import *
 
 cred = credentials.Certificate("servicesKey.json")
 firebase_admin.initialize_app(cred)
@@ -15,13 +16,13 @@ QUESTION_COLLECTION_TEXT = u'subjects_questions'
 CAPITALS_TEXT = u'capitals'
 
 #SUBJECT_LIST = [Capitals]
-SUBJECT_LIST = [Astronomy]
+# SUBJECT_LIST = [Astronomy]
+#
+# def init_subjects_questions():
+#     for subject in SUBJECT_LIST:
+#
+#         subject().init_questions(db)
 
-def init_subjects_questions():
-    for subject in SUBJECT_LIST:
+#upload_pkl("general_knowledge", db)
 
-        subject().init_questions(db)
-
-
-
-init_subjects_questions()
+#init_subjects_questions()
