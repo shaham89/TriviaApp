@@ -12,7 +12,7 @@ def get_questions_dict():
         ("In what year Israel made peace with Jordan?", '1995', '1994', '1983', '1999', 2),
         ("Who was the first person in Israel to receive the Noble price?", 'Yosef Agnon', 'Menachem Begin', 'Shimon Peres', 'Yitzhak Rabin', 1),
         ("Israel was named after which person?", 'Israel', 'Jakob', 'Abraham', 'Israeli', 2),
-                        ()
+
     ]
 
     return israel_questions_list
