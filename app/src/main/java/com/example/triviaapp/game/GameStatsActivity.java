@@ -237,6 +237,15 @@ public class GameStatsActivity extends AppCompatActivity {
         graphView.addSeries(inCorrectSeries);
     }
 
+    private String[] getYAxis(int timePerQuestions){
+        String[] yAxis = new String[timePerQuestions + 1];
+
+        for (int i = 0; i < timePerQuestions + 1; i++) {
+            yAxis[i] = i + "000";
+        }
+        return yAxis;
+    }
+
     private void initGraph(){
         graphView.setTitle("Time scores");
 
@@ -256,14 +265,14 @@ public class GameStatsActivity extends AppCompatActivity {
 // Set manual Y bounds
         graphView.getViewport().setYAxisBoundsManual(true);
         graphView.getViewport().setMinY(0);
-        graphView.getViewport().setMaxY(5100);
+        graphView.getViewport().setMaxY(m_gameResults.getTimePerQuestionSec() * 1000L + 100);
 
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
         String[] axis = generateXAxis(m_gameResults.getNumberOfQuestions());
         Log.w("Stats activity", Arrays.toString(axis));
         staticLabelsFormatter.setHorizontalLabels(axis);
 
-        staticLabelsFormatter.setVerticalLabels(new String[] {"0,", "1000", "2000", "3000","4000", "5000"});
+        staticLabelsFormatter.setVerticalLabels(getYAxis(m_gameResults.getTimePerQuestionSec()));
         //staticLabelsFormatter.setVerticalLabels(new String[] {"1000", "2000"});
 
         graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TriviaBat</string>
+    <string name="app_name">TriviaDrop</string>
     <string name="username_hint">Username</string>
     <string name="LoginTitle">TriviaBay</string>
     <string name="password_hint">Password</string>
@@ -45,5 +45,7 @@
     <string name="time_per_question_limit">1 – 10</string>
     <string name="image_id">subject_image_id</string>
     <string name="history">history</string>
-    <string name="generalKnowledge">general_knowledge</string>
+    <string name="generalKnowledge">general knowledge</string>
+    <string name="harryPotter">harry potter</string>
+    <string name="world_cup_title">world cup</string>
 </resources>

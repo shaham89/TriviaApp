@@ -93,10 +93,13 @@
         app:srcCompat="@drawable/earth" />
 
 
-    <Space
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"/>
+        android:layout_weight="5"
+        android:orientation="vertical">
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/chooseSubjectButton"

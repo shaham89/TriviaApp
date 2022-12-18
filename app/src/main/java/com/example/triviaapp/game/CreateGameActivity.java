@@ -164,13 +164,16 @@ public class CreateGameActivity extends AppCompatActivity {
             //m_game.setCompetitive(isCompetitiveSwitch.isChecked());
             if(m_game.isCompetitive()){
                 numberOfWantedQuestions = Game.COMPETITIVE_QUESTION_NUMBER;
+                m_game.setTimePerQuestionSec(Game.COMPETITIVE_TIME_PER_QUESTION_SEC);
             } else {
                 numberOfWantedQuestions = Integer.parseInt(questionNumberEditText.getText().toString());
+                m_game.setTimePerQuestionSec(Integer.parseInt(questionsTimeEditText.getText().toString()));
             }
 
             callGetQuestions();
             waitUntilQuestionsAreRead();
         }
+
     }
 
     private void startGameActivity(){

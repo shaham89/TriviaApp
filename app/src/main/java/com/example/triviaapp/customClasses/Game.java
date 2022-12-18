@@ -6,8 +6,17 @@ public class Game implements Serializable {
     protected boolean isCompetitive;
     protected String subject;
     protected Question[] questions;
+    protected int timePerQuestionSec;
 
     protected int numberOfQuestions = 0;
+
+    public int getTimePerQuestionSec() {
+        return timePerQuestionSec;
+    }
+
+    public void setTimePerQuestionSec(int timePerQuestionSec) {
+        this.timePerQuestionSec = timePerQuestionSec;
+    }
 
     public boolean isCompetitive() {
         return isCompetitive;
@@ -43,12 +52,13 @@ public class Game implements Serializable {
     public static final int DEFAULT_TIME_PER_QUESTION_SEC = 5;
 
     public static final int COMPETITIVE_QUESTION_NUMBER = 4;
-    public static final int COMPETITIVE_TIME_PER_QUESTION_SEC = 5;
+    public static final int COMPETITIVE_TIME_PER_QUESTION_SEC = 11;
 
     public Game() {
         this.subject = DEFAULT_SUBJECT;
         this.isCompetitive = false;
         this.questions = null;
+        this.timePerQuestionSec = Game.DEFAULT_TIME_PER_QUESTION_SEC;
     }
 
     public Game(Game game){
@@ -56,6 +66,7 @@ public class Game implements Serializable {
         this.isCompetitive = game.isCompetitive;
         this.questions = game.questions;
         this.numberOfQuestions = game.numberOfQuestions;
+        this.timePerQuestionSec = game.timePerQuestionSec;
     }
 
 }

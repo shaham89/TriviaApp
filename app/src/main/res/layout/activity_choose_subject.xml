@@ -8,14 +8,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:weightSum="100"
+            android:weightSum="200"
             >
 
             <TextView
@@ -92,6 +92,39 @@
                 android:layout_height="0dp"
                 android:layout_weight="20"
                 app:srcCompat="@drawable/general_knowledge" />
+
+            <TextView
+                android:id="@+id/harryPotterTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:textSize="40sp"
+                android:textAlignment="center"
+                android:text="@string/harryPotter" />
+
+            <ImageView
+                android:id="@+id/harryPotter_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="20"
+                app:srcCompat="@drawable/harry_potter" />
+
+            <TextView
+                android:id="@+id/worldCupTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:textSize="40sp"
+                android:textAlignment="center"
+                android:text="@string/world_cup_title" />
+
+            <ImageView
+                android:id="@+id/worldCup_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="20"
+                app:srcCompat="@drawable/world_cup" />
+
 
         </LinearLayout>
 

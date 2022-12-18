@@ -65,7 +65,7 @@ public class GameActivity extends AppCompatActivity {
 
         try {
             long start = System.currentTimeMillis();
-            lock.wait(TIME_PER_QUESTION_MS);
+            lock.wait(m_game.getTimePerQuestionSec() * 1000L);
             long finish = System.currentTimeMillis();
 
             stopwatch.stop();
@@ -176,7 +176,7 @@ public class GameActivity extends AppCompatActivity {
         for (Button answer : answers) {
             answer.setOnClickListener(new answerClickedHandler());
         }
-        long time = 5000;
+        long time = m_game.getTimePerQuestionSec() * 1000L;
         gameQuestionTextview = findViewById(R.id.gameQuestionTextview);
         stopwatch = new Stopwatch(findViewById(R.id.stopWatchProgressBar), time);
     }

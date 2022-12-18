@@ -15,7 +15,6 @@
         android:layout_height="0dp"
         android:autoSizeMinTextSize="12sp"
         android:autoSizeMaxTextSize="100sp"
-        android:layout_marginBottom="0dp"
         />
 
 <!--    android:autoSizeStepGranularity="2sp"-->
@@ -33,11 +32,15 @@
         />
 
 
-    <Space
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3" />
+        android:layout_weight="4"
+        android:orientation="vertical"
+        tools:ignore="UselessLeaf">
 
+    </LinearLayout>
 
 
     <LinearLayout
@@ -47,6 +50,7 @@
             android:weightSum="100"
             android:orientation="vertical"
             tools:ignore="NestedWeights">
+
 
 
 
