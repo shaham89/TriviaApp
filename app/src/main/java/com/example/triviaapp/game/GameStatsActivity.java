@@ -14,11 +14,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.triviaapp.HomeActivity;
 import com.example.triviaapp.R;
 import com.example.triviaapp.customClasses.Game;
 import com.example.triviaapp.customClasses.GameResults;
@@ -166,10 +168,20 @@ public class GameStatsActivity extends AppCompatActivity {
 
     }
 
+    private class startGameClickHandler implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view){
+            Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(i);
+        }
+
+    }
+
     private void initViews(){
         graphView = findViewById(R.id.scoresGraph);
         dataPointTextView = findViewById(R.id.dataPointTextView);
-
+        findViewById(R.id.home_button_from_stats).setOnClickListener(new startGameClickHandler());
         initTextViewsScore();
         initGraph();
         initSeries();
@@ -178,14 +190,18 @@ public class GameStatsActivity extends AppCompatActivity {
     private void initTextViewsScore(){
 
         TextView avgView = findViewById(R.id.averageScore);
-        avgView.setText(String.format("Average Time Score: %s", m_gameResults.getAverageTimeScore()));
-
-        TextView answerScores = findViewById(R.id.answerScore);
-
-        String correctAnswerRatio = String.format("%s/%s Correct Answers",
+        String msg = String.format("Average Time: %.2f\n%s/%s Correct",
+                m_gameResults.getAverageTimeScore(),
                 m_gameResults.getNumberOfCorrectQuestions(), m_gameResults.getNumberOfQuestions());
 
-        answerScores.setText(correctAnswerRatio);
+        avgView.setText(msg);
+
+//        TextView answerScores = findViewById(R.id.answerScore);
+//
+//        String correctAnswerRatio = String.format("%s/%s Correct Answers",
+//                m_gameResults.getNumberOfCorrectQuestions(), m_gameResults.getNumberOfQuestions());
+//
+//        answerScores.setText(correctAnswerRatio);
     }
 
     private static String[] generateXAxis(int size){

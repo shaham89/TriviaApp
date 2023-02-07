@@ -33,7 +33,7 @@ public class GameActivity extends AppCompatActivity {
 
     private static boolean isFreezeState;
 
-    private static final long TIME_PER_QUESTION_MS = 5 * 1000;
+    //private static final long TIME_PER_QUESTION_MS = 5 * 1000;
     private static final long TIME_BETWEEN_QUESTIONS_MS = 2 * 1000;
 
 

@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_weight="30"
         android:layout_height="0dp"
-        android:autoSizeMinTextSize="12sp"
-        android:autoSizeMaxTextSize="100sp"
+
+        android:autoSizeTextType="uniform"
         />
 
 <!--    android:autoSizeStepGranularity="2sp"-->

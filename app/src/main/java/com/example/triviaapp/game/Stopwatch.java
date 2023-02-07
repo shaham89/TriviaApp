@@ -34,6 +34,7 @@ public class Stopwatch {
     }
 
 
+
     private void updateUi(){
         //timeTextView.setText(MessageFormat.format("{0} ms", currentWaitingTimeMs));
         double percentage = 100 * (double)currentWaitingTimeMs / maxWaitingTimeMs;

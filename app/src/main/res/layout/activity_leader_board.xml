@@ -13,6 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="15"
+        android:textSize="25sp"
+        android:textAlignment="center"
         android:text="" />
 
     <TextView
@@ -20,13 +22,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="15"
+        android:textAlignment="center"
+        android:textSize="25sp"
         android:text="" />
 
     <TextView
         android:id="@+id/scoreTextView3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:textSize="25sp"
         android:layout_weight="15"
+        android:textAlignment="center"
         android:text="" />
 
     <TextView
@@ -34,6 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="15"
+        android:textAlignment="center"
+        android:textSize="25sp"
         android:text="" />
 
     <Button
@@ -41,4 +49,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/choose_subject" />
+
+    <Button
+        android:id="@+id/leaderboard_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/home" />
+
 </LinearLayout>

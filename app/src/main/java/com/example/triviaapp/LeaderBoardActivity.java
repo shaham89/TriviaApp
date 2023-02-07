@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.triviaapp.customClasses.UserStats;
@@ -56,6 +57,18 @@ public class LeaderBoardActivity extends AppCompatActivity {
         scoresTextView[0] = findViewById(R.id.scoreTextView1);
         scoresTextView[1] = findViewById(R.id.scoreTextView2);
         scoresTextView[2] = findViewById(R.id.scoreTextView3);
+
+        Button b = findViewById(R.id.leaderboard_home);
+        b.setOnClickListener(new startGameClickHandler());
+    }
+
+    private class startGameClickHandler implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view){
+            Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(i);
+        }
 
     }
 

@@ -24,14 +24,21 @@
             android:textAlignment="center"
             tools:ignore="NestedWeights" />
 
-        <TextView
-            android:id="@+id/answerScore"
+        <Button
+            android:id="@+id/home_button_from_stats"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="50"
-            android:textSize="25sp"
-            android:textAlignment="center"
-             />
+            android:text="@string/home" />
+
+        <!--        <TextView-->
+<!--            android:id="@+id/answerScore"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="50"-->
+<!--            android:textSize="25sp"-->
+<!--            android:textAlignment="center"-->
+<!--             />-->
     </LinearLayout>
 
     <TextView

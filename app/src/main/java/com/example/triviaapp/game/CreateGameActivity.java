@@ -40,6 +40,7 @@ public class CreateGameActivity extends AppCompatActivity {
     private EditText questionsTimeEditText;
 
 
+
     private Game m_game;
     private static ArrayList<Question> questions;
     private int numberOfWantedQuestions;
@@ -198,11 +199,11 @@ public class CreateGameActivity extends AppCompatActivity {
                 int maxQuestions = Objects.requireNonNull(document.getLong("Length")).intValue();
                 getQuestions(numberOfWantedQuestions, maxQuestions);
                 Log.d(TAG, "Questions:" + questions);
-
             } else {
                 Log.d(TAG, "Cached get failed: ", task.getException());
             }
         });
+
     }
 
     private int getRandomNumber(int max) {
