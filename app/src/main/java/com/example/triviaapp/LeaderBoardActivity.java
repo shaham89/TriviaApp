@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.triviaapp.customClasses.Subject;
 import com.example.triviaapp.customClasses.UserStats;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -57,7 +58,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
         scoresTextView[0] = findViewById(R.id.scoreTextView1);
         scoresTextView[1] = findViewById(R.id.scoreTextView2);
         scoresTextView[2] = findViewById(R.id.scoreTextView3);
-
+        
         Button b = findViewById(R.id.leaderboard_home);
         b.setOnClickListener(new startGameClickHandler());
     }
@@ -177,10 +178,10 @@ public class LeaderBoardActivity extends AppCompatActivity {
                     // Here, no request code
                     Intent data = result.getData();
                     assert data != null;
-
-                    String subject = data.getStringExtra(String.valueOf(R.string.subject));
-                    getTopScore(subject);
-                    getUserScore(subject);
+                    Subject chosen_subject = (Subject) data.getSerializableExtra(String.valueOf(R.string.subject));
+                    String subjectName = chosen_subject.getSubjectName();
+                    getTopScore(subjectName);
+                    getUserScore(subjectName);
                 }
             });
 

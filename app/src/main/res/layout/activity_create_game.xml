@@ -15,6 +15,7 @@
         android:layout_weight="10"
         android:weightSum="100"
         android:paddingBottom="10dp"
+        android:layoutDirection="ltr"
         android:orientation="horizontal">
 
         <TextView
@@ -48,6 +49,7 @@
         android:layout_weight="12"
         android:weightSum="100"
         android:paddingBottom="10dp"
+        android:layoutDirection="ltr"
         android:orientation="horizontal">
 
         <TextView

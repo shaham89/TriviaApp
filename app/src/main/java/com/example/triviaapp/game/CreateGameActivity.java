@@ -19,6 +19,7 @@ import com.example.triviaapp.ChooseSubjectActivity;
 import com.example.triviaapp.R;
 import com.example.triviaapp.customClasses.Question;
 import com.example.triviaapp.customClasses.Game;
+import com.example.triviaapp.customClasses.Subject;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -116,8 +117,9 @@ public class CreateGameActivity extends AppCompatActivity {
                         // Here, no request code
                         Intent data = result.getData();
                         assert data != null;
-                        m_game.setSubject(data.getStringExtra(String.valueOf(R.string.subject)));
-                        int imageID = data.getIntExtra(String.valueOf(R.string.image_id), 0);
+                        Subject chosen_subject = (Subject) data.getSerializableExtra(String.valueOf(R.string.subject));
+                        m_game.setSubject(chosen_subject.getSubjectDisplayName());
+                        int imageID = chosen_subject.getSubjectImageId();//data.getIntExtra(String.valueOf(R.string.image_id), 0);
 
                         if (imageID != 0){
                             final ImageView img = findViewById(R.id.subjectImage);

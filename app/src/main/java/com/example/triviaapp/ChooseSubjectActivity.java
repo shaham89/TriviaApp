@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.example.triviaapp.customClasses.Question;
 import com.example.triviaapp.customClasses.Game;
+import com.example.triviaapp.customClasses.Subject;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class ChooseSubjectActivity extends AppCompatActivity {
     private int subjectImageID;
     private ArrayList<Question> questions;
     private FirebaseFirestore db;
+    private Subject chosen_subject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,28 +56,34 @@ public class ChooseSubjectActivity extends AppCompatActivity {
             int m_id = view.getId();
             switch (m_id){
                 case R.id.capitals_image:
-                    subject = getString(R.string.capitals);
-                    subjectImageID = R.drawable.earth;
+                    chosen_subject = new Subject(Subject.subjectNameCapitals,
+                            R.drawable.earth,
+                            Subject.displayNameCapitals);
                     break;
                 case R.id.astronomy_image:
-                    subject = getString(R.string.astronomy);
-                    subjectImageID = R.drawable.astronomy;
+                    chosen_subject = new Subject(Subject.subjectNameAstronomy,
+                            R.drawable.astronomy,
+                            Subject.displayNameAstronomy);
                     break;
                 case R.id.history_image:
-                    subject = getString(R.string.history);
-                    subjectImageID = R.drawable.history;
+                    chosen_subject = new Subject(Subject.subjectNameHistory,
+                            R.drawable.history,
+                            Subject.displayNameHistory);
                     break;
                 case R.id.generalKnowledge_image:
-                    subject = "general_knowledge";
-                    subjectImageID = R.drawable.general_knowledge;
+                    chosen_subject = new Subject(Subject.subjectNameGeneralKnowledge,
+                            R.drawable.general_knowledge,
+                            Subject.displayNameGeneralKnowledge);
                     break;
                 case R.id.harryPotter_image:
-                    subject = "harry_potter";
-                    subjectImageID = R.drawable.harry_potter;
+                    chosen_subject = new Subject(Subject.subjectNameHarryPotter,
+                            R.drawable.harry_potter,
+                            Subject.displayNameHarryPotter);
                     break;
                 case R.id.worldCup_image:
-                    subject = "world_cup";
-                    subjectImageID = R.drawable.world_cup;
+                    chosen_subject = new Subject(Subject.subjectNameWorldCup,
+                            R.drawable.world_cup,
+                            Subject.displayNameWorldCup);
                     break;
             }
 
@@ -87,9 +95,9 @@ public class ChooseSubjectActivity extends AppCompatActivity {
 
     private void returnSubject(){
         Intent intent = new Intent();
-        //intent.putExtra(String.valueOf(R.string.room), m_room);
-        intent.putExtra(String.valueOf(R.string.subject), subject);
-        intent.putExtra(String.valueOf(R.string.image_id), subjectImageID);
+        intent.putExtra(String.valueOf(R.string.subject), chosen_subject);
+//        intent.putExtra(String.valueOf(R.string.subject), subject);
+//        intent.putExtra(String.valueOf(R.string.image_id), subjectImageID);
         setResult(Activity.RESULT_OK, intent);
         finish();
 
