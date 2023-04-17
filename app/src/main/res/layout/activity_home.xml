@@ -31,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="25"
+            android:textSize="30sp"
             android:text="@string/create_game"
             tools:ignore="NestedWeights" />
 
@@ -38,6 +39,8 @@
             android:id="@+id/playCompetitiveButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:textSize="30sp"
+
             android:layout_weight="25"
             android:text="@string/play_competitive" />
 
@@ -45,12 +48,14 @@
             android:id="@+id/leaderBoardsButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:textSize="30sp"
             android:layout_weight="25"
             android:text="@string/leaderboards" />
         <Button
             android:id="@+id/logoutButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:textSize="30sp"
             android:layout_weight="25"
             android:backgroundTint="@android:color/holo_red_dark"
 

@@ -136,6 +136,7 @@ public class GameActivity extends AppCompatActivity {
             }
         }
     }
+
     //change the color of all the buttons to the default value
     private void resetButtonColors(){
         for(Button answer: answers){

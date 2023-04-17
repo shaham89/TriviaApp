@@ -74,7 +74,7 @@ public class CreateGameActivity extends AppCompatActivity {
             questionNumberEditText.setEnabled(false);
 
             questionsTimeEditText.setText(String.valueOf(Game.COMPETITIVE_TIME_PER_QUESTION_SEC));
-            questionNumberEditText.setEnabled(false);
+            questionsTimeEditText.setEnabled(false);
         }
 
     }
@@ -92,7 +92,6 @@ public class CreateGameActivity extends AppCompatActivity {
         questionsTimeEditText.setText(String.valueOf(Game.DEFAULT_TIME_PER_QUESTION_SEC));
 
         questionNumberEditText = findViewById(R.id.questionsNumberEditText);
-
         questionNumberEditText.setText(String.valueOf(Game.DEFAULT_QUESTION_NUMBER));
     }
 
@@ -198,6 +197,7 @@ public class CreateGameActivity extends AppCompatActivity {
                 // Document found in the offline cache
                 DocumentSnapshot document = task.getResult();
                 Log.d(TAG, "Cached document data: " + document.getData());
+                long test = document.getLong("Length");
                 int maxQuestions = Objects.requireNonNull(document.getLong("Length")).intValue();
                 getQuestions(numberOfWantedQuestions, maxQuestions);
                 Log.d(TAG, "Questions:" + questions);

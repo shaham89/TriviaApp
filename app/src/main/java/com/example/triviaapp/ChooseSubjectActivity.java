@@ -82,7 +82,7 @@ public class ChooseSubjectActivity extends AppCompatActivity {
                     break;
                 case R.id.worldCup_image:
                     chosen_subject = new Subject(Subject.subjectNameWorldCup,
-                            R.drawable.world_cup,
+                            R.drawable.worldcup,
                             Subject.displayNameWorldCup);
                     break;
             }

@@ -52,7 +52,7 @@ public class Game implements Serializable {
     public static final int DEFAULT_TIME_PER_QUESTION_SEC = 5;
 
     public static final int COMPETITIVE_QUESTION_NUMBER = 4;
-    public static final int COMPETITIVE_TIME_PER_QUESTION_SEC = 11;
+    public static final int COMPETITIVE_TIME_PER_QUESTION_SEC = 5;
 
     public Game() {
         this.subject = DEFAULT_SUBJECT;
