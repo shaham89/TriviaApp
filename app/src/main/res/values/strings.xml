@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">TriviaDrop</string>
     <string name="username_hint">Username</string>
-    <string name="LoginTitle">TriviaBay</string>
+    <string name="LoginTitle">TriviaDrop</string>
     <string name="password_hint">Password</string>
-    <string name="signup_button_text">SignUP</string>
+    <string name="signup_button_text">Sign Up</string>
     <string name="title_activity_login">LoginActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -17,14 +17,14 @@
     <string name="soloButtonText">Solo</string>
     <string name="email_hint">Email</string>
     <string name="SignUpTitle">SignUp</string>
-    <string name="already_registered_try_login">Already registered? Try login</string>
+    <string name="already_registered_try_login">  Already registered? Try login</string>
     <string name="try_signUp_text">Don\'t have an account yet? try SignUp</string>
     <string name="logout">LOGOUT</string>
     <string name="display_name">Display name</string>
     <string name="choose_subject_title">Choose Subject</string>
     <string name="is_solo">isSolo</string>
     <string name="capitals">capitals</string>
-    <string name="create_game">Play Practice</string>
+    <string name="create_game">Practice Mode</string>
     <string name="game_intent_text">Game</string>
     <string name="questions">Questions</string>
     <string name="start_game">Start Game</string>
@@ -37,8 +37,8 @@
     <string name="scores_text">scores</string>
     <string name="correct_answers_text">correctAnswers</string>
     <string name="is_competitive_text">is_competitive</string>
-    <string name="play_competitive">Play competitive</string>
-    <string name="leaderboards">leaderboards</string>
+    <string name="play_competitive">Competitive Mode</string>
+    <string name="leaderboards">leaderboard</string>
     <string name="astronomy">astronomy</string>
     <string name="questions_limit">1 – 50</string>
     <string name="time_per_question">Time per question(seconds):</string>

@@ -3,35 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#bdb5a0"
+    android:orientation="vertical"
     tools:context=".ChooseSubjectActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:weightSum="200"
+            android:weightSum="100"
             >
 
             <TextView
                 android:id="@+id/chooseSubjectTitleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="40sp"
-                android:textAlignment="center"
+                android:fontFamily="@font/abril_fatface"
+                android:paddingBottom="60dp"
                 android:text="@string/choose_subject_title"
-                android:fontFamily="@font/coiny"
-                android:paddingBottom="40dp"/>
+                android:textColor="#660322"
+                android:textAlignment="center"
+                android:textSize="50sp" />
 
             <TextView
                 android:id="@+id/capitalsTitleTextView"
                 style="@style/images_titles_style"
-
                 android:text="@string/capitals"
                  />
 

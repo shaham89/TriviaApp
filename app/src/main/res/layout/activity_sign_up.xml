@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/hh"
     android:orientation="vertical"
     android:weightSum="100"
     tools:context=".signin.SignUpActivity">
@@ -12,40 +13,49 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/love_ya_like_a_sister"
         android:text="@string/LoginTitle"
-        android:textSize="60sp"
         android:textAlignment="center"
-        android:layout_weight="5"
-        />
+        android:textColor="@color/black"
+        android:textSize="60sp" />
 
     <ImageView
         android:id="@+id/signUpLogo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        app:srcCompat="@drawable/logo" />
+        android:layout_height="0dp"
+        android:layout_weight="50"
+        app:srcCompat="@drawable/drop2" />
 
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        />
 
     <EditText
         android:id="@+id/signUpEmailEditText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="18"
-        android:hint="@string/email_hint"
-         />
+        android:layout_weight="12"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:hint="@string/email_hint" />
 
     <EditText
         android:id="@+id/displayNameEditText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20"
+        android:textColorHint="@color/black"
+        android:layout_weight="12"
         android:hint="@string/display_name" />
 
     <EditText
         android:id="@+id/signUpPasswordEditText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="18"
+        android:layout_weight="12"
+        android:textColorHint="@color/black"
         android:hint="@string/password_hint"
         android:inputType="textPassword" />
 
@@ -54,7 +64,9 @@
         android:id="@+id/signUpButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
+        android:layout_weight="8"
+        android:textSize="20sp"
+        android:backgroundTint="@color/default_button_color"
         android:text="@string/signup_button_text" />
 
     <TextView
@@ -62,7 +74,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="5"
-        android:text="@string/already_registered_try_login" />
+        android:text="@string/already_registered_try_login"
+        android:textColor="@color/teal_700" />
 
 
 </LinearLayout>

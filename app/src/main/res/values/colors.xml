@@ -9,4 +9,5 @@
     <color name="green_answer">#04de87</color>
     <color name="red_answer">#a80207</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="default_button_color">#141167</color>
 </resources>

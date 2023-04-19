@@ -117,7 +117,7 @@ public class CreateGameActivity extends AppCompatActivity {
                         Intent data = result.getData();
                         assert data != null;
                         Subject chosen_subject = (Subject) data.getSerializableExtra(String.valueOf(R.string.subject));
-                        m_game.setSubject(chosen_subject.getSubjectDisplayName());
+                        m_game.setSubject(chosen_subject.getSubjectName());
                         int imageID = chosen_subject.getSubjectImageId();//data.getIntExtra(String.valueOf(R.string.image_id), 0);
 
                         if (imageID != 0){

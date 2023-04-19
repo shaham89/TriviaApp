@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:weightSum="100"
+    android:background="@drawable/dd"
     android:orientation="vertical"
     tools:context=".game.GameActivity">
 
@@ -17,13 +18,6 @@
         />
 
 
-    <!--    <TextView-->
-<!--        android:id="@+id/stopWatchTextView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_weight="20"-->
-<!--        android:textSize="45sp"-->
-<!--        android:text="" />-->
     <com.mackhartley.roundedprogressbar.RoundedProgressBar
         android:id="@+id/stopWatchProgressBar"
         app:rpbBackgroundColor="#43AA8B"
@@ -38,22 +32,27 @@
 
 
 
-
-
-
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="60"
-            android:weightSum="100"
+            android:weightSum="120"
             android:orientation="vertical"
             tools:ignore="NestedWeights">
 
-            <Button
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="20"
+            android:orientation="vertical"></LinearLayout>
+
+        <Button
                 android:id="@+id/questionButton1"
                 android:textSize="30sp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:backgroundTint="@color/default_button_color"
                 android:layout_weight="25"
                  />
 
@@ -61,6 +60,7 @@
                 android:id="@+id/questionButton2"
                 android:layout_width="match_parent"
                 android:textSize="30sp"
+                android:backgroundTint="@color/default_button_color"
                 android:layout_height="0dp"
                 android:layout_weight="25"
                  />
@@ -70,6 +70,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:textSize="30sp"
+                android:backgroundTint="@color/default_button_color"
+
                 android:layout_weight="25" />
 
             <Button
@@ -77,10 +79,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="25"
+                android:backgroundTint="@color/default_button_color"
                 android:textSize="30sp"
                 />
 
         </LinearLayout>
+
 
 
 

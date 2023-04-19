@@ -5,24 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/hh"
     android:weightSum="100"
     tools:context=".signin.LoginActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/love_ya_like_a_sister"
         android:text="@string/LoginTitle"
-        android:textSize="60sp"
         android:textAlignment="center"
-        android:layout_weight="5"
-        />
+        android:textColor="@color/black"
+        android:textSize="60sp" />
 
     <ImageView
         android:id="@+id/login_logo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="15"
-        app:srcCompat="@drawable/logo" />
+        android:layout_height="0dp"
+        android:layout_weight="50"
+        app:srcCompat="@drawable/drop2" />
 
     <!--    <ImageView-->
     <!--        android:layout_width="match_parent"-->
@@ -32,11 +33,11 @@
     <!--        />-->
 
 
-
     <EditText
         android:id="@+id/loginEmailEditText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:textColorHint="@color/black"
         android:layout_weight="20"
         android:hint="@string/email_hint"
         />
@@ -46,6 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="20"
+        android:textColorHint="@color/black"
         android:hint="@string/password_hint"
         android:inputType="textPassword" />
 
@@ -53,7 +55,9 @@
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
+        android:layout_weight="8"
+        android:textSize="20sp"
+        android:backgroundTint="@color/default_button_color"
         android:text="@string/login_button_text" />
 
     <TextView
@@ -61,6 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="5"
+        android:textColor="@color/teal_700"
         android:text="@string/try_signUp_text" />
 
 </LinearLayout>

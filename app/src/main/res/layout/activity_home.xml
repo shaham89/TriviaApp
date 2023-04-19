@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@drawable/hh"
     android:orientation="vertical"
     android:weightSum="100"
     tools:context=".HomeActivity">
@@ -13,25 +13,34 @@
     <TextView
         android:id="@+id/homeActivityTitle"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="20"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/love_ya_like_a_sister"
+        android:text="welcome"
+        android:textColor="@color/black"
         android:textAlignment="center"
         android:textSize="30sp" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="65"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:weightSum="99">
+        android:weightSum="100">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="40"
+            app:srcCompat="@drawable/drop2" />
 
         <Button
             android:id="@+id/playPracticeButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="25"
+            android:layout_weight="15"
             android:textSize="30sp"
+            android:backgroundTint="#141167"
             android:text="@string/create_game"
             tools:ignore="NestedWeights" />
 
@@ -40,8 +49,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:textSize="30sp"
-
-            android:layout_weight="25"
+            android:backgroundTint="#141167"
+            android:layout_weight="15"
             android:text="@string/play_competitive" />
 
         <Button
@@ -49,14 +58,16 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:textSize="30sp"
-            android:layout_weight="25"
+            android:backgroundTint="@color/teal_700"
+            android:layout_weight="15"
             android:text="@string/leaderboards" />
+
         <Button
             android:id="@+id/logoutButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:textSize="30sp"
-            android:layout_weight="25"
+            android:layout_weight="15"
             android:backgroundTint="@android:color/holo_red_dark"
 
             android:text="@string/logout" />
