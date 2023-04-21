@@ -14,15 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="0dp"
-        android:layout_weight="15"
+        android:layout_weight="25"
+        android:autoSizeTextType="uniform"
         android:fontFamily="@font/rammetto_one"
-         />
+        android:text="How much is 5*5"
+        android:textColor="#C8C69C" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
-        android:orientation="vertical" />
 
     <com.mackhartley.roundedprogressbar.RoundedProgressBar
         android:id="@+id/stopWatchProgressBar"
@@ -41,7 +38,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="60"
+            android:layout_weight="65"
             android:weightSum="120"
             android:orientation="vertical"
             tools:ignore="NestedWeights">
@@ -50,43 +47,29 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="20"
+            android:layout_weight="15"
             android:orientation="vertical" />
 
         <Button
-                android:id="@+id/questionButton1"
-                android:textSize="30sp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:backgroundTint="@color/default_button_color"
-                android:layout_weight="25"
-                 />
+            android:id="@+id/questionButton1"
+            style="@style/answers_image_style"
+             />
 
             <Button
                 android:id="@+id/questionButton2"
-                android:layout_width="match_parent"
-                android:textSize="30sp"
-                android:backgroundTint="@color/default_button_color"
-                android:layout_height="0dp"
-                android:layout_weight="25"
-                 />
+                style="@style/answers_image_style"
+                />
 
             <Button
                 android:id="@+id/questionButton3"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:textSize="30sp"
-                android:backgroundTint="@color/default_button_color"
+                style="@style/answers_image_style"
 
-                android:layout_weight="25" />
+                />
 
             <Button
                 android:id="@+id/questionButton4"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="25"
-                android:backgroundTint="@color/default_button_color"
-                android:textSize="30sp"
+                style="@style/answers_image_style"
+
                 />
 
         </LinearLayout>

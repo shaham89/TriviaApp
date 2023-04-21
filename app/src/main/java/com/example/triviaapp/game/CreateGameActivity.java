@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.triviaapp.ChooseSubjectActivity;
+import com.example.triviaapp.HomeActivity;
 import com.example.triviaapp.R;
 import com.example.triviaapp.customClasses.Question;
 import com.example.triviaapp.customClasses.Game;
@@ -70,6 +71,7 @@ public class CreateGameActivity extends AppCompatActivity {
         m_game = new Game();
         Intent intent = getIntent();
         m_game.setCompetitive(intent.getBooleanExtra(String.valueOf(R.string.is_competitive_text), false));
+        m_game.setSubject(new Subject(Subject.subjectNameCapitals, R.id.capitals_image, Subject.displayNameCapitals));
 
         if(m_game.isCompetitive()){
             questionNumberEditText.setText(String.valueOf(Game.COMPETITIVE_QUESTION_NUMBER));
@@ -84,7 +86,7 @@ public class CreateGameActivity extends AppCompatActivity {
     private void initViews() {
         findViewById(R.id.chooseSubjectButton).setOnClickListener(new chooseSubjectClickHandler());
         findViewById(R.id.startGameButton).setOnClickListener(new startGameClickHandler());
-
+        findViewById(R.id.returnHomeButtonCreateGameActivity).setOnClickListener(new returnHomeClickHandler());
         //views
 
         // To listen for a switch's checked/unchecked state changes
@@ -125,15 +127,6 @@ public class CreateGameActivity extends AppCompatActivity {
                             final ImageView img = findViewById(R.id.subjectImage);
                             img.setImageResource(imageID);
 
-
-//                            int averageColor = getImageColor(imageID);
-//                            Log.d(TAG,"avg color:" + averageColor);
-//                            //earth - -12890809
-//                            //astronomy - -11645879
-//                            LinearLayout background = findViewById(R.id.background_create_game_activity);
-//
-//                            background.setBackgroundColor(averageColor);
-
                             final TextView subjectView = findViewById(R.id.currentSubjectTitleTextView);
                             subjectView.setText(m_game.getSubject().getSubjectDisplayName());
                         }
@@ -142,35 +135,6 @@ public class CreateGameActivity extends AppCompatActivity {
                 }
             });
 
-    private int getImageColor(int imageId){
-
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imageId);
-
-        int width = bitmap.getWidth();
-        int height = bitmap.getHeight();
-
-        int pixelColor;
-        int red = 0;
-        int green = 0;
-        int blue = 0;
-        int totalPixels = width * height;
-
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                pixelColor = bitmap.getPixel(x, y);
-                red += Color.red(pixelColor);
-                green += Color.green(pixelColor);
-                blue += Color.blue(pixelColor);
-            }
-        }
-
-        int averageRed = Math.min(10 + (red / totalPixels), 255);
-        int averageGreen = Math.min(10 + (green / totalPixels), 255);
-        int averageBlue = Math.min(10 + (blue / totalPixels), 255);
-
-        return Color.rgb(averageRed, averageGreen, averageBlue);
-
-    }
 
     private static final Object lock = new Object();
 
@@ -219,6 +183,16 @@ public class CreateGameActivity extends AppCompatActivity {
 
     }
 
+    private class returnHomeClickHandler implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view){
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            finish();
+            startActivity(intent);
+        }
+
+    }
 
     private void startGameActivity(){
         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
@@ -231,7 +205,7 @@ public class CreateGameActivity extends AppCompatActivity {
     private void callGetQuestions(){
         String subjectPath = m_game.getSubject().getSubjectName() + "_subject";
         DocumentReference docRef = db.collection(MAIN_SUBJECT_COLLECTION).document(subjectPath);
-
+        Log.d(TAG, "Getting questions from:" + subjectPath);
         questions = new ArrayList<>();
 
         docRef.get().addOnCompleteListener(task -> {

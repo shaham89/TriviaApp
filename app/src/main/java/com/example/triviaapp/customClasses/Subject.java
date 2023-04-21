@@ -29,6 +29,7 @@ public class Subject implements Serializable {
         this.subjectDisplayName = subjectDisplayName;
     }
 
+
     public Subject(){
         this.subjectName = "";
         this.subjectImageId = 0;

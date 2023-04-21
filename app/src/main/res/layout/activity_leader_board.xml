@@ -15,7 +15,7 @@
         android:layout_weight="15"
         android:textSize="25sp"
         android:textAlignment="center"
-        android:text="" />
+        android:text="score text 1" />
 
     <TextView
         android:id="@+id/scoreTextView2"
@@ -24,7 +24,7 @@
         android:layout_weight="15"
         android:textAlignment="center"
         android:textSize="25sp"
-        android:text="" />
+        android:text="score text 2" />
 
     <TextView
         android:id="@+id/scoreTextView3"
@@ -33,7 +33,7 @@
         android:textSize="25sp"
         android:layout_weight="15"
         android:textAlignment="center"
-        android:text="" />
+        android:text="score text 3" />
 
     <TextView
         android:id="@+id/userScoreTextView"
@@ -42,7 +42,7 @@
         android:layout_weight="15"
         android:textAlignment="center"
         android:textSize="25sp"
-        android:text="" />
+        android:text="user scored: 4" />
 
     <Button
         android:id="@+id/getSubjectButton"

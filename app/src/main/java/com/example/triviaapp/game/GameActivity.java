@@ -140,7 +140,7 @@ public class GameActivity extends AppCompatActivity {
     //change the color of all the buttons to the default value
     private void resetButtonColors(){
         for(Button answer: answers){
-            answer.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            answer.setBackgroundColor(getResources().getColor(R.color.default_button_color));
         }
     }
 

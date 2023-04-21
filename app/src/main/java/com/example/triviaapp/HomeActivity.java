@@ -77,7 +77,7 @@ public class HomeActivity extends AppCompatActivity {
         String titleText = "Welcome " + name;
         title.setText(titleText);
 
-        Toast.makeText(getApplicationContext(), "welcome! " + name, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Welcome! " + name, Toast.LENGTH_LONG).show();
 
 
         findViewById(R.id.playCompetitiveButton).setOnClickListener(new playClickHandler());
