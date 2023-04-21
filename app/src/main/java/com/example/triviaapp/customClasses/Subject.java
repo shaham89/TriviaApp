@@ -1,4 +1,6 @@
 package com.example.triviaapp.customClasses;
+import android.graphics.Color;
+
 import java.io.Serializable;
 
 public class Subject implements Serializable {
@@ -26,6 +28,13 @@ public class Subject implements Serializable {
         this.subjectImageId = subjectImageId;
         this.subjectDisplayName = subjectDisplayName;
     }
+
+    public Subject(){
+        this.subjectName = "";
+        this.subjectImageId = 0;
+        this.subjectDisplayName = "";
+    }
+
 
     public String getSubjectName() {
         return subjectName;

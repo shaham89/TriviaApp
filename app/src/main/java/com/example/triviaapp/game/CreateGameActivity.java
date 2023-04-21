@@ -8,11 +8,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.triviaapp.ChooseSubjectActivity;
@@ -61,9 +65,7 @@ public class CreateGameActivity extends AppCompatActivity {
 
         hasStartGameClickedAlready = false;
 
-        //m_room = new Room(true, "", 4, 10, "test room");
         initViews();
-
 
         m_game = new Game();
         Intent intent = getIntent();
@@ -106,7 +108,6 @@ public class CreateGameActivity extends AppCompatActivity {
     }
 
 
-
     ActivityResultLauncher<Intent> getSubjectResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -117,19 +118,59 @@ public class CreateGameActivity extends AppCompatActivity {
                         Intent data = result.getData();
                         assert data != null;
                         Subject chosen_subject = (Subject) data.getSerializableExtra(String.valueOf(R.string.subject));
-                        m_game.setSubject(chosen_subject.getSubjectName());
+                        m_game.setSubject(chosen_subject);
                         int imageID = chosen_subject.getSubjectImageId();//data.getIntExtra(String.valueOf(R.string.image_id), 0);
 
                         if (imageID != 0){
                             final ImageView img = findViewById(R.id.subjectImage);
                             img.setImageResource(imageID);
+
+
+//                            int averageColor = getImageColor(imageID);
+//                            Log.d(TAG,"avg color:" + averageColor);
+//                            //earth - -12890809
+//                            //astronomy - -11645879
+//                            LinearLayout background = findViewById(R.id.background_create_game_activity);
+//
+//                            background.setBackgroundColor(averageColor);
+
                             final TextView subjectView = findViewById(R.id.currentSubjectTitleTextView);
-                            subjectView.setText(m_game.getSubject());
+                            subjectView.setText(m_game.getSubject().getSubjectDisplayName());
                         }
 
                     }
                 }
             });
+
+    private int getImageColor(int imageId){
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imageId);
+
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        int pixelColor;
+        int red = 0;
+        int green = 0;
+        int blue = 0;
+        int totalPixels = width * height;
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                pixelColor = bitmap.getPixel(x, y);
+                red += Color.red(pixelColor);
+                green += Color.green(pixelColor);
+                blue += Color.blue(pixelColor);
+            }
+        }
+
+        int averageRed = Math.min(10 + (red / totalPixels), 255);
+        int averageGreen = Math.min(10 + (green / totalPixels), 255);
+        int averageBlue = Math.min(10 + (blue / totalPixels), 255);
+
+        return Color.rgb(averageRed, averageGreen, averageBlue);
+
+    }
 
     private static final Object lock = new Object();
 
@@ -178,6 +219,7 @@ public class CreateGameActivity extends AppCompatActivity {
 
     }
 
+
     private void startGameActivity(){
         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
         intent.putExtra(getString(R.string.game_intent_text), m_game);
@@ -187,7 +229,7 @@ public class CreateGameActivity extends AppCompatActivity {
 
 
     private void callGetQuestions(){
-        String subjectPath = m_game.getSubject() + "_subject";
+        String subjectPath = m_game.getSubject().getSubjectName() + "_subject";
         DocumentReference docRef = db.collection(MAIN_SUBJECT_COLLECTION).document(subjectPath);
 
         questions = new ArrayList<>();
@@ -227,7 +269,7 @@ public class CreateGameActivity extends AppCompatActivity {
 
     private void getQuestionFromFirestore(int index, int numberOfWantedQuestions){
 
-        String path = MAIN_SUBJECT_COLLECTION + "/" + m_game.getSubject() + "_subject/" + m_game.getSubject() + "_questions";
+        String path = MAIN_SUBJECT_COLLECTION + "/" + m_game.getSubject().getSubjectName() + "_subject/" + m_game.getSubject().getSubjectName() + "_questions";
         CollectionReference docRef = db.collection(path);
 
         docRef

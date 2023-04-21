@@ -12,11 +12,17 @@
     <TextView
         android:id="@+id/gameQuestionTextview"
         android:layout_width="match_parent"
-        android:layout_weight="15"
         android:layout_height="0dp"
         android:layout_marginBottom="0dp"
-        />
+        android:layout_weight="15"
+        android:fontFamily="@font/rammetto_one"
+         />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:orientation="vertical" />
 
     <com.mackhartley.roundedprogressbar.RoundedProgressBar
         android:id="@+id/stopWatchProgressBar"
@@ -45,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="20"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical" />
 
         <Button
                 android:id="@+id/questionButton1"

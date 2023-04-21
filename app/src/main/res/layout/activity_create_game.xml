@@ -2,8 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/background_create_game_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#513636"
+    android:backgroundTint="#1F2532"
     android:orientation="vertical"
     android:weightSum="100"
     tools:context=".game.CreateGameActivity">
@@ -12,19 +15,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
-        android:weightSum="100"
-        android:paddingBottom="10dp"
+        android:layout_weight="8"
         android:layoutDirection="ltr"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="100">
 
         <TextView
             android:id="@+id/questionNumberTextView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="70"
-            android:textSize="25sp"
+            android:gravity="center"
             android:text="@string/number_of_questions"
+            android:textColor="@color/white"
+
+            android:textSize="25sp"
             tools:ignore="NestedWeights" />
 
         <EditText
@@ -32,12 +37,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="30"
-            android:ems="10"
-            android:textSize="30sp"
-            android:textAlignment="center"
-            android:inputType="numberSigned"
             android:hint="@string/questions_limit"
             android:importantForAutofill="no"
+            android:inputType="numberSigned"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="25sp"
             tools:ignore="NestedWeights" />
 
     </LinearLayout>
@@ -46,19 +52,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="12"
-        android:weightSum="100"
-        android:paddingBottom="10dp"
+        android:layout_weight="8"
         android:layoutDirection="ltr"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="100">
 
         <TextView
             android:id="@+id/timePerQuestionTextView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="70"
-            android:textSize="25sp"
+            android:gravity="center"
             android:text="@string/time_per_question"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="25sp"
             tools:ignore="NestedWeights" />
 
         <EditText
@@ -66,34 +74,36 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="30"
-            android:ems="10"
-            android:textSize="30sp"
-            android:textAlignment="center"
-            android:inputType="numberSigned"
             android:hint="@string/time_per_question_limit"
             android:importantForAutofill="no"
+            android:inputType="numberSigned"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="25sp"
             tools:ignore="NestedWeights" />
 
     </LinearLayout>
-
 
 
     <TextView
         android:id="@+id/currentSubjectTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
-        android:textSize="30sp"
+        android:layout_weight="10"
+        android:fontFamily="@font/coiny"
+        android:text="@string/capitals"
         android:textAlignment="center"
-        android:text="@string/capitals" />
+        android:textColor="@color/teal_700"
+        android:textSize="40sp" />
+
 
     <ImageView
         android:id="@+id/subjectImage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="35"
+        android:layout_weight="40"
         app:srcCompat="@drawable/earth" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -108,15 +118,43 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="15"
+        android:backgroundTint="@color/default_button_color"
         android:text="@string/choose_subject"
-        />
+        android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/startGameButton"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
-        android:text="@string/start_game" />
+        android:layout_weight="14"
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/returnHomeButtonCreateGameActivity"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="48"
+            android:backgroundTint="#068FB1"
+            android:text="back home"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="?android:attr/listDivider" />
+
+        <Button
+            android:id="@+id/startGameButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="48"
+            android:backgroundTint="#42B106"
+            android:text="@string/start_game"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
 
 
 

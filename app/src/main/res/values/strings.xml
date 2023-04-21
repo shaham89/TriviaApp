@@ -18,7 +18,7 @@
     <string name="email_hint">Email</string>
     <string name="SignUpTitle">SignUp</string>
     <string name="already_registered_try_login">  Already registered? Try login</string>
-    <string name="try_signUp_text">Don\'t have an account yet? try SignUp</string>
+    <string name="try_signUp_text">  Don\'t have an account yet? try SignUp</string>
     <string name="logout">LOGOUT</string>
     <string name="display_name">Display name</string>
     <string name="choose_subject_title">Choose Subject</string>
@@ -41,8 +41,8 @@
     <string name="leaderboards">leaderboard</string>
     <string name="astronomy">astronomy</string>
     <string name="questions_limit">1 – 50</string>
-    <string name="time_per_question">Time per question(seconds):</string>
-    <string name="time_per_question_limit">1 – 10</string>
+    <string name="time_per_question">Seconds per Question:</string>
+    <string name="time_per_question_limit">1 – 20</string>
     <string name="image_id">subject_image_id</string>
     <string name="history">history</string>
     <string name="generalKnowledge">general knowledge</string>

@@ -35,27 +35,20 @@
 
     <EditText
         android:id="@+id/signUpEmailEditText"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        style="@style/credentials_textview_style"
         android:layout_weight="12"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
         android:hint="@string/email_hint" />
 
     <EditText
         android:id="@+id/displayNameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:textColorHint="@color/black"
+        style="@style/credentials_textview_style"
         android:layout_weight="12"
         android:hint="@string/display_name" />
 
     <EditText
         android:id="@+id/signUpPasswordEditText"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        style="@style/credentials_textview_style"
         android:layout_weight="12"
-        android:textColorHint="@color/black"
         android:hint="@string/password_hint"
         android:inputType="textPassword" />
 
@@ -73,9 +66,10 @@
         android:id="@+id/switchToLoginText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
+        android:textSize="20sp"
+        android:textColor="@color/teal_700"
         android:text="@string/already_registered_try_login"
-        android:textColor="@color/teal_700" />
+        />
 
 
 </LinearLayout>

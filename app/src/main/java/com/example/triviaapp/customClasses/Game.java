@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Game implements Serializable {
     protected boolean isCompetitive;
-    protected String subject;
+    protected Subject subject;
     protected Question[] questions;
     protected int timePerQuestionSec;
 
@@ -26,11 +26,11 @@ public class Game implements Serializable {
         isCompetitive = competitive;
     }
 
-    public String getSubject() {
+    public Subject getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
+    public void setSubject(Subject subject) {
         this.subject = subject;
     }
 
@@ -55,7 +55,7 @@ public class Game implements Serializable {
     public static final int COMPETITIVE_TIME_PER_QUESTION_SEC = 5;
 
     public Game() {
-        this.subject = DEFAULT_SUBJECT;
+        this.subject = new Subject();
         this.isCompetitive = false;
         this.questions = null;
         this.timePerQuestionSec = Game.DEFAULT_TIME_PER_QUESTION_SEC;

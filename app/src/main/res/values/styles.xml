@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="images_style">
-
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">7</item>
-
     </style>
+
 
     <style name="images_titles_style">
         <item name="android:layout_width">match_parent</item>
@@ -15,6 +14,14 @@
         <item name="android:textSize">60sp</item>
         <item name="android:textColor">#0c255e</item>
         <item name="android:textAlignment">center</item>
+    </style>
 
+    <style name="credentials_textview_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColorHint">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>
