@@ -1,59 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="100"
+    android:background="@drawable/ii"
+    android:weightSum="80"
     tools:context=".LeaderBoardActivity">
 
 
-    <TextView
-        android:id="@+id/scoreTextView1"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="15"
-        android:textSize="25sp"
-        android:textAlignment="center"
-        android:text="score text 1" />
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/scoreTextView1"
+            style="@style/leaderboard_top_scores_textview_style"
+            android:text="score text 1" />
+
+        <ImageView
+            android:id="@+id/gold_medal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="25"
+            app:srcCompat="@drawable/gold" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:weightSum="100"
+        android:orientation="horizontal">
+
 
     <TextView
         android:id="@+id/scoreTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="15"
-        android:textAlignment="center"
-        android:textSize="25sp"
+        style="@style/leaderboard_top_scores_textview_style"
         android:text="score text 2" />
 
-    <TextView
-        android:id="@+id/scoreTextView3"
+    <ImageView
+        android:id="@+id/silver_medal"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="25"
+        app:srcCompat="@drawable/silver" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:textSize="25sp"
         android:layout_weight="15"
-        android:textAlignment="center"
-        android:text="score text 3" />
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+
+    <TextView
+    android:id="@+id/scoreTextView3"
+    style="@style/leaderboard_top_scores_textview_style"
+    android:text="score text 3" />
+
+    <ImageView
+        android:id="@+id/bronze_medal"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="25"
+        app:srcCompat="@drawable/bronze" />
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/userScoreTextView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        style="@style/leaderboard_top_scores_textview_style"
         android:layout_weight="15"
-        android:textAlignment="center"
-        android:textSize="25sp"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
         android:text="user scored: 4" />
+
 
     <Button
         android:id="@+id/getSubjectButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:textSize="25sp"
         android:text="@string/choose_subject" />
 
     <Button
         android:id="@+id/leaderboard_home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/home" />
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:backgroundTint="#022B35"
+        android:text="back home"
+        android:textSize="25sp" />
 
 </LinearLayout>
