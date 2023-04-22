@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(task.isSuccessful()){
                         //if sign in is a success
                         FirebaseUser user = m_auth.getCurrentUser();
+
                         assert user != null;
                         Log.d(Tag, "logged user with email success: " + user.getEmail());
                         HomeActivity();

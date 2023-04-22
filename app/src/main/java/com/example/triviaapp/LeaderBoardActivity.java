@@ -37,7 +37,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
     private final int NUMBER_OF_TOP_SCORES = 3;
     private FirebaseUser m_user;
 
-    private TextView[] scoresTextView;
+    private TextView[][] scoresTextViewMat;
     private TextView userScoreTextView;
 
 
@@ -53,14 +53,23 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
         //topUsersStats = new UserStats[NUMBER_OF_TOP_SCORES];
         findViewById(R.id.getSubjectButton).setOnClickListener(new LeaderBoardActivity.chooseSubjectClickHandler());
-        scoresTextView = new TextView[NUMBER_OF_TOP_SCORES];
+        int NUMBER_OF_COLUMNS = 3;
+
+        scoresTextViewMat = new TextView[NUMBER_OF_TOP_SCORES][NUMBER_OF_COLUMNS];
         userScoreTextView = findViewById(R.id.userScoreTextView);
-        scoresTextView[0] = findViewById(R.id.scoreTextView1);
-        scoresTextView[1] = findViewById(R.id.scoreTextView2);
-        scoresTextView[2] = findViewById(R.id.scoreTextView3);
+        scoresTextViewMat[0][0] = findViewById(R.id.scoreTextView11);
+        scoresTextViewMat[0][1] = findViewById(R.id.scoreTextView12);
+        scoresTextViewMat[0][2] = findViewById(R.id.scoreTextView13);
+        scoresTextViewMat[1][0] = findViewById(R.id.scoreTextView21);
+        scoresTextViewMat[1][1] = findViewById(R.id.scoreTextView22);
+        scoresTextViewMat[1][2] = findViewById(R.id.scoreTextView23);
+        scoresTextViewMat[2][0] = findViewById(R.id.scoreTextView31);
+        scoresTextViewMat[2][1] = findViewById(R.id.scoreTextView32);
+        scoresTextViewMat[2][2] = findViewById(R.id.scoreTextView33);
         
         Button b = findViewById(R.id.leaderboard_home);
         b.setOnClickListener(new startGameClickHandler());
+
     }
 
     private class startGameClickHandler implements View.OnClickListener {
@@ -79,11 +88,12 @@ public class LeaderBoardActivity extends AppCompatActivity {
             if(stats == null || stats.getTimeScore() == 0){
                 continue;
             }
-            String text = stats.getDisplayName() + ": " + stats.getScore() + "/10" +
-                    " time: " + stats.getTimeScore();
 
-            scoresTextView[i].setText(text);
+            scoresTextViewMat[i][0].setText(stats.getDisplayName());
+            scoresTextViewMat[i][1].setText(String.valueOf(stats.getScore()));
+            scoresTextViewMat[i][2].setText(String.valueOf((int)(stats.getTimeScore())));
             i += 1;
+
         }
     }
 
@@ -118,9 +128,9 @@ public class LeaderBoardActivity extends AppCompatActivity {
     }
 
     private void updateUserStats(long score, double timeScore, long totalGames, long totalCorrectAnswers){
-        String text = "Your score: " + score +
-                " " + timeScore + ", total games:" + totalGames +
-                " totalCorrectAnswers:" + totalCorrectAnswers;
+        String text = "Your best score: " + score +
+                "  time: " + (int)(timeScore) + "\nTotal Games: " + totalGames +
+                "\nTotal Correct Answers: " + totalCorrectAnswers;
         userScoreTextView.setText(text);
     }
 

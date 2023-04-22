@@ -2,8 +2,10 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/abril_fatface</item>
+        <item>@font/andika</item>
         <item>@font/coiny</item>
         <item>@font/coustard</item>
+        <item>@font/judson</item>
         <item>@font/love_ya_like_a_sister</item>
         <item>@font/rammetto_one</item>
         <item>@font/vast_shadow</item>

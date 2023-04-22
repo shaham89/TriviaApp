@@ -6,74 +6,154 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/ii"
-    android:weightSum="80"
+    android:weightSum="82"
     tools:context=".LeaderBoardActivity">
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="15"
+        android:layout_weight="6"
         android:weightSum="100"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/scoreTextView1"
-            style="@style/leaderboard_top_scores_textview_style"
-            android:text="score text 1" />
-
-        <ImageView
-            android:id="@+id/gold_medal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="25"
-            app:srcCompat="@drawable/gold" />
+            android:layout_weight="30"
+            android:fontFamily="@font/judson"
+            android:gravity="center"
+            android:text="Score"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="40"
+            android:fontFamily="@font/judson"
+            android:gravity="center"
+            android:text="Name"
+            android:textAlignment="center"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="30"
+            android:fontFamily="@font/judson"
+            android:gravity="center"
+            android:text="Time(ms)"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/gold_medal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11"
+        app:srcCompat="@drawable/gold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="15"
+        android:layout_weight="6"
         android:weightSum="100"
         android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/scoreTextView12"
+            style="@style/leaderboard_top_scores_textview_style"
+            android:layout_weight="30"
+            android:text="-" />
 
-    <TextView
-        android:id="@+id/scoreTextView2"
-        style="@style/leaderboard_top_scores_textview_style"
-        android:text="score text 2" />
+        <TextView
+            android:id="@+id/scoreTextView11"
+            style="@style/leaderboard_top_scores_textview_style"
+            android:layout_weight="40"
+            android:text="-"
+            android:textColor="#CDBC25" />
+
+        <TextView
+            android:id="@+id/scoreTextView13"
+            style="@style/leaderboard_top_scores_textview_style"
+            android:layout_weight="30"
+            android:text="-" />
+
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/silver_medal"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="25"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11"
         app:srcCompat="@drawable/silver" />
-
-    </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="15"
+        android:layout_weight="6"
         android:weightSum="100"
         android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/scoreTextView22"
+            style="@style/leaderboard_top_scores_textview_style"
+            android:layout_weight="30"
+            android:text="-" />
 
-    <TextView
-    android:id="@+id/scoreTextView3"
-    style="@style/leaderboard_top_scores_textview_style"
-    android:text="score text 3" />
+        <TextView
+            android:id="@+id/scoreTextView21"
+            style="@style/leaderboard_top_scores_textview_style"
+            android:layout_weight="40"
+            android:text="-"
+            android:textColor="#A6A4A4" />
+
+        <TextView
+            android:id="@+id/scoreTextView23"
+            style="@style/leaderboard_top_scores_textview_style"
+            android:layout_weight="30"
+            android:text="-" />
+
+    </LinearLayout>
+
 
     <ImageView
         android:id="@+id/bronze_medal"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="25"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11"
         app:srcCompat="@drawable/bronze" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/scoreTextView32"
+            style="@style/leaderboard_top_scores_textview_style"
+            android:layout_weight="30"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/scoreTextView31"
+            style="@style/leaderboard_top_scores_textview_style"
+            android:layout_weight="40"
+            android:text="-"
+            android:textColor="#6A2905" />
+
+        <TextView
+            android:id="@+id/scoreTextView33"
+            style="@style/leaderboard_top_scores_textview_style"
+            android:layout_weight="30"
+            android:text="-" />
 
     </LinearLayout>
 
@@ -81,27 +161,39 @@
     <TextView
         android:id="@+id/userScoreTextView"
         style="@style/leaderboard_top_scores_textview_style"
-        android:layout_weight="15"
+        android:layout_weight="13"
         android:layout_height="0dp"
+        android:textSize="23sp"
         android:layout_width="match_parent"
-        android:text="user scored: 4" />
+        android:text="Choose a subject" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="12"
+        android:weightSum="100"
+        android:orientation="horizontal">
 
     <Button
         android:id="@+id/getSubjectButton"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="5dp"
+        android:layout_weight="50"
         android:textSize="25sp"
         android:text="@string/choose_subject" />
 
     <Button
         android:id="@+id/leaderboard_home"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="50"
+        android:layout_marginHorizontal="5dp"
         android:backgroundTint="#022B35"
         android:text="back home"
         android:textSize="25sp" />
+
+    </LinearLayout>
+
 
 </LinearLayout>
