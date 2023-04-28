@@ -145,6 +145,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     protected class answerClickedHandler implements View.OnClickListener {
+
         //check if the user exist, and if he doesn't call addUser
         //if he does, show Toast
         @Override

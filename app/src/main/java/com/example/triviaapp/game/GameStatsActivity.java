@@ -190,8 +190,8 @@ public class GameStatsActivity extends AppCompatActivity {
     private void initTextViewsScore(){
 
         TextView avgView = findViewById(R.id.averageScore);
-        String msg = String.format("Average Time: %.2f\n%s/%s Correct",
-                m_gameResults.getAverageTimeScore(),
+        String msg = String.format("Average Time: %d(ms)\n%s/%s Correct",
+                (int)(m_gameResults.getAverageTimeScore()),
                 m_gameResults.getNumberOfCorrectQuestions(), m_gameResults.getNumberOfQuestions());
 
         avgView.setText(msg);
@@ -269,9 +269,14 @@ public class GameStatsActivity extends AppCompatActivity {
         // text color to our graph view.
         graphView.setTitleColor(R.color.purple_200);
 
+        //graphView.setBackgroundColor(Color.argb(255, 0, 0, 0));
+
         // on below line we are setting
         // our title text size.
-        graphView.setTitleTextSize(40);
+        graphView.setTitleTextSize(60);
+
+        graphView.setTitleColor(Color.parseColor("#FFFFFF"));
+
 
 
         graphView.getViewport().setXAxisBoundsManual(true);
@@ -293,8 +298,6 @@ public class GameStatsActivity extends AppCompatActivity {
 
         graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
-
-        graphView.setBackgroundColor(Color.WHITE);
 
     }
 

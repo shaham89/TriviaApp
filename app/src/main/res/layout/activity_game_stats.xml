@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bright_ii"
     android:orientation="vertical"
     android:weightSum="100"
     tools:context=".game.GameStatsActivity">
@@ -20,13 +21,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="50"
+            android:fontFamily="@font/abril_fatface"
             android:textSize="25sp"
+            android:textColor="@color/black"
             android:textAlignment="center"
             tools:ignore="NestedWeights" />
 
         <Button
             android:id="@+id/home_button_from_stats"
             android:layout_width="0dp"
+            android:textSize="30sp"
             android:layout_height="match_parent"
             android:layout_weight="50"
             android:text="@string/home" />
@@ -45,8 +49,10 @@
         android:id="@+id/dataPointTextView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20"
-        android:textSize="30sp"
+        android:layout_weight="23"
+        android:fontFamily="@font/coiny"
+        android:gravity="center"
+        android:autoSizeTextType="uniform"
         android:text=""
         />
 
@@ -54,7 +60,7 @@
         android:id="@+id/scoresGraph"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="65"
+        android:layout_weight="62"
          />
 
 

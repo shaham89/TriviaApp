@@ -68,20 +68,20 @@
             android:id="@+id/scoreTextView12"
             style="@style/leaderboard_top_scores_textview_style"
             android:layout_weight="30"
-            android:text="-" />
+            android:text="@string/empty_leaderboard" />
 
         <TextView
             android:id="@+id/scoreTextView11"
             style="@style/leaderboard_top_scores_textview_style"
             android:layout_weight="40"
-            android:text="-"
+            android:text="@string/empty_leaderboard"
             android:textColor="#CDBC25" />
 
         <TextView
             android:id="@+id/scoreTextView13"
             style="@style/leaderboard_top_scores_textview_style"
             android:layout_weight="30"
-            android:text="-" />
+            android:text="@string/empty_leaderboard" />
 
 
     </LinearLayout>
@@ -104,20 +104,20 @@
             android:id="@+id/scoreTextView22"
             style="@style/leaderboard_top_scores_textview_style"
             android:layout_weight="30"
-            android:text="-" />
+            android:text="@string/empty_leaderboard" />
 
         <TextView
             android:id="@+id/scoreTextView21"
             style="@style/leaderboard_top_scores_textview_style"
             android:layout_weight="40"
-            android:text="-"
+            android:text="@string/empty_leaderboard"
             android:textColor="#A6A4A4" />
 
         <TextView
             android:id="@+id/scoreTextView23"
             style="@style/leaderboard_top_scores_textview_style"
             android:layout_weight="30"
-            android:text="-" />
+            android:text="@string/empty_leaderboard" />
 
     </LinearLayout>
 
@@ -140,20 +140,20 @@
             android:id="@+id/scoreTextView32"
             style="@style/leaderboard_top_scores_textview_style"
             android:layout_weight="30"
-            android:text="-" />
+            android:text="@string/empty_leaderboard" />
 
         <TextView
             android:id="@+id/scoreTextView31"
             style="@style/leaderboard_top_scores_textview_style"
             android:layout_weight="40"
-            android:text="-"
+            android:text="@string/empty_leaderboard"
             android:textColor="#6A2905" />
 
         <TextView
             android:id="@+id/scoreTextView33"
             style="@style/leaderboard_top_scores_textview_style"
             android:layout_weight="30"
-            android:text="-" />
+            android:text="@string/empty_leaderboard" />
 
     </LinearLayout>
 
