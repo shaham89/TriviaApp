@@ -109,7 +109,7 @@ public class CreateGameActivity extends AppCompatActivity {
         }
     }
 
-
+    //gets the subject from the chooseSubjectActivity and changes the subject accordingly
     ActivityResultLauncher<Intent> getSubjectResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {

@@ -16,7 +16,7 @@ import com.example.triviaapp.R;
 import com.example.triviaapp.helperFunctions.CredentialsValidator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
+import com.example.triviaapp.chatgpt.*;
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth m_auth;

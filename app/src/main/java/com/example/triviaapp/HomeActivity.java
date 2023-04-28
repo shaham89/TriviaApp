@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.triviaapp.chatgpt.chatApi;
 import com.example.triviaapp.game.CreateGameActivity;
 import com.example.triviaapp.signin.SignUpActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +36,9 @@ public class HomeActivity extends AppCompatActivity {
 //        //intent.putExtra(String.valueOf(R.string.is_solo), false);
 //        startActivity(intent);
 //        finish();
+
+        chatApi.runGPT();
+
     }
 
     private class playClickHandler implements View.OnClickListener {
