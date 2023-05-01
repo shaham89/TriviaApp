@@ -32,6 +32,7 @@
                 android:textAlignment="center"
                 android:textSize="50sp" />
 
+
             <TextView
                 android:id="@+id/capitalsTitleTextView"
                 style="@style/images_titles_style"
@@ -42,6 +43,19 @@
                 android:id="@+id/capitals_image"
                 style="@style/images_style"
                 app:srcCompat="@drawable/earth" />
+
+            <TextView
+                android:id="@+id/customSubjectTitleTextView"
+                style="@style/images_titles_style"
+
+                android:fontFamily="@font/acme"
+                android:text="@string/custom_subject" />
+
+            <ImageView
+                android:id="@+id/customSubject_image"
+                style="@style/images_style"
+
+                app:srcCompat="@drawable/network_brain" />
 
             <TextView
                 android:id="@+id/astronomyTitleTextView"
@@ -99,6 +113,7 @@
                 style="@style/images_style"
 
                 app:srcCompat="@drawable/worldcup" />
+
 
 
         </LinearLayout>

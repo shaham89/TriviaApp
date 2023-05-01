@@ -8,6 +8,7 @@ public class Question implements Serializable {
     public final String questionText;
     public final ArrayList<String> options;
     public final String answerHash;
+
     public final String OPTION_TEXT = "Options";
     public final String QUESTION_TEXT = "QuestionText";
     public final String TRUE_ANSWER = "TrueAnswer";

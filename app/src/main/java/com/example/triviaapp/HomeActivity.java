@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
 //        startActivity(intent);
 //        finish();
 
-        chatApi.runGPT();
+        chatApi.getQuestion(10, "Machine learning");
 
     }
 

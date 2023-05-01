@@ -85,6 +85,11 @@ public class ChooseSubjectActivity extends AppCompatActivity {
                             R.drawable.worldcup,
                             Subject.displayNameWorldCup);
                     break;
+                case R.id.customSubject_image:
+                    chosen_subject = new Subject(Subject.subjectNameCustomSubject,
+                            R.drawable.network_brain,
+                            Subject.displayNameCustomSubject);
+                    break;
             }
 
             returnSubject();

@@ -23,6 +23,9 @@ public class Subject implements Serializable {
     public static final String subjectNameWorldCup = "world_cup";
     public static final String displayNameWorldCup = "World Cup";
 
+    public static final String subjectNameCustomSubject = "custom_subject";
+    public static final String displayNameCustomSubject = "Custom Subject";
+
     public Subject(String subjectName, int subjectImageId, String subjectDisplayName){
         this.subjectName = subjectName;
         this.subjectImageId = subjectImageId;

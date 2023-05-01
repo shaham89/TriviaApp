@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import com.example.triviaapp.ChooseSubjectActivity;
 import com.example.triviaapp.HomeActivity;
 import com.example.triviaapp.R;
+import com.example.triviaapp.chatgpt.chatApi;
 import com.example.triviaapp.customClasses.Question;
 import com.example.triviaapp.customClasses.Game;
 import com.example.triviaapp.customClasses.Subject;
@@ -33,10 +35,20 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class CreateGameActivity extends AppCompatActivity {
 
@@ -113,6 +125,7 @@ public class CreateGameActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> getSubjectResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
+
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
@@ -177,8 +190,14 @@ public class CreateGameActivity extends AppCompatActivity {
                 m_game.setTimePerQuestionSec(Integer.parseInt(questionsTimeEditText.getText().toString()));
             }
 
-            callGetQuestions();
-            waitUntilQuestionsAreRead();
+            //if the subject is "custom subject"
+            if (Subject.subjectNameCustomSubject.equals(m_game.getSubject().getSubjectName())){
+
+            } else{
+                callGetQuestions();
+                waitUntilQuestionsAreRead();
+            }
+
         }
 
     }
@@ -200,6 +219,7 @@ public class CreateGameActivity extends AppCompatActivity {
         finish();
         startActivity(intent);
     }
+
 
 
     private void callGetQuestions(){
@@ -273,5 +293,37 @@ public class CreateGameActivity extends AppCompatActivity {
 
     }
 
+    private void getQuestionsFromChatGPT(int numberOfWantedQuestions, String subject) {
+        Request request = chatApi.getRequest(numberOfWantedQuestions, subject);
+        chatApi.client.newCall(request).enqueue(new Callback() {
 
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d("CALLED", "Failed to load response due to " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(Objects.requireNonNull(response.body()).string());
+                        JSONArray jsonArray = jsonObject.getJSONArray("choices");
+                        String result = jsonArray.getJSONObject(0).getJSONObject("message").getString("content");
+                        Log.d("CALLED", result);
+
+                        JSONObject t = new JSONObject(result);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+//https://github.com/easy-tuto/Android_ChatGPT/blob/main/app/src/main/java/com/example/easychatgpt/MainActivity.java
+                } else {
+                    Log.d("ELSE CALLED", "Failed to load response due to " + response.body().toString());
+                }
+            }
+
+
+        });
+
+    }
 }

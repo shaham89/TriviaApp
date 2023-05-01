@@ -50,4 +50,5 @@
     <string name="world_cup_title">world cup</string>
     <string name="home">Home</string>
     <string name="empty_leaderboard">-</string>
+    <string name="custom_subject">Custom Subject</string>
 </resources>
