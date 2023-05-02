@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import com.example.triviaapp.customClasses.Question;
 import com.example.triviaapp.customClasses.Game;
@@ -45,6 +46,7 @@ public class ChooseSubjectActivity extends AppCompatActivity {
         findViewById(R.id.generalKnowledge_image).setOnClickListener(new imageClickHandler());
         findViewById(R.id.harryPotter_image).setOnClickListener(new imageClickHandler());
         findViewById(R.id.worldCup_image).setOnClickListener(new imageClickHandler());
+        findViewById(R.id.customSubject_image).setOnClickListener(new imageClickHandler());
     }
 
     protected class imageClickHandler implements View.OnClickListener {
@@ -86,9 +88,10 @@ public class ChooseSubjectActivity extends AppCompatActivity {
                             Subject.displayNameWorldCup);
                     break;
                 case R.id.customSubject_image:
+                    String customSubjectName = ((EditText)findViewById(R.id.customSubjectTitleTextView)).getText().toString();
                     chosen_subject = new Subject(Subject.subjectNameCustomSubject,
                             R.drawable.network_brain,
-                            Subject.displayNameCustomSubject);
+                            customSubjectName);
                     break;
             }
 

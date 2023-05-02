@@ -50,9 +50,13 @@ public class chatApi {
 //                        jsonBody.put("prompt", "Give me " + numberOfQuestions + " random trivia questions about " + subject + ", with 4 options for each, and mark the correct answer. Parse the questions in a json format");
 //                        jsonBody.put("max_tokens", 200);
 //                        jsonBody.put("temperature", 1);
+                        String prompt = "Give me " + numberOfQuestions + " random trivia questions about " + subject + ", with 4 options for each, and mark the correct answer." +
+                                " Parse the questions in a json format following this pattern: {question_<number> : {\"QuestionText\":<text>, Options: { \"a\" : <firstAnswer>,\"b\" : <secondAnswer>, \"c\" : <thirdAnswer>,\"d\" : <forthAnswer>}, \"TrueAnswer\" : <answerNumber>}";
 
-                        jsonBody = new JSONObject("{\"model\": \"gpt-3.5-turbo\", \"messages\": [{\"role\": \"user\", \"content\": \"Give me " + numberOfQuestions + " random trivia questions about " + subject + ", with 4 options for each, and mark the correct answer. Parse the questions in a json format\"}]}");
-
+                        jsonBody = new JSONObject("{\"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}]}");
+                        jsonBody.put("model", "gpt-3.5-turbo");
+                        jsonBody.put("max_tokens", 300);
+                        jsonBody.put("temperature", 1);
                 } catch (JSONException e) {
                         e.printStackTrace();
                 }
@@ -69,6 +73,7 @@ public class chatApi {
                 final String modelsCompletionURL = "https://api.openai.com/v1/completions";
 
 
+
                 return new Request.Builder()
                         .url(chatURL)
                         .header("Authorization", decodedString)
@@ -76,45 +81,7 @@ public class chatApi {
                         .build();
         }
 
-        public static void getQuestion(int numberOfQuestions, String subject) {
-                //okhttp
-                //messageList.add(new Message("Typing... ",Message.SENT_BY_BOT));
 
-                Request request = getRequest(numberOfQuestions, subject);
-
-
-                client.newCall(request).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                                Log.d("CALLED", "Failed to load response due to " + e.getMessage());
-                        }
-
-                        @Override
-                        public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                                if (response.isSuccessful()) {
-                                        try {
-
-                                                JSONObject jsonObject = new JSONObject(Objects.requireNonNull(response.body()).string());
-                                                JSONArray jsonArray = jsonObject.getJSONArray("choices");
-                                                String result = jsonArray.getJSONObject(0).getJSONObject("message").getString("content");
-                                                //String result = jsonArray.getJSONObject(0).getString("text");
-                                                Log.d("CALLED", result);
-
-                                                //JSONObject t = new JSONObject(result);
-                                        } catch (JSONException e) {
-                                                e.printStackTrace();
-                                        }
-
-//https://github.com/easy-tuto/Android_ChatGPT/blob/main/app/src/main/java/com/example/easychatgpt/MainActivity.java
-                                } else {
-                                        Log.d("ELSE CALLED", "Failed to load response due to " + Objects.requireNonNull(response.body()).toString());
-                                }
-                        }
-
-
-                });
-
-        }
 
 
 }

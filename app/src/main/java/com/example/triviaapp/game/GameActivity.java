@@ -118,7 +118,7 @@ public class GameActivity extends AppCompatActivity {
         resetButtonColors();
 
         for(int i = 0; i < answers.length; i++){
-            answers[i].setText(currQuestion.options.get(i));
+            answers[i].setText(currQuestion.options[i]);
         }
 
     }

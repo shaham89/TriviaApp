@@ -44,12 +44,12 @@
                 style="@style/images_style"
                 app:srcCompat="@drawable/earth" />
 
-            <TextView
+            <EditText
                 android:id="@+id/customSubjectTitleTextView"
                 style="@style/images_titles_style"
 
                 android:fontFamily="@font/acme"
-                android:text="@string/custom_subject" />
+                android:text="Math" />
 
             <ImageView
                 android:id="@+id/customSubject_image"
