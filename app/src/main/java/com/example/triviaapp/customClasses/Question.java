@@ -40,7 +40,7 @@ public class Question implements Serializable {
     public Question(JSONObject jsonObject) throws JSONException, NoSuchAlgorithmException {
         this.questionText = (String) jsonObject.get(QUESTION_TEXT);
         this.options = toStringArray(((JSONArray) jsonObject.get(OPTION_TEXT)));
-        this.answerHash = GameActivity.getMd5Hashed(options[(int) jsonObject.get(TRUE_ANSWER)]);
+        this.answerHash = GameActivity.getMd5Hashed((String) jsonObject.get(TRUE_ANSWER));
     }
 
     private static String[] toStringArray(JSONArray array) {

@@ -249,12 +249,12 @@ public class GameActivity extends AppCompatActivity {
 
 
         Context context = getApplicationContext();
-        String[] oldQuestions = new String[m_game.getQuestions().length];
-        for(int i = 0; i < m_game.getQuestions().length; i++){
-            oldQuestions[i] = m_game.getQuestions()[i].questionText;
-        }
+//        String[] oldQuestions = new String[m_game.getQuestions().length];
+//        for(int i = 0; i < m_game.getQuestions().length; i++){
+//            oldQuestions[i] = m_game.getQuestions()[i].questionText;
+//        }
 
-        Request request = chatApi.getRequest(numberOfQuestions, subject, true, oldQuestions);
+        Request request = chatApi.getRequest(numberOfQuestions, subject, true);
 
 
         chatApi.client.newCall(request).enqueue(new Callback() {

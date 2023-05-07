@@ -315,7 +315,7 @@ public class CreateGameActivity extends AppCompatActivity {
 
         final int NUMBER_OF_QUESTION_TO_ASK = min(1, numberOfQuestions);
         Context context = getApplicationContext();
-        Request request = chatApi.getRequest(NUMBER_OF_QUESTION_TO_ASK, subject, false, null);
+        Request request = chatApi.getRequest(NUMBER_OF_QUESTION_TO_ASK, subject, false);
 
         m_game.setNumberOfQuestions(numberOfQuestions);
 
@@ -336,6 +336,7 @@ public class CreateGameActivity extends AppCompatActivity {
                         String result = jsonArrayChoices.getJSONObject(0).getJSONObject("message").getString("content");
                         //String result = jsonArray.getJSONObject(0).getString("text");
                         Log.d("CALLED", result);
+                        chatApi.chatAnswer = result;
 
                         JSONObject json_questions = new JSONObject(result);
 
@@ -349,6 +350,7 @@ public class CreateGameActivity extends AppCompatActivity {
                             }
                         }
 
+                        questions.get(0);
                         synchronized (lock){
                             lock.notify();
                         }
