@@ -1,23 +1,42 @@
 package com.example.triviaapp.game;
 
+import static java.lang.Math.min;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.triviaapp.R;
+import com.example.triviaapp.chatgpt.chatApi;
 import com.example.triviaapp.customClasses.Question;
 import com.example.triviaapp.customClasses.Game;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.Objects;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -46,9 +65,10 @@ public class GameActivity extends AppCompatActivity {
         m_game = (Game) getIntent().getSerializableExtra(getString(R.string.game_intent_text));
 
         currentQuestionIndex = 0;
-        timeScores = new int[m_game.getQuestions().length];
-        correctAnswers = new boolean[m_game.getQuestions().length];
+        timeScores = new int[m_game.getNumberOfQuestions()];
+        correctAnswers = new boolean[m_game.getNumberOfQuestions()];
         isFreezeState = false;
+        generateChatQuestions(m_game.getNumberOfQuestions() - m_game.getQuestions().length, m_game.getSubject().getSubjectDisplayName());
         init_views();
 
         playGame();
@@ -56,8 +76,14 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private static final Object lock = new Object();
+    private static final Object waitForMoreQuestionsLock = new Object();
+    private void playQuestion(int questionIndex) throws InterruptedException {
+        long REFRESH_RATE_MS = 100;
 
-    private void playQuestion(int questionIndex){
+        while(questionIndex >= m_game.getQuestions().length){
+            lock.wait(REFRESH_RATE_MS);
+        }
+
         currQuestion = m_game.getQuestions()[questionIndex];
         showCurrQuestion();
         isFreezeState = false;
@@ -90,8 +116,12 @@ public class GameActivity extends AppCompatActivity {
             public void run() {
                 synchronized(lock) {
                     isFreezeState = false;
-                    for(int i = 0; i < m_game.getQuestions().length; i++){
-                        playQuestion(i);
+                    for(int i = 0; i < m_game.getNumberOfQuestions(); i++){
+                        try {
+                            playQuestion(i);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                     gameEnded();
                 }
@@ -111,6 +141,7 @@ public class GameActivity extends AppCompatActivity {
         intent.putExtra(getString(R.string.scores_text), timeScores);
         finish();
         startActivity(intent);
+
     }
 
     private void showCurrQuestion(){
@@ -184,7 +215,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     //returns the hex string representation of a hashMd5 on string
-    private static String getMd5Hashed(String answer) {
+    public static String getMd5Hashed(String answer) {
 
         byte[] bytesOfMessage = answer.getBytes(StandardCharsets.UTF_8);
 
@@ -212,5 +243,67 @@ public class GameActivity extends AppCompatActivity {
         return new String(hexChars).toLowerCase(Locale.ROOT);
     }
 
+    public void generateChatQuestions(int numberOfQuestions, String subject) {
+        //okhttp
+        //messageList.add(new Message("Typing... ",Message.SENT_BY_BOT));
+
+
+        Context context = getApplicationContext();
+        String[] oldQuestions = new String[m_game.getQuestions().length];
+        for(int i = 0; i < m_game.getQuestions().length; i++){
+            oldQuestions[i] = m_game.getQuestions()[i].questionText;
+        }
+
+        Request request = chatApi.getRequest(numberOfQuestions, subject, true, oldQuestions);
+
+
+        chatApi.client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d("CALLED", "Failed to load response due to " + e.getMessage());
+                Toast.makeText(context, "Response failed", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    try {
+
+                        JSONObject jsonResponse = new JSONObject(Objects.requireNonNull(response.body()).string());
+                        JSONArray jsonArrayChoices = jsonResponse.getJSONArray("choices");
+                        String result = jsonArrayChoices.getJSONObject(0).getJSONObject("message").getString("content");
+                        //String result = jsonArray.getJSONObject(0).getString("text");
+                        Log.d("CALLED", result);
+
+                        JSONObject json_questions = new JSONObject(result);
+
+                        Iterator<String> keys = json_questions.keys();
+                        int i = m_game.getQuestions().length;
+
+                        Question[] newQuestions = new Question[m_game.getNumberOfQuestions()];
+                        while(keys.hasNext()) {
+                            String key = keys.next();
+                            if (json_questions.get(key) instanceof JSONObject) {
+                                newQuestions[i] = new Question((JSONObject) json_questions.get(key));
+                            }
+                            i++;
+                        }
+                        System.arraycopy(m_game.getQuestions(), 0, newQuestions, 0, m_game.getQuestions().length);
+                        m_game.setQuestions(newQuestions);
+
+                    } catch (JSONException | NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
+
+//https://github.com/easy-tuto/Android_ChatGPT/blob/main/app/src/main/java/com/example/easychatgpt/MainActivity.java
+                } else {
+                    Log.d("ELSE CALLED", "Failed to load response due to " + Objects.requireNonNull(response.body()).toString());
+                    Toast.makeText(context, "Error with response", Toast.LENGTH_LONG).show();
+                }
+            }
+
+        });
+
+    }
 
 }

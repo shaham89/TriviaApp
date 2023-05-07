@@ -39,7 +39,7 @@ public class chatApi {
                 .readTimeout(60, TimeUnit.SECONDS)
                 .build();
 
-        public static Request getRequest(int numberOfQuestions, String subject){
+        public static Request getRequest(int numberOfQuestions, String subject, boolean hasAsked, String[] oldQuestions){
                 JSONObject jsonBody = new JSONObject();
 
                 //String model = "text-davinci-003";
@@ -50,13 +50,28 @@ public class chatApi {
 //                        jsonBody.put("prompt", "Give me " + numberOfQuestions + " random trivia questions about " + subject + ", with 4 options for each, and mark the correct answer. Parse the questions in a json format");
 //                        jsonBody.put("max_tokens", 200);
 //                        jsonBody.put("temperature", 1);
-                        String prompt = "Give me " + numberOfQuestions + " random trivia questions about " + subject + ", with 4 options for each, and mark the correct answer." +
-                                " Parse the questions in a json format following this pattern: {question_<number> : {\"QuestionText\":<text>, Options: { \"a\" : <firstAnswer>,\"b\" : <secondAnswer>, \"c\" : <thirdAnswer>,\"d\" : <forthAnswer>}, \"TrueAnswer\" : <answerNumber>}";
+                        StringBuilder prompt = new StringBuilder("Write " + numberOfQuestions + " random trivia questions about " + subject + ", with 4 options for each, and mark the correct answer.");
 
-                        jsonBody = new JSONObject("{\"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}]}");
+                        String jsonString = "";
+
+                        if(hasAsked){
+//                                prompt.append("\nMake sure not to include the following questions: ");
+//                                for (String oldQuestion : oldQuestions) {
+//                                        prompt.append("\\\"").append(oldQuestion).append("\\\", ");
+//                                }
+                                String oldMessage = String.valueOf(prompt);
+                                jsonString =
+                        }
+
+                        String jsonFormat = "Parse the questions in a json format following this pattern: {question_<number> : {`QuestionText`:<text>, Options: [<firstAnswer>, <secondAnswer>, <thirdAnswer>, <forthAnswer>], `TrueAnswer` : <TrueAnswerIndex>}";
+                        prompt.append(jsonFormat);
+                        String messages = ("{\"role\": \"user\", \"content\": \"" + prompt + "\"}").replace("`", "\\\"");
+                        jsonString = "{\"messages\":[" + messages + "]}";
+                        jsonBody = new JSONObject(jsonString);
                         jsonBody.put("model", "gpt-3.5-turbo");
-                        jsonBody.put("max_tokens", 300);
-                        jsonBody.put("temperature", 1);
+                        jsonBody.put("max_tokens", 1000);
+                        jsonBody.put("temperature", 1.2);
+                        jsonBody.put("n", 1);
                 } catch (JSONException e) {
                         e.printStackTrace();
                 }

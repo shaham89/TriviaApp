@@ -1,11 +1,17 @@
 package com.example.triviaapp.customClasses;
 
+import com.example.triviaapp.game.GameActivity;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 public class Question implements Serializable {
     public final String questionText;
@@ -27,13 +33,24 @@ public class Question implements Serializable {
 
     public Question(Map<String, Object> json){
         this.questionText = (String) json.get(QUESTION_TEXT);
-        this.options = (String[]) ((ArrayList<String>) json.get(OPTION_TEXT)).toArray(new String[NUMBER_OF_DIFFERENT_OPTIONS]);
+        this.options = (String[]) ((ArrayList<String>) Objects.requireNonNull(json.get(OPTION_TEXT))).toArray(new String[NUMBER_OF_DIFFERENT_OPTIONS]);
         this.answerHash = (String) json.get(TRUE_ANSWER);
     }
 
-    public Question(JSONObject jsonObject) throws JSONException {
+    public Question(JSONObject jsonObject) throws JSONException, NoSuchAlgorithmException {
         this.questionText = (String) jsonObject.get(QUESTION_TEXT);
-        this.options = (String[]) jsonObject.get(OPTION_TEXT);
-        this.answerHash = (String) jsonObject.get(TRUE_ANSWER);
+        this.options = toStringArray(((JSONArray) jsonObject.get(OPTION_TEXT)));
+        this.answerHash = GameActivity.getMd5Hashed(options[(int) jsonObject.get(TRUE_ANSWER)]);
+    }
+
+    private static String[] toStringArray(JSONArray array) {
+        if(array==null)
+            return new String[0];
+
+        String[] arr=new String[array.length()];
+        for(int i=0; i<arr.length; i++) {
+            arr[i]=array.optString(i);
+        }
+        return arr;
     }
 }

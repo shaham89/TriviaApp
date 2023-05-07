@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -43,8 +44,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 
@@ -166,8 +169,7 @@ public class CreateGameActivity extends AppCompatActivity {
                 synchronized(lock) {
                     try {
                         lock.wait(MAXIMUM_WAITING_TIME_MS);
-                        m_game.setQuestions(new Question[questions.size()]);
-                        m_game.setQuestions(questions.toArray(m_game.getQuestions()));
+                        m_game.setQuestions(questions.toArray(new Question[questions.size()]));
                         startGameActivity();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -188,6 +190,8 @@ public class CreateGameActivity extends AppCompatActivity {
             if(hasStartGameClickedAlready){return;}
             hasStartGameClickedAlready = true;
 
+            questions = new ArrayList<>();
+
             //m_game.setCompetitive(isCompetitiveSwitch.isChecked());
             if(m_game.isCompetitive()){
                 numberOfWantedQuestions = Game.COMPETITIVE_QUESTION_NUMBER;
@@ -202,8 +206,9 @@ public class CreateGameActivity extends AppCompatActivity {
                 generateChatQuestions(numberOfWantedQuestions, m_game.getSubject().getSubjectDisplayName());
             } else{
                 callGetQuestions();
-                waitUntilQuestionsAreRead();
             }
+
+            waitUntilQuestionsAreRead();
 
         }
 
@@ -220,11 +225,13 @@ public class CreateGameActivity extends AppCompatActivity {
 
     }
 
-    private void startGameActivity(){
+    private void startGameActivity() {
+
         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
         intent.putExtra(getString(R.string.game_intent_text), m_game);
         finish();
         startActivity(intent);
+
     }
 
 
@@ -233,7 +240,6 @@ public class CreateGameActivity extends AppCompatActivity {
         String subjectPath = m_game.getSubject().getSubjectName() + "_subject";
         DocumentReference docRef = db.collection(MAIN_SUBJECT_COLLECTION).document(subjectPath);
         Log.d(TAG, "Getting questions from:" + subjectPath);
-        questions = new ArrayList<>();
 
         docRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -305,17 +311,19 @@ public class CreateGameActivity extends AppCompatActivity {
         //okhttp
         //messageList.add(new Message("Typing... ",Message.SENT_BY_BOT));
 
-        final int NUMBER_OF_QUESTION_TO_ASK = min(3, numberOfQuestions);
 
-        Request request = chatApi.getRequest(NUMBER_OF_QUESTION_TO_ASK, subject);
 
-        int numberOfRemainingQuestions = numberOfQuestions - NUMBER_OF_QUESTION_TO_ASK;
+        final int NUMBER_OF_QUESTION_TO_ASK = min(1, numberOfQuestions);
+        Context context = getApplicationContext();
+        Request request = chatApi.getRequest(NUMBER_OF_QUESTION_TO_ASK, subject, false, null);
+
+        m_game.setNumberOfQuestions(numberOfQuestions);
 
         chatApi.client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.d("CALLED", "Failed to load response due to " + e.getMessage());
-                Toast.makeText(getApplicationContext(), "Response failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Response failed", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -323,25 +331,37 @@ public class CreateGameActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     try {
 
-                        JSONObject jsonObject = new JSONObject(Objects.requireNonNull(response.body()).string());
-                        JSONArray jsonArray = jsonObject.getJSONArray("choices");
-                        String result = jsonArray.getJSONObject(0).getJSONObject("message").getString("content");
+                        JSONObject jsonResponse = new JSONObject(Objects.requireNonNull(response.body()).string());
+                        JSONArray jsonArrayChoices = jsonResponse.getJSONArray("choices");
+                        String result = jsonArrayChoices.getJSONObject(0).getJSONObject("message").getString("content");
                         //String result = jsonArray.getJSONObject(0).getString("text");
                         Log.d("CALLED", result);
 
                         JSONObject json_questions = new JSONObject(result);
 
-                        for (int i = 0; i < jsonArray.length(); i++) {
-//                            questions.add(json_questions.get("questions"));
+                        Iterator<String> keys = json_questions.keys();
+
+                        while(keys.hasNext()) {
+                            String key = keys.next();
+                            if (json_questions.get(key) instanceof JSONObject) {
+
+                                questions.add(new Question((JSONObject) json_questions.get(key)));
+                            }
                         }
-                    } catch (JSONException e) {
+
+                        synchronized (lock){
+                            lock.notify();
+                        }
+
+                    } catch (JSONException | NoSuchAlgorithmException e) {
                         e.printStackTrace();
                     }
 
 //https://github.com/easy-tuto/Android_ChatGPT/blob/main/app/src/main/java/com/example/easychatgpt/MainActivity.java
                 } else {
                     Log.d("ELSE CALLED", "Failed to load response due to " + Objects.requireNonNull(response.body()).toString());
-                    Toast.makeText(getApplicationContext(), "Error with response", Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(context, "Error with response", Toast.LENGTH_LONG).show();
                 }
             }
 
