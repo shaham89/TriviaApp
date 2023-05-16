@@ -269,13 +269,7 @@ public class GameActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     try {
 
-                        JSONObject jsonResponse = new JSONObject(Objects.requireNonNull(response.body()).string());
-                        JSONArray jsonArrayChoices = jsonResponse.getJSONArray("choices");
-                        String result = jsonArrayChoices.getJSONObject(0).getJSONObject("message").getString("content");
-                        //String result = jsonArray.getJSONObject(0).getString("text");
-                        Log.d("CALLED", result);
-
-                        JSONObject json_questions = new JSONObject(result);
+                        JSONObject json_questions = chatApi.getQuestionsFormat(response, false);
 
                         Iterator<String> keys = json_questions.keys();
                         int i = m_game.getQuestions().length;

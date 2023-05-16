@@ -38,7 +38,7 @@ public class chatApi {
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .build();
-        public static String chatAnswer;
+        public static String chatAnswer = "";
 
         public static Request getRequest(int numberOfQuestions, String subject, boolean hasAsked){
                 JSONObject jsonBody = new JSONObject();
@@ -54,7 +54,7 @@ public class chatApi {
                         StringBuilder prompt = new StringBuilder("Write " + numberOfQuestions + " random trivia questions about " + subject + ", with 4 options for each, and mark the correct answer.");
 
                         String jsonString = "";
-                        String jsonPattern = "{question_<number> : {`QuestionText`:<text>, Options: [<firstAnswer>, <secondAnswer>, <thirdAnswer>, <forthAnswer>], `TrueAnswer` : <TrueAnswer>}".replace("`", "\\\"");
+                        String jsonPattern = "{`Questions`:{question_<number> : {`QuestionText`:<text>, Options: [`<firstAnswer>`, `<secondAnswer>`, `<thirdAnswer>`, `<forthAnswer>`], `TrueAnswer` : `<TrueAnswer>`}}".replace("`", "\\\"");
                         String jsonFormat = "Parse the questions in a json format following this pattern: " + jsonPattern;
                         prompt.append(jsonFormat);
                         String messages = ("{\"role\": \"user\", \"content\": \"" + prompt + "\"}").replace("`", "\\\"");
@@ -66,7 +66,7 @@ public class chatApi {
 //                                }
 
                                 messages += ", {\"role\": \"assistant\", \"content\": \"" + chatAnswer.replace("\"", "\\\"") +"\"}";
-                                messages += ", {\"role\": \"user\", \"content\": \"Write additional unique " + numberOfQuestions +" questions with the same parsing format: " + jsonPattern + "\"}";
+                                messages += ", {\"role\": \"user\", \"content\": \"Write " + numberOfQuestions + " additional unique  questions with the same exact parsing format: " + jsonPattern + "\"}";
                         }
 
 
@@ -75,7 +75,7 @@ public class chatApi {
                         jsonBody = new JSONObject(jsonString);
                         jsonBody.put("model", "gpt-3.5-turbo");
                         jsonBody.put("max_tokens", 1000);
-                        jsonBody.put("temperature", 1.2);
+                        jsonBody.put("temperature", 0);
                         jsonBody.put("n", 1);
                 } catch (JSONException e) {
                         e.printStackTrace();
@@ -99,6 +99,27 @@ public class chatApi {
                         .header("Authorization", decodedString)
                         .post(body)
                         .build();
+        }
+
+        public static JSONObject getQuestionsFormat(@NonNull Response response, boolean should_save_answer) throws JSONException, IOException {
+
+                JSONObject jsonResponse = new JSONObject(Objects.requireNonNull(response.body()).string());
+                JSONArray jsonArrayChoices = jsonResponse.getJSONArray("choices");
+                String result = jsonArrayChoices.getJSONObject(0).getJSONObject("message").getString("content");
+                //String result = jsonArray.getJSONObject(0).getString("text");
+                Log.d("CALLED", result);
+
+                chatAnswer += result;
+//                if(should_save_answer){
+//                        chatAnswer = result;
+//                }
+
+                JSONObject json_questions = new JSONObject(result);
+                if(json_questions.has("Questions")){
+                        json_questions = (JSONObject) json_questions.get("Questions");
+                }
+
+                return json_questions;
         }
 
 

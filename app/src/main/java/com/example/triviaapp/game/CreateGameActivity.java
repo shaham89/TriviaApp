@@ -162,7 +162,7 @@ public class CreateGameActivity extends AppCompatActivity {
     private static final Object lock = new Object();
 
     private void waitUntilQuestionsAreRead(){
-        final long MAXIMUM_WAITING_TIME_MS = 20000;
+        final long MAXIMUM_WAITING_TIME_MS = 40000;
         Thread game_thread = new Thread() {
             @Override
             public void run() {
@@ -313,7 +313,7 @@ public class CreateGameActivity extends AppCompatActivity {
 
 
 
-        final int NUMBER_OF_QUESTION_TO_ASK = min(1, numberOfQuestions);
+        final int NUMBER_OF_QUESTION_TO_ASK = min(2, numberOfQuestions);
         Context context = getApplicationContext();
         Request request = chatApi.getRequest(NUMBER_OF_QUESTION_TO_ASK, subject, false);
 
@@ -331,14 +331,10 @@ public class CreateGameActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     try {
 
-                        JSONObject jsonResponse = new JSONObject(Objects.requireNonNull(response.body()).string());
-                        JSONArray jsonArrayChoices = jsonResponse.getJSONArray("choices");
-                        String result = jsonArrayChoices.getJSONObject(0).getJSONObject("message").getString("content");
-                        //String result = jsonArray.getJSONObject(0).getString("text");
-                        Log.d("CALLED", result);
-                        chatApi.chatAnswer = result;
+                        JSONObject json_questions = chatApi.getQuestionsFormat(response, true);
 
-                        JSONObject json_questions = new JSONObject(result);
+                        chatApi.chatAnswer = String.valueOf(json_questions);
+
 
                         Iterator<String> keys = json_questions.keys();
 
@@ -350,7 +346,6 @@ public class CreateGameActivity extends AppCompatActivity {
                             }
                         }
 
-                        questions.get(0);
                         synchronized (lock){
                             lock.notify();
                         }
