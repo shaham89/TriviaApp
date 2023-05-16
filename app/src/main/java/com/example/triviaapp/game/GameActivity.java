@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -50,6 +51,9 @@ public class GameActivity extends AppCompatActivity {
     private int[] timeScores;
     private Stopwatch stopwatch;
 
+    TextToSpeech m_textToSpeech;
+
+
     private static boolean isFreezeState;
 
     //private static final long TIME_PER_QUESTION_MS = 5 * 1000;
@@ -68,6 +72,13 @@ public class GameActivity extends AppCompatActivity {
         timeScores = new int[m_game.getNumberOfQuestions()];
         correctAnswers = new boolean[m_game.getNumberOfQuestions()];
         isFreezeState = false;
+
+        m_textToSpeech = new TextToSpeech(getApplicationContext(), status -> {
+            if(status != TextToSpeech.ERROR) {
+                m_textToSpeech.setLanguage(Locale.US);
+            }
+        });
+
         generateChatQuestions(m_game.getNumberOfQuestions() - m_game.getQuestions().length, m_game.getSubject().getSubjectDisplayName());
         init_views();
 

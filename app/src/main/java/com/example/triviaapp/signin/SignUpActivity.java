@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.triviaapp.HomeActivity;
+import com.example.triviaapp.BackgroundMusic;
 import com.example.triviaapp.R;
 import com.example.triviaapp.helperFunctions.CredentialsValidator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        startService(new Intent(SignUpActivity.this, BackgroundMusic.class));
         m_auth = FirebaseAuth.getInstance();
 
         init_views();
