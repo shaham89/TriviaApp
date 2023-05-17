@@ -16,6 +16,8 @@ public class BackgroundMusic extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
+        mediaPlayer = MediaPlayer.create(this, R.raw.music_background);
+
         Log.d("CUSTOM_SERVICE", "On Create Service");
     }
 
@@ -29,7 +31,6 @@ public class BackgroundMusic extends Service{
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("SERVICE", "Starting to play playing");
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.music_background);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
         return super.onStartCommand(intent, flags, startId);
@@ -38,6 +39,7 @@ public class BackgroundMusic extends Service{
 
     @Override
     public boolean stopService(Intent name) {
+        mediaPlayer.stop();
 
         return super.stopService(name);
     }

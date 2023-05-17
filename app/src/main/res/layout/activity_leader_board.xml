@@ -23,7 +23,7 @@
             android:fontFamily="@font/judson"
             android:gravity="center"
             android:text="Score"
-            android:textSize="25sp"
+            android:textSize="28sp"
             android:textStyle="bold" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:gravity="center"
             android:text="Name"
             android:textAlignment="center"
-            android:textSize="25sp"
+            android:textSize="28sp"
             android:textStyle="bold" />
 
         <TextView
@@ -44,7 +44,7 @@
             android:fontFamily="@font/judson"
             android:gravity="center"
             android:text="Time(ms)"
-            android:textSize="25sp"
+            android:textSize="28sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -158,10 +158,17 @@
     </LinearLayout>
 
 
+    <ImageView
+        android:id="@+id/black_rectangle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/black_divider" />
+
     <TextView
         android:id="@+id/userScoreTextView"
         style="@style/leaderboard_top_scores_textview_style"
-        android:layout_weight="13"
+        android:layout_weight="12"
         android:layout_height="0dp"
         android:textSize="23sp"
         android:layout_width="match_parent"

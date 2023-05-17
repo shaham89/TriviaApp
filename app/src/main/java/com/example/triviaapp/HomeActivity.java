@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,11 @@ import com.google.firebase.auth.FirebaseUser;
 public class HomeActivity extends AppCompatActivity {
 
     private FirebaseUser m_user;
+    public static boolean isSound = true;
+    public static boolean isMusic = true;
+
+    private ImageView speakerImageView;
+    private ImageView musicImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +80,34 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    private class musicSettings implements View.OnClickListener {
+        @Override
+        public void onClick(View view){
+
+            if(view.getId() == R.id.speaker_icon){
+                isSound = !isSound;
+                if(isSound){
+                    speakerImageView.setImageResource(R.drawable.speaker);
+                } else{
+                    speakerImageView.setImageResource(R.drawable.speaker_mute_icon);
+                }
+
+            } else if(view.getId() == R.id.music_icon){
+                isMusic = !isMusic;
+
+                if(isMusic){
+                    musicImageView.setImageResource(R.drawable.music_icon);
+                    startService(new Intent(HomeActivity.this, BackgroundMusic.class));
+                } else {
+                    musicImageView.setImageResource(R.drawable.music_mute_icon);
+                    stopService(new Intent(HomeActivity.this, BackgroundMusic.class));
+                }
+
+            }
+
+        }
+    }
+
     private void init_views(){
         TextView title = findViewById(R.id.homeActivityTitle);
 
@@ -88,6 +122,10 @@ public class HomeActivity extends AppCompatActivity {
         findViewById(R.id.playPracticeButton).setOnClickListener(new playClickHandler());
         findViewById(R.id.leaderBoardsButton).setOnClickListener(new leaderBoardsClickHandler());
         findViewById(R.id.logoutButton).setOnClickListener(new logoutClickHandler());
+        musicImageView = findViewById(R.id.music_icon);
+        musicImageView.setOnClickListener(new musicSettings());
+        speakerImageView = findViewById(R.id.speaker_icon);
+        speakerImageView.setOnClickListener(new musicSettings());
 
     }
 

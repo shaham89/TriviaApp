@@ -9,29 +9,52 @@
     android:weightSum="100"
     tools:context=".HomeActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+        <ImageView
+            android:id="@+id/music_icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="15"
+            app:srcCompat="@drawable/music_icon" />
 
     <TextView
         android:id="@+id/homeActivityTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:fontFamily="@font/love_ya_like_a_sister"
         android:text="welcome"
+        android:layout_weight="70"
         android:textColor="@color/black"
         android:textAlignment="center"
         android:textSize="30sp" />
 
+        <ImageView
+            android:id="@+id/speaker_icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="15"
+            app:srcCompat="@drawable/speaker" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="95"
         android:orientation="vertical"
-        android:weightSum="100">
+        android:weightSum="105">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="40"
+            android:layout_weight="45"
             app:srcCompat="@drawable/drop2" />
 
         <Button

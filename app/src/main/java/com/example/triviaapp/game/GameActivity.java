@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.triviaapp.HomeActivity;
 import com.example.triviaapp.R;
 import com.example.triviaapp.chatgpt.chatApi;
 import com.example.triviaapp.customClasses.Question;
@@ -79,15 +80,19 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        generateChatQuestions(m_game.getNumberOfQuestions() - m_game.getQuestions().length, m_game.getSubject().getSubjectDisplayName());
-        init_views();
 
+        if(m_game.getNumberOfQuestions() != m_game.getQuestions().length){
+            generateChatQuestions(m_game.getNumberOfQuestions() - m_game.getQuestions().length, m_game.getSubject().getSubjectDisplayName());
+        }
+
+        init_views();
         playGame();
 
     }
 
     private static final Object lock = new Object();
     private static final Object waitForMoreQuestionsLock = new Object();
+
     private void playQuestion(int questionIndex) throws InterruptedException {
         long REFRESH_RATE_MS = 100;
 
@@ -157,11 +162,23 @@ public class GameActivity extends AppCompatActivity {
 
     private void showCurrQuestion(){
         gameQuestionTextview.setText(currQuestion.questionText);
+
+        if(HomeActivity.isSound){
+            m_textToSpeech.speak(currQuestion.questionText, TextToSpeech.QUEUE_FLUSH, null, null);
+        }
+
         resetButtonColors();
 
         for(int i = 0; i < answers.length; i++){
             answers[i].setText(currQuestion.options[i]);
+            if(HomeActivity.isSound){
+                m_textToSpeech.playSilentUtterance(500, TextToSpeech.QUEUE_ADD, null);
+                m_textToSpeech.speak(currQuestion.options[i], TextToSpeech.QUEUE_ADD, null, null);
+            }
+
         }
+
+
 
     }
 
