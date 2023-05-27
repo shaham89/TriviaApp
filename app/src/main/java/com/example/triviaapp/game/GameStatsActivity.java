@@ -50,6 +50,7 @@ public class GameStatsActivity extends AppCompatActivity {
     private static Question[] questions;
     private FirebaseFirestore db;
     private FirebaseUser m_user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +87,7 @@ public class GameStatsActivity extends AppCompatActivity {
         //total correct answer in subject
         updateDict.put(STATS_TOTAL_CORRECT_ANSWERS_FIELD, FieldValue.increment(m_gameResults.getNumberOfCorrectQuestions()));
         //subject
-        updateDict.put(STATS_SUBJECT_FIELD, m_gameResults.getSubject());
+        updateDict.put(STATS_SUBJECT_FIELD, m_gameResults.getSubject().getSubjectName());
         //score
         updateDict.put(STATS_SCORE_FIELD, score);
         //timeScore
@@ -117,7 +118,7 @@ public class GameStatsActivity extends AppCompatActivity {
 
         //query for the same user and subject
         Query query = db.collection(MAIN_STATS_COLLECTION)
-                .whereEqualTo(STATS_SUBJECT_FIELD, m_gameResults.getSubject())
+                .whereEqualTo(STATS_SUBJECT_FIELD, m_gameResults.getSubject().getSubjectName())
                 .whereEqualTo(ID_FIELD_FIELD, m_user.getUid());
 //                .whereLessThanOrEqualTo(STATS_SCORE_FIELD, m_gameResults.getAverageTimeScore())
 //                .orderBy(STATS_SCORE_FIELD, Query.Direction.ASCENDING).limit(1);
@@ -140,7 +141,6 @@ public class GameStatsActivity extends AppCompatActivity {
                             documentID = document.getId();
 
 
-                            //hopefully this isn't null
                             long firestoreUserScore = (long)document.get(STATS_SCORE_FIELD);
                             double firestoreUserTimeScore = (double) document.get(STATS_TIME_SCORE_FIELD);
                             bestUserScore = firestoreUserScore;
@@ -213,7 +213,7 @@ public class GameStatsActivity extends AppCompatActivity {
     }
 
 
-    private void initSeries(){
+    private void initSeries() {
         DataPoint[] points = new DataPoint[m_gameResults.getNumberOfQuestions()];
 
         for(int i = 0; i < m_gameResults.getNumberOfQuestions(); i++){

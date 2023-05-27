@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="0dp"
+        android:layout_marginLeft="20dp"
         android:layout_weight="25"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/rammetto_one"

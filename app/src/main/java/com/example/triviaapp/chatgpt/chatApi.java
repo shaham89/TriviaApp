@@ -47,10 +47,6 @@ public class chatApi {
 
                 try {
 
-//                        jsonBody.put("model", model);
-//                        jsonBody.put("prompt", "Give me " + numberOfQuestions + " random trivia questions about " + subject + ", with 4 options for each, and mark the correct answer. Parse the questions in a json format");
-//                        jsonBody.put("max_tokens", 200);
-//                        jsonBody.put("temperature", 1);
                         StringBuilder prompt = new StringBuilder("Write " + numberOfQuestions + " random trivia questions about " + subject + ", with 4 options for each, and mark the correct answer.");
 
                         String jsonString = "";
@@ -60,23 +56,23 @@ public class chatApi {
                         String messages = ("{\"role\": \"user\", \"content\": \"" + prompt + "\"}").replace("`", "\\\"");
 
                         if(hasAsked){
-//                                prompt.append("\nMake sure not to include the following questions: ");
-//                                for (String oldQuestion : oldQuestions) {
-//                                        prompt.append("\\\"").append(oldQuestion).append("\\\", ");
-//                                }
 
                                 messages += ", {\"role\": \"assistant\", \"content\": \"" + chatAnswer.replace("\"", "\\\"") +"\"}";
                                 messages += ", {\"role\": \"user\", \"content\": \"Write " + numberOfQuestions + " additional unique  questions with the same exact parsing format: " + jsonPattern + "\"}";
                         }
 
+                        Log.d("CHATGPT", messages);
 
 
                         jsonString = "{\"messages\":[" + messages + "]}";
                         jsonBody = new JSONObject(jsonString);
                         jsonBody.put("model", "gpt-3.5-turbo");
                         jsonBody.put("max_tokens", 1000);
-                        jsonBody.put("temperature", 0);
+                        //the randomness of the model
+                        jsonBody.put("temperature", 0.2);
+                        //the number of answers the model sends
                         jsonBody.put("n", 1);
+
                 } catch (JSONException e) {
                         e.printStackTrace();
                 }
@@ -101,7 +97,7 @@ public class chatApi {
                         .build();
         }
 
-        public static JSONObject getQuestionsFormat(@NonNull Response response, boolean should_save_answer) throws JSONException, IOException {
+        public static JSONObject getQuestionsFormat(@NonNull Response response) throws JSONException, IOException {
 
                 JSONObject jsonResponse = new JSONObject(Objects.requireNonNull(response.body()).string());
                 JSONArray jsonArrayChoices = jsonResponse.getJSONArray("choices");

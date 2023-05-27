@@ -1,18 +1,18 @@
 package com.example.triviaapp.customClasses;
 
-public class UserStats extends User {
+public class UserStats {
 
 
     private double timeScore;
     private long score;
     private String subject;
-
+    private String displayName;
 
     public UserStats(String displayName, double timeScore, long score, String subject) {
-        super(displayName);
         this.timeScore = timeScore;
         this.score = score;
         this.subject = subject;
+        this.displayName = displayName;
     }
 
     public double getTimeScore() {
@@ -39,5 +39,11 @@ public class UserStats extends User {
         this.subject = subject;
     }
 
+    public String getDisplayName() {
+        return displayName;
+    }
 
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 }

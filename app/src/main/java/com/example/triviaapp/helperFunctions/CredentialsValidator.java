@@ -55,7 +55,7 @@ public class CredentialsValidator {
     }
 
     //checks for length
-    static boolean isDisplayNameValid(String username){
+    private static boolean isDisplayNameValid(String username){
         final short MIN_CHARACTER_SIZE = 2;
         final short MAX_CHARACTER_SIZE = 10;
 
@@ -64,7 +64,7 @@ public class CredentialsValidator {
     }
 
     //checks for regex pattern and length
-    static boolean isEmailAddressValid(String email){
+    private static boolean isEmailAddressValid(String email){
         final short MIN_CHARACTER_SIZE = 2;
         final short MAX_CHARACTER_SIZE = 40;
 
@@ -74,7 +74,7 @@ public class CredentialsValidator {
     }
 
     //checks for length
-    static boolean isPasswordValid(String password){
+    private static boolean isPasswordValid(String password){
         final short MIN_CHARACTER_SIZE = 4;
         final short MAX_CHARACTER_SIZE = 20;
 

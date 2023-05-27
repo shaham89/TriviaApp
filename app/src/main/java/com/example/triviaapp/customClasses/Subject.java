@@ -67,4 +67,5 @@ public class Subject implements Serializable {
     private String subjectName;
     private int subjectImageId;
     private String subjectDisplayName;
+
 }

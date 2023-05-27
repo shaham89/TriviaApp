@@ -91,7 +91,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private static final Object lock = new Object();
-    private static final Object waitForMoreQuestionsLock = new Object();
 
     private void playQuestion(int questionIndex) throws InterruptedException {
         long REFRESH_RATE_MS = 100;
@@ -277,10 +276,6 @@ public class GameActivity extends AppCompatActivity {
 
 
         Context context = getApplicationContext();
-//        String[] oldQuestions = new String[m_game.getQuestions().length];
-//        for(int i = 0; i < m_game.getQuestions().length; i++){
-//            oldQuestions[i] = m_game.getQuestions()[i].questionText;
-//        }
 
         Request request = chatApi.getRequest(numberOfQuestions, subject, true);
 
@@ -297,7 +292,7 @@ public class GameActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     try {
 
-                        JSONObject json_questions = chatApi.getQuestionsFormat(response, false);
+                        JSONObject json_questions = chatApi.getQuestionsFormat(response);
 
                         Iterator<String> keys = json_questions.keys();
                         int i = m_game.getQuestions().length;
@@ -309,6 +304,7 @@ public class GameActivity extends AppCompatActivity {
                                 newQuestions[i] = new Question((JSONObject) json_questions.get(key));
                             }
                             i++;
+
                         }
                         System.arraycopy(m_game.getQuestions(), 0, newQuestions, 0, m_game.getQuestions().length);
                         m_game.setQuestions(newQuestions);

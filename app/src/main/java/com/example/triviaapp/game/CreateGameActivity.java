@@ -64,7 +64,6 @@ public class CreateGameActivity extends AppCompatActivity {
     private EditText questionsTimeEditText;
 
 
-
     private Game m_game;
     private static ArrayList<Question> questions;
     private int numberOfWantedQuestions;
@@ -235,7 +234,6 @@ public class CreateGameActivity extends AppCompatActivity {
     }
 
 
-
     private void callGetQuestions(){
         String subjectPath = m_game.getSubject().getSubjectName() + "_subject";
         DocumentReference docRef = db.collection(MAIN_SUBJECT_COLLECTION).document(subjectPath);
@@ -251,6 +249,7 @@ public class CreateGameActivity extends AppCompatActivity {
                 int maxQuestions = Objects.requireNonNull(document.getLong("Length")).intValue();
                 getQuestions(numberOfWantedQuestions, maxQuestions);
                 Log.d(TAG, "Questions:" + questions);
+
             } else {
                 Log.d(TAG, "Cached get failed: ", task.getException());
             }
@@ -312,7 +311,6 @@ public class CreateGameActivity extends AppCompatActivity {
         //messageList.add(new Message("Typing... ",Message.SENT_BY_BOT));
 
 
-
         final int NUMBER_OF_QUESTION_TO_ASK = min(2, numberOfQuestions);
         Context context = getApplicationContext();
         Request request = chatApi.getRequest(NUMBER_OF_QUESTION_TO_ASK, subject, false);
@@ -331,7 +329,7 @@ public class CreateGameActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     try {
 
-                        JSONObject json_questions = chatApi.getQuestionsFormat(response, true);
+                        JSONObject json_questions = chatApi.getQuestionsFormat(response);
 
                         chatApi.chatAnswer = String.valueOf(json_questions);
 

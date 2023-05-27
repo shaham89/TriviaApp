@@ -63,11 +63,11 @@ public class Game implements Serializable {
     }
 
     public static final String DEFAULT_SUBJECT = "capitals";
-    public static final int DEFAULT_QUESTION_NUMBER = 4;
+    public static final int DEFAULT_QUESTION_NUMBER = 5;
     public static final int DEFAULT_TIME_PER_QUESTION_SEC = 12;
 
-    public static final int COMPETITIVE_QUESTION_NUMBER = 4;
-    public static final int COMPETITIVE_TIME_PER_QUESTION_SEC = 5;
+    public static final int COMPETITIVE_QUESTION_NUMBER = 10;
+    public static final int COMPETITIVE_TIME_PER_QUESTION_SEC = 12;
 
     public Game() {
         this.subject = new Subject();

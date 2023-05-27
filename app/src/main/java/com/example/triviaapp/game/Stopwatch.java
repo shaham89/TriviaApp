@@ -19,6 +19,7 @@ public class Stopwatch {
 
     private static final long REFRESH_RATE_MS = 100;
     private static final long SOME_DELAY_MS = 5;
+
     // Creates a new Handler
     final Handler handler = new Handler();
 
@@ -73,6 +74,7 @@ public class Stopwatch {
                 if(currentWaitingTimeMs <= 0){
                     isRunning = false;
                 }
+
                 //Log.d(TAG, "time: " + currentWaitingTimeMs);
 
                 // Post the code again

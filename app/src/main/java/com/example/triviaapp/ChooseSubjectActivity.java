@@ -19,12 +19,7 @@ import java.util.ArrayList;
 public class ChooseSubjectActivity extends AppCompatActivity {
 
     private static final String TAG = "ChooseSubjectActivity";
-    private boolean isSolo;
-    private Game m_game;
-    private String subject;
-    private int subjectImageID;
-    private ArrayList<Question> questions;
-    private FirebaseFirestore db;
+
     private Subject chosen_subject;
 
     @Override
@@ -32,13 +27,6 @@ public class ChooseSubjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_subject);
 
-//        db = FirebaseFirestore.getInstance();
-//
-//        Intent intent = getIntent();
-//        m_room = (Room) intent.getExtras().get(String.valueOf(R.string.room));
-
-
-        //questions = new ArrayList<Question>();
 
         findViewById(R.id.capitals_image).setOnClickListener(new imageClickHandler());
         findViewById(R.id.astronomy_image).setOnClickListener(new imageClickHandler());

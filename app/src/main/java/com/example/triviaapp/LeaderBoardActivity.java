@@ -82,7 +82,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     }
 
-    private void updateTopScore(UserStats[] userStats){
+    private void updateTopScore(UserStats[] userStats) {
         int i = 0;
         for(UserStats stats : userStats){
             if(stats == null || stats.getTimeScore() == 0){
