@@ -1,4 +1,4 @@
-package com.example.triviaapp.signin;
+package com.example.triviaapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +11,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.triviaapp.HomeActivity;
-import com.example.triviaapp.R;
-import com.example.triviaapp.helperFunctions.CredentialsValidator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.example.triviaapp.chatgpt.*;
+
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth m_auth;
@@ -57,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    //log in using firebase auth
     private void login(String email, String password){
         m_auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {

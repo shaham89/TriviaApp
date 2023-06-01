@@ -1,4 +1,4 @@
-package com.example.triviaapp.game;
+package com.example.triviaapp;
 
 import android.os.Build;
 import android.os.Handler;
@@ -35,7 +35,6 @@ public class Stopwatch {
     }
 
 
-
     private void updateUi(){
         //timeTextView.setText(MessageFormat.format("{0} ms", currentWaitingTimeMs));
         double percentage = 100 * (double)currentWaitingTimeMs / maxWaitingTimeMs;
@@ -66,17 +65,13 @@ public class Stopwatch {
                 if(!isRunning){
                     return;
                 }
-
                 // Set the text view text.
-               updateUi();
+                updateUi();
                 currentWaitingTimeMs = currentWaitingTimeMs - REFRESH_RATE_MS - SOME_DELAY_MS;
 
                 if(currentWaitingTimeMs <= 0){
                     isRunning = false;
                 }
-
-                //Log.d(TAG, "time: " + currentWaitingTimeMs);
-
                 // Post the code again
                 handler.postDelayed(this, REFRESH_RATE_MS);
             }

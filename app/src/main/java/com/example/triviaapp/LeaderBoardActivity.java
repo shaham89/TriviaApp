@@ -1,13 +1,13 @@
 package com.example.triviaapp;
 
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.ID_FIELD_FIELD;
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.MAIN_STATS_COLLECTION;
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_DISPLAY_NAME_FIELD;
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_SCORE_FIELD;
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_SUBJECT_FIELD;
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TIME_SCORE_FIELD;
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TOTAL_CORRECT_ANSWERS_FIELD;
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TOTAL_GAMES_PLAYED_FIELD;
+import static com.example.triviaapp.FireStoreConstants.ID_FIELD_FIELD;
+import static com.example.triviaapp.FireStoreConstants.MAIN_STATS_COLLECTION;
+import static com.example.triviaapp.FireStoreConstants.STATS_DISPLAY_NAME_FIELD;
+import static com.example.triviaapp.FireStoreConstants.STATS_SCORE_FIELD;
+import static com.example.triviaapp.FireStoreConstants.STATS_SUBJECT_FIELD;
+import static com.example.triviaapp.FireStoreConstants.STATS_TIME_SCORE_FIELD;
+import static com.example.triviaapp.FireStoreConstants.STATS_TOTAL_CORRECT_ANSWERS_FIELD;
+import static com.example.triviaapp.FireStoreConstants.STATS_TOTAL_GAMES_PLAYED_FIELD;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -21,8 +21,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.triviaapp.customClasses.Subject;
-import com.example.triviaapp.customClasses.UserStats;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -82,6 +80,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     }
 
+    //updates the UI of the top scores
     private void updateTopScore(UserStats[] userStats) {
         int i = 0;
         for(UserStats stats : userStats){
@@ -98,7 +97,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
     }
 
 
-
+    //reads from firestore the 3 best users in the subject
     @SuppressWarnings("ConstantConditions")
     private void getTopScore(String subject){
 
@@ -134,6 +133,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
         userScoreTextView.setText(text);
     }
 
+    //reads from firestore the user stats on the subject
     @SuppressWarnings("ConstantConditions")
     private void getUserScore(String subject){
 
@@ -181,6 +181,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
         }
     }
 
+    //get the chosen subject
     ActivityResultLauncher<Intent> getSubjectResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {

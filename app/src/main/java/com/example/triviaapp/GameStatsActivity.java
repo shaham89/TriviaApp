@@ -1,14 +1,14 @@
-package com.example.triviaapp.game;
+package com.example.triviaapp;
 
 
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.ID_FIELD_FIELD;
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.MAIN_STATS_COLLECTION;
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_DISPLAY_NAME_FIELD;
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_SCORE_FIELD;
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_SUBJECT_FIELD;
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TIME_SCORE_FIELD;
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TOTAL_CORRECT_ANSWERS_FIELD;
-import static com.example.triviaapp.helperFunctions.FireStoreConstants.STATS_TOTAL_GAMES_PLAYED_FIELD;
+import static com.example.triviaapp.FireStoreConstants.ID_FIELD_FIELD;
+import static com.example.triviaapp.FireStoreConstants.MAIN_STATS_COLLECTION;
+import static com.example.triviaapp.FireStoreConstants.STATS_DISPLAY_NAME_FIELD;
+import static com.example.triviaapp.FireStoreConstants.STATS_SCORE_FIELD;
+import static com.example.triviaapp.FireStoreConstants.STATS_SUBJECT_FIELD;
+import static com.example.triviaapp.FireStoreConstants.STATS_TIME_SCORE_FIELD;
+import static com.example.triviaapp.FireStoreConstants.STATS_TOTAL_CORRECT_ANSWERS_FIELD;
+import static com.example.triviaapp.FireStoreConstants.STATS_TOTAL_GAMES_PLAYED_FIELD;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,11 +20,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.triviaapp.HomeActivity;
-import com.example.triviaapp.R;
-import com.example.triviaapp.customClasses.Game;
-import com.example.triviaapp.customClasses.GameResults;
-import com.example.triviaapp.customClasses.Question;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
@@ -77,6 +72,7 @@ public class GameStatsActivity extends AppCompatActivity {
     }
     private static final String TAG = "StatsActivity";
 
+    //updates the stats of the games played by the user
     private void updateUserGames(String docId, long score, double timeScore, boolean doesAlreadyExists){
         //UserStats stats = new UserStats(m_user.getUid(), 1, 2, 4000, m_gameResults.getSubject())
 
@@ -97,6 +93,7 @@ public class GameStatsActivity extends AppCompatActivity {
         //display name
         updateDict.put(STATS_DISPLAY_NAME_FIELD, m_user.getDisplayName());
 
+        //if user exists, update the stats, if not, add the stats
         if(doesAlreadyExists){
             db.collection(MAIN_STATS_COLLECTION)
                     .document(docId)
@@ -113,6 +110,8 @@ public class GameStatsActivity extends AppCompatActivity {
 
     }
 
+    //read data from firestore and check if the currect userscore is better than the old user score
+    //if so, updates it accordingly
     @SuppressWarnings("ConstantConditions")
     private void updateStats(){
 
@@ -213,6 +212,7 @@ public class GameStatsActivity extends AppCompatActivity {
     }
 
 
+    //init the points on the graph using the questions
     private void initSeries() {
         DataPoint[] points = new DataPoint[m_gameResults.getNumberOfQuestions()];
 
@@ -236,7 +236,7 @@ public class GameStatsActivity extends AppCompatActivity {
         correctSeries.setColor(Color.GREEN);
         inCorrectSeries.setColor(Color.RED);
 
-
+        //adding a tap listener
         OnDataPointTapListener showQuestionTap = (OnDataPointTapListener) (series1, dataPoint) -> {
             String showOutput = questions[(int) dataPoint.getX() - 1].questionText + "\n" + (int) dataPoint.getY() + " ms";
             dataPointTextView.setText(showOutput);

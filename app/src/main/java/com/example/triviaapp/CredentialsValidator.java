@@ -1,4 +1,4 @@
-package com.example.triviaapp.helperFunctions;
+package com.example.triviaapp;
 
 import android.content.Context;
 import android.widget.Toast;

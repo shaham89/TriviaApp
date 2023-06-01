@@ -1,4 +1,4 @@
-package com.example.triviaapp.customClasses;
+package com.example.triviaapp;
 
 import java.io.Serializable;
 

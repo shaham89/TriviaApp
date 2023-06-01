@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bright_ii"
+    android:background="@drawable/game_background"
     android:orientation="vertical"
     android:weightSum="100"
-    tools:context=".game.GameStatsActivity">
+    tools:context=".GameStatsActivity">
 
 
     <LinearLayout

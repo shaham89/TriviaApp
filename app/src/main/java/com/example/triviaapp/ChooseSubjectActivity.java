@@ -9,12 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.triviaapp.customClasses.Question;
-import com.example.triviaapp.customClasses.Game;
-import com.example.triviaapp.customClasses.Subject;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
+import com.example.triviaapp.R;
+import com.example.triviaapp.Subject;
 
 public class ChooseSubjectActivity extends AppCompatActivity {
 
@@ -27,7 +23,7 @@ public class ChooseSubjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_subject);
 
-
+        //init listeners
         findViewById(R.id.capitals_image).setOnClickListener(new imageClickHandler());
         findViewById(R.id.astronomy_image).setOnClickListener(new imageClickHandler());
         findViewById(R.id.history_image).setOnClickListener(new imageClickHandler());
@@ -38,8 +34,7 @@ public class ChooseSubjectActivity extends AppCompatActivity {
     }
 
     protected class imageClickHandler implements View.OnClickListener {
-        //check if the user exist, and if he doesn't call addUser
-        //if he does, show Toast
+        //find what subject was chosen
         @SuppressLint("NonConstantResourceId")
         @Override
         public void onClick(View view) {
@@ -88,12 +83,10 @@ public class ChooseSubjectActivity extends AppCompatActivity {
 
     }
 
-
+    //returns the subject as a result
     private void returnSubject(){
         Intent intent = new Intent();
         intent.putExtra(String.valueOf(R.string.subject), chosen_subject);
-//        intent.putExtra(String.valueOf(R.string.subject), subject);
-//        intent.putExtra(String.valueOf(R.string.image_id), subjectImageID);
         setResult(Activity.RESULT_OK, intent);
         finish();
 

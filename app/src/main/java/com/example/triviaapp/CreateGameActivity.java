@@ -1,4 +1,4 @@
-package com.example.triviaapp.game;
+package com.example.triviaapp;
 
 import static java.lang.Math.min;
 
@@ -12,25 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.triviaapp.ChooseSubjectActivity;
-import com.example.triviaapp.HomeActivity;
-import com.example.triviaapp.R;
-import com.example.triviaapp.chatgpt.chatApi;
-import com.example.triviaapp.customClasses.Question;
-import com.example.triviaapp.customClasses.Game;
-import com.example.triviaapp.customClasses.Subject;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -39,7 +28,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -89,7 +77,7 @@ public class CreateGameActivity extends AppCompatActivity {
         Intent intent = getIntent();
         m_game.setCompetitive(intent.getBooleanExtra(String.valueOf(R.string.is_competitive_text), false));
         m_game.setSubject(new Subject(Subject.subjectNameCapitals, R.id.capitals_image, Subject.displayNameCapitals));
-
+        //if game is competitive set the number of question to the constant default
         if(m_game.isCompetitive()){
             questionNumberEditText.setText(String.valueOf(Game.COMPETITIVE_QUESTION_NUMBER));
             questionNumberEditText.setEnabled(false);
@@ -160,6 +148,7 @@ public class CreateGameActivity extends AppCompatActivity {
 
     private static final Object lock = new Object();
 
+    //wait until all the questions are read and then start the game
     private void waitUntilQuestionsAreRead(){
         final long MAXIMUM_WAITING_TIME_MS = 40000;
         Thread game_thread = new Thread() {
@@ -185,14 +174,14 @@ public class CreateGameActivity extends AppCompatActivity {
     private class startGameClickHandler implements View.OnClickListener {
 
         @Override
-        public void onClick(View view){
+        public void onClick(View view) {
             if(hasStartGameClickedAlready){return;}
             hasStartGameClickedAlready = true;
 
             questions = new ArrayList<>();
 
             //m_game.setCompetitive(isCompetitiveSwitch.isChecked());
-            if(m_game.isCompetitive()){
+            if(m_game.isCompetitive()) {
                 numberOfWantedQuestions = Game.COMPETITIVE_QUESTION_NUMBER;
                 m_game.setTimePerQuestionSec(Game.COMPETITIVE_TIME_PER_QUESTION_SEC);
             } else {
@@ -332,7 +321,6 @@ public class CreateGameActivity extends AppCompatActivity {
                         JSONObject json_questions = chatApi.getQuestionsFormat(response);
 
                         chatApi.chatAnswer = String.valueOf(json_questions);
-
 
                         Iterator<String> keys = json_questions.keys();
 

@@ -1,30 +1,18 @@
-package com.example.triviaapp.chatgpt;
+package com.example.triviaapp;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-
-import com.example.triviaapp.R;
-import com.example.triviaapp.customClasses.Question;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -40,6 +28,7 @@ public class chatApi {
                 .build();
         public static String chatAnswer = "";
 
+        //returns a request to send to chatGPT
         public static Request getRequest(int numberOfQuestions, String subject, boolean hasAsked){
                 JSONObject jsonBody = new JSONObject();
 
@@ -97,6 +86,7 @@ public class chatApi {
                         .build();
         }
 
+        //gets the Response from chatGPT  and returns a jsonObject of the questions the response contains
         public static JSONObject getQuestionsFormat(@NonNull Response response) throws JSONException, IOException {
 
                 JSONObject jsonResponse = new JSONObject(Objects.requireNonNull(response.body()).string());

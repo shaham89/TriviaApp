@@ -1,4 +1,4 @@
-package com.example.triviaapp.helperFunctions;
+package com.example.triviaapp;
 
 public final class FireStoreConstants {
 

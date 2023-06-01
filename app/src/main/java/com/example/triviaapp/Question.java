@@ -1,13 +1,10 @@
-package com.example.triviaapp.customClasses;
-
-import com.example.triviaapp.game.GameActivity;
+package com.example.triviaapp;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -56,7 +53,7 @@ public class Question implements Serializable {
         this.answerHash = GameActivity.getMd5Hashed(currentAnswer);
     }
 
-
+    //finds how similar two strings are, returns a number between 0 and 1
     private static double similarity(String s1, String s2) {
         String longer = s1, shorter = s2;
         if (s1.length() < s2.length()) { // longer should always have greater length

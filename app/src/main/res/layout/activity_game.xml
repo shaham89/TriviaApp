@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:weightSum="100"
-    android:background="@drawable/dd"
+    android:background="@drawable/blue_background"
     android:orientation="vertical"
-    tools:context=".game.GameActivity">
+    tools:context=".GameActivity">
 
     <TextView
         android:id="@+id/gameQuestionTextview"

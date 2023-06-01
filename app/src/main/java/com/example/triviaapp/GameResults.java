@@ -1,4 +1,4 @@
-package com.example.triviaapp.customClasses;
+package com.example.triviaapp;
 
 public class GameResults extends Game {
     private final int[] timeScores;

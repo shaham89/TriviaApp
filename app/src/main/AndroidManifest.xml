@@ -14,25 +14,25 @@
             android:name=".LeaderBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".game.GameStatsActivity"
+            android:name=".GameStatsActivity"
             android:exported="false" />
         <activity
-            android:name=".game.CreateGameActivity"
+            android:name=".CreateGameActivity"
             android:exported="false" />
         <activity
             android:name=".ChooseSubjectActivity"
             android:exported="false" />
         <activity
-            android:name=".signin.LoginActivity"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".game.GameActivity"
+            android:name=".GameActivity"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".signin.SignUpActivity"
+            android:name=".SignUpActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

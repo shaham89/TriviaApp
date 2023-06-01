@@ -1,4 +1,4 @@
-package com.example.triviaapp.game;
+package com.example.triviaapp;
 
 import static java.lang.Math.min;
 
@@ -17,13 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.triviaapp.HomeActivity;
-import com.example.triviaapp.R;
-import com.example.triviaapp.chatgpt.chatApi;
-import com.example.triviaapp.customClasses.Question;
-import com.example.triviaapp.customClasses.Game;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -92,9 +85,11 @@ public class GameActivity extends AppCompatActivity {
 
     private static final Object lock = new Object();
 
+    //responsible for timing the waiting time with the appearance of the questions
     private void playQuestion(int questionIndex) throws InterruptedException {
         long REFRESH_RATE_MS = 100;
 
+        //if the questions is'nt read yet, wait until it is
         while(questionIndex >= m_game.getQuestions().length){
             lock.wait(REFRESH_RATE_MS);
         }
@@ -112,11 +107,11 @@ public class GameActivity extends AppCompatActivity {
             stopwatch.stop();
 
             isFreezeState = true;
-            long timeElapsed = finish - start;
+            long timeElapsed = finish - start;  //the time it took for the user to answer
 
             timeScores[questionIndex] = (int) timeElapsed;
 
-            greenLightCorrectAnswer();
+            greenLightCorrectAnswer();  //show the correct answer
             GameActivity.currentQuestionIndex += 1;
             lock.wait(TIME_BETWEEN_QUESTIONS_MS);
 
@@ -125,6 +120,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    //synchronizes the questions and the UI freeze
     private void playGame() {
         Thread game_thread = new Thread() {
             @Override
@@ -159,15 +155,18 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    //show and sound(with text to speech) the questions
     private void showCurrQuestion(){
         gameQuestionTextview.setText(currQuestion.questionText);
 
+        //play the sound of the question
         if(HomeActivity.isSound){
             m_textToSpeech.speak(currQuestion.questionText, TextToSpeech.QUEUE_FLUSH, null, null);
         }
 
         resetButtonColors();
 
+        //play the sound of the answers
         for(int i = 0; i < answers.length; i++){
             answers[i].setText(currQuestion.options[i]);
             if(HomeActivity.isSound){
@@ -270,6 +269,7 @@ public class GameActivity extends AppCompatActivity {
         return new String(hexChars).toLowerCase(Locale.ROOT);
     }
 
+    //asks <numberOfQuestions> from chatGPT and add them to the array list of questions
     public void generateChatQuestions(int numberOfQuestions, String subject) {
         //okhttp
         //messageList.add(new Message("Typing... ",Message.SENT_BY_BOT));

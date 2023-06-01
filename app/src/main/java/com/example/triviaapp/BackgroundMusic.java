@@ -8,6 +8,8 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.triviaapp.R;
+
 
 public class BackgroundMusic extends Service{
 
@@ -27,6 +29,7 @@ public class BackgroundMusic extends Service{
         return null;
     }
 
+    //plays the music on loops
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("SERVICE", "Starting to play playing");

@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/hh"
+    android:background="@drawable/light_blue_background"
     android:weightSum="100"
-    tools:context=".signin.LoginActivity">
+    tools:context=".LoginActivity">
 
     <TextView
         android:layout_width="match_parent"

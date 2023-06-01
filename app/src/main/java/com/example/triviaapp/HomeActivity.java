@@ -9,9 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.triviaapp.chatgpt.chatApi;
-import com.example.triviaapp.game.CreateGameActivity;
-import com.example.triviaapp.signin.SignUpActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -47,6 +44,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    //go to create game
     private class playClickHandler implements View.OnClickListener {
         @Override
         public void onClick(View view){
@@ -59,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    //logout
     private class logoutClickHandler implements View.OnClickListener {
         @Override
         public void onClick(View view){
@@ -70,6 +69,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    //go to leaderboards
     private class leaderBoardsClickHandler implements View.OnClickListener {
         @Override
         public void onClick(View view){
@@ -80,6 +80,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    //set the music and textToSpeech on and off
     private class musicSettings implements View.OnClickListener {
         @Override
         public void onClick(View view){
