@@ -49,7 +49,7 @@
                 style="@style/images_titles_style"
 
                 android:fontFamily="@font/acme"
-                android:text="Math" />
+                android:text="@string/custom_subject" />
 
             <ImageView
                 android:id="@+id/customSubject_image"

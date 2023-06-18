@@ -78,13 +78,16 @@ public class GameActivity extends AppCompatActivity {
             generateChatQuestions(m_game.getNumberOfQuestions() - m_game.getQuestions().length, m_game.getSubject().getSubjectDisplayName());
         }
 
+
         init_views();
+        m_textToSpeech.speak("hello", TextToSpeech.QUEUE_ADD, null, null);
+
+
         playGame();
 
     }
 
     private static final Object lock = new Object();
-
     //responsible for timing the waiting time with the appearance of the questions
     private void playQuestion(int questionIndex) throws InterruptedException {
         long REFRESH_RATE_MS = 100;
@@ -155,13 +158,19 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    private boolean isFirstRun = false;
     //show and sound(with text to speech) the questions
-    private void showCurrQuestion(){
+    private void showCurrQuestion() throws InterruptedException {
         gameQuestionTextview.setText(currQuestion.questionText);
+
+        synchronized (lock){
+            lock.wait(500);
+        }
 
         //play the sound of the question
         if(HomeActivity.isSound){
-            m_textToSpeech.speak(currQuestion.questionText, TextToSpeech.QUEUE_FLUSH, null, null);
+            m_textToSpeech.speak(currQuestion.questionText, TextToSpeech.QUEUE_ADD, null, null);
+            Log.d(currQuestion.questionText, "SPEAKER");
         }
 
         resetButtonColors();
@@ -216,6 +225,7 @@ public class GameActivity extends AppCompatActivity {
                 } else {
                     view.setBackgroundColor(getResources().getColor(R.color.red_answer));
                 }
+
                 lock.notify();
             }
 
